@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { checkAuth } from "../middlewares/checkAuth.js";
+import { checkAuth } from "../src/middlewares/checkAuth.js";
 const router = express.Router();
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {

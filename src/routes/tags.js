@@ -1,7 +1,7 @@
 import express from "express";
-import PostSchema from "../models/post.js";
+import PostSchema from "../src/models/post.js";
 import mongoose from "mongoose";
-import { checkAuth } from "../middlewares/index.js";
+import { checkAuth } from "../src/middlewares/index.js";
 const router = express.Router();
 router.get("/tags", async (req, res) => {
   try {
