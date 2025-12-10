@@ -1,9 +1,9 @@
-import { NotFoundError } from "~/lib/errors/index.js";
+import { NotFoundError, UnauthorizedError } from "~/lib/errors/index.js";
 import { prisma } from "~/lib/prisma.js";
 import bcrypt from 'bcrypt'
 import { signToken } from "~/utils/jwt.js";
 import { AppError } from "~/lib/errors/AppError.js";
-import type { RegisterDataType } from "~/dto/auth.dto.js";
+import type { LoginDataType, RegisterDataType } from "~/dto/auth.dto.js";
 
 
 export class AuthService {
@@ -24,13 +24,23 @@ export class AuthService {
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(data.password, salt);
         const newUser = await prisma.user.create({
+            omit: { password: true },
             data: {
                 email: data.email,
                 password: passwordHash
             }
         })
 
-        const token = signToken({ id: newUser.id })
+        const token = signToken({ id: newUser.id, email: newUser.email })
         return { token, user: newUser }
     };
+    async login(data: LoginDataType) {
+        const user = await prisma.user.findUnique({ where: { email: data.email } })
+        if (!user) throw new NotFoundError("Пользователь не найден")
+        const isVerify = await bcrypt.compare(data.password, user.password)
+        if (!isVerify) throw new AppError("Не верный логин или пароль", 400)
+        const token = signToken({ id: user.id, email: user.email })
+        const { password, ...userWithoutPassword } = user
+        return { token, user: userWithoutPassword }
+    }
 }

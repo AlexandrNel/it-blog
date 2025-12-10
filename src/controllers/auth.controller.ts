@@ -2,7 +2,7 @@ import { errorHandler } from "~/middlewares/errorHandler.js";
 import { AuthService } from "../services/auth.service.js"
 import type { Response, Request, CookieOptions } from 'express'
 import type { AuthenticatedRequest } from "~/types/express.js";
-import { registerSchema } from "~/dto/auth.dto.js";
+import { loginSchema, registerSchema } from "~/dto/auth.dto.js";
 
 
 const authService = new AuthService()
@@ -30,6 +30,16 @@ export const register = async (req: Request, res: Response) => {
         const { user, token } = await authService.register(data)
         res.cookie('access_token', token, cookieOptions)
         res.status(201).json(user);
+    } catch (error) {
+        errorHandler(error, res)
+    }
+};
+export const login = async (req: Request, res: Response) => {
+    try {
+        const data = await loginSchema.parseAsync(req.body)
+        const { user, token } = await authService.login(data)
+        res.cookie('access_token', token, cookieOptions)
+        res.json(user);
     } catch (error) {
         errorHandler(error, res)
     }
