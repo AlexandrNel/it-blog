@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models.ts"
-import { type PrismaClient } from "./class.ts"
+import type * as Prisma from "../models.js"
+import { type PrismaClient } from "./class.js"
 
-export type * from '../models.ts'
+export type * from '../models.js'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -898,8 +898,8 @@ export const UserScalarFieldEnum = {
   name: 'name',
   avatar: 'avatar',
   role: 'role',
-  password: 'password',
   createdAt: 'createdAt',
+  password: 'password',
   updatedAt: 'updatedAt'
 } as const
 
@@ -908,8 +908,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ProfileScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  bio: 'bio'
+  bio: 'bio',
+  userId: 'userId'
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
@@ -917,6 +917,7 @@ export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeo
 
 export const PostScalarFieldEnum = {
   id: 'id',
+  slug: 'slug',
   title: 'title',
   content: 'content',
   published: 'published',
@@ -933,8 +934,8 @@ export const CommentScalarFieldEnum = {
   content: 'content',
   postId: 'postId',
   authorId: 'authorId',
-  parentId: 'parentId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  parentId: 'parentId'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]

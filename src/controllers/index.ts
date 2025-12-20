@@ -1,2 +1,3 @@
 import * as authController from "./auth.controller.js";
-export { authController };
+import * as postController from "./post.controller.js"
+export { authController, postController };

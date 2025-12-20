@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.ts'
-export type * from './prismaNamespace.ts'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -81,8 +81,8 @@ export const UserScalarFieldEnum = {
   name: 'name',
   avatar: 'avatar',
   role: 'role',
-  password: 'password',
   createdAt: 'createdAt',
+  password: 'password',
   updatedAt: 'updatedAt'
 } as const
 
@@ -91,8 +91,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ProfileScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  bio: 'bio'
+  bio: 'bio',
+  userId: 'userId'
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
@@ -100,6 +100,7 @@ export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeo
 
 export const PostScalarFieldEnum = {
   id: 'id',
+  slug: 'slug',
   title: 'title',
   content: 'content',
   published: 'published',
@@ -116,8 +117,8 @@ export const CommentScalarFieldEnum = {
   content: 'content',
   postId: 'postId',
   authorId: 'authorId',
-  parentId: 'parentId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  parentId: 'parentId'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]

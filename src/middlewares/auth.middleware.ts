@@ -4,7 +4,6 @@ import { verifyToken } from "~/utils/jwt.js";
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token: string | undefined = req.cookies.access_token
-
     if (!token) {
         return res.status(403).json({
             message: "Нет доступа",

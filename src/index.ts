@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { authRouter } from './routes/index.js'
+import { authRouter, postRouter } from './routes/index.js'
 import cookieParser from "cookie-parser";
 
 const PORT = process.env.PORT || 3000;
@@ -18,6 +18,7 @@ app.use(
 );
 app.use('/api',
   authRouter,
+  postRouter
 )
 
 app.listen(PORT, () => {

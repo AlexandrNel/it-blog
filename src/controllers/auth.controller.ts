@@ -11,6 +11,7 @@ const cookieOptions: CookieOptions = {
     secure: false, // must be true in prodaction!
     sameSite: "lax",
     path: "/",
+    domain: "localhost",
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
 };
 
@@ -40,6 +41,15 @@ export const login = async (req: Request, res: Response) => {
         const { user, token } = await authService.login(data)
         res.cookie('access_token', token, cookieOptions)
         res.json(user);
+    } catch (error) {
+        errorHandler(error, res)
+    }
+};
+export const logout = async (req: Request, res: Response) => {
+    try {
+        res.clearCookie('access_token')
+        res.clearCookie('refresh_token')
+        res.status(200).json()
     } catch (error) {
         errorHandler(error, res)
     }
