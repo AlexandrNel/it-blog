@@ -1,4 +1,5 @@
 import "express-serve-static-core";
+import { Request } from 'express'
 
 declare global {
     namespace Express {
