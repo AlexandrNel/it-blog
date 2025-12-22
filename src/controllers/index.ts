@@ -1,3 +1,4 @@
 import * as authController from "./auth.controller.js";
 import * as postController from "./post.controller.js"
-export { authController, postController };
+import * as tagController from './tag.controller.js'
+export { authController, postController, tagController };
