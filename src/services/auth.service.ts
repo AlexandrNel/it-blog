@@ -1,4 +1,4 @@
-import { NotFoundError, UnauthorizedError } from "~/lib/errors/index.js";
+import { NotFoundError } from "~/lib/errors/index.js";
 import { prisma } from "~/lib/prisma.js";
 import bcrypt from 'bcrypt'
 import { signToken } from "~/utils/jwt.js";
@@ -31,7 +31,7 @@ export class AuthService {
             }
         })
 
-        const token = signToken({ id: newUser.id, email: newUser.email })
+        const token = signToken({ id: newUser.id, role: newUser.role })
         return { token, user: newUser }
     };
     async login(data: LoginDataType) {
@@ -39,7 +39,7 @@ export class AuthService {
         if (!user) throw new NotFoundError("Пользователь не найден")
         const isVerify = await bcrypt.compare(data.password, user.password)
         if (!isVerify) throw new AppError("Не верный логин или пароль", 400)
-        const token = signToken({ id: user.id, email: user.email })
+        const token = signToken({ id: user.id, role: user.role })
         const { password, ...userWithoutPassword } = user
         return { token, user: userWithoutPassword }
     }

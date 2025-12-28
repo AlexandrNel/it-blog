@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { config } from "~/config/index.js";
+import type { User } from "~/generated/prisma/client.js";
 import type { TokenPayload } from "~/types/jwt.js";
 
 export const signToken = (payload: TokenPayload) => {
@@ -9,10 +10,10 @@ export const signToken = (payload: TokenPayload) => {
 export const verifyToken = (token: string) => {
     try {
         const payload = jwt.verify(token, config.jwt.secret);
-        if (payload && typeof payload === "object" && "id" in payload) {
-            return { id: payload.id as string }
+        if (!payload) {
+            return null
         }
-        return null
+        return payload as jwt.JwtPayload & TokenPayload
     } catch (err) {
         return null;
     }

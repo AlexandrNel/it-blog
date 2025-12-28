@@ -3,6 +3,8 @@ import { AuthService } from "../services/auth.service.js"
 import type { Response, Request, CookieOptions } from 'express'
 import type { AuthenticatedRequest } from "~/types/express.js";
 import { loginSchema, registerSchema } from "~/dto/auth.dto.js";
+import { verifyToken } from "~/utils/jwt.js";
+import { UnauthorizedError } from "~/lib/errors/index.js";
 
 
 const authService = new AuthService()
@@ -53,4 +55,19 @@ export const logout = async (req: Request, res: Response) => {
     } catch (error) {
         errorHandler(error, res)
     }
+
+
 };
+export const check = async (req: Request, res: Response) => {
+    try {
+        const token: string | undefined = req.cookies.access_token
+        if (!token) throw new UnauthorizedError()
+        const payload = verifyToken(token)
+        console.log(payload);
+
+        if (!payload) throw new UnauthorizedError()
+        res.json(payload);
+    } catch (error) {
+        errorHandler(error, res)
+    }
+}
