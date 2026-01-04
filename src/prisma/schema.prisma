@@ -41,6 +41,7 @@ model Post {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   slug      String    @unique
+  desc      String
   comments  Comment[]
   tags      PostTag[]
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
