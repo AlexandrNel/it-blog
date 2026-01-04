@@ -55,6 +55,7 @@ export class PostService {
                 const post = await tx.post.create({
                     data:
                     {
+                        desc: data.desc,
                         content: data.content,
                         slug,
                         title: data.title,
@@ -185,5 +186,5 @@ async function withUniqueSlug<T>(
 }
 
 
-export type CreatePostDataType = { title: string, content: string, tags: string[], slug: string, authorId: string }
+export type CreatePostDataType = { title: string, content: string, tags: string[], slug: string, authorId: string, desc: string }
 export type UpdatePostDataType = Partial<Omit<CreatePostDataType, "slug">> & { authorId: string, postId: string }
