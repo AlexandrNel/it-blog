@@ -114,7 +114,7 @@
 }
 
 @utility container {
-  @apply max-w-270 w-full mx-auto px-4 max-md:px-2;
+  @apply max-w-280 w-full mx-auto px-4 max-md:px-2;
 }
 
 @layer base {

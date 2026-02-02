@@ -8,7 +8,7 @@ export const PageLayout: React.FC<BaseProps & { sidebar?: React.ReactNode }> = (
 	children,
 }) => {
 	return (
-		<div className={cn("container mx-auto flex justify-between", className)}>
+		<div className={cn("container mt-2 mx-auto flex justify-between", className)}>
 			<div className="w-full mr-4">{children}</div>
 			<div className="max-w-75 w-full max-md:hidden">{sidebar}</div>
 		</div>

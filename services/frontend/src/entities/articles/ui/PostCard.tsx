@@ -49,7 +49,7 @@ export const PostCard: React.FC<Props> = ({ className, post }) => {
 								</span>
 							</div>
 						</div>
-						<Link href={`/posts/${post.slug}`}>
+						<Link href={`/articles/${post.slug}`}>
 							<h2 className="font-bold text-[25px] mb-2 transition-all hover:underline">
 								{post.title}
 							</h2>
