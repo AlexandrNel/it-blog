@@ -2,7 +2,7 @@
 import type { Request, Response } from 'express'
 import { validatePostSchema } from '~/dto/post.dto.js';
 import { AppError } from '~/lib/errors/AppError.js';
-import { NotFoundError } from '~/lib/errors/index.js';
+import { NotFoundError, ValidationError } from '~/lib/errors/index.js';
 import { errorHandler } from '~/middlewares/errorHandler.js';
 import type { PaginationParams } from '~/middlewares/paginate.middleware.js';
 import { PostService } from '~/services/post.service.js';
@@ -88,6 +88,31 @@ export const updatePost = async (req: Request, res: Response) => {
     } catch (error) {
         errorHandler(error, res)
     }
+}
+export const getStatistic = async (req: Request, res: Response) => {
+    try {
+        const user = req.user
+        const id = req.params.id
+        if (!id) throw new AppError("Не передан id статьи")
+        const stats = await postService.getStatistic(id, user?.id)
+        console.log(stats);
+
+        res.status(200).json(stats)
+    } catch (error) {
+        errorHandler(error, res)
+    }
+}
+export const likeOrDislikePost = async (req: Request, res: Response) => {
+    try {
+        const isLike = req.path.endsWith('/like')
+        const userId = req.user?.id as string
+        const id = req.params.id
+        const value = isLike ? 1 : -1
+        if (!id) throw new AppError("Не передан id статьи")
+        if (!Number.isInteger(value)) throw new ValidationError("Неверное значение")
+        await postService.likeOrDislike(userId, id, value)
+        res.status(200).send()
+    } catch (error) {
+        errorHandler(error, res)
+    }
 };
-
-

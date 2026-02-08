@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import type { Tag } from "~/generated/prisma/client.js";
 import { PrismaClientKnownRequestError } from "~/generated/prisma/internal/prismaNamespace.js";
-import { NotFoundError } from "~/lib/errors/index.js";
+import { NotFoundError, ValidationError } from "~/lib/errors/index.js";
 import { prisma } from "~/lib/prisma.js";
 
 const includeTag = { select: { tag: { select: { id: true, name: true } } } }
@@ -202,6 +202,26 @@ export class PostService {
 
             return tx.post.findUnique({ where: { id: postId }, include: { author: includeAuthor, tags: includeTag } })
         })
+    }
+    async likeOrDislike(userId: string, postId: string, value: -1 | 1) {
+        return prisma.$transaction(async (tx) => {
+            const exist = await tx.postVote.findUnique({ where: { user_id_post_id: { user_id: userId, post_id: postId } } })
+            if (exist) {
+                throw new ValidationError(`Вы уже поставили ${exist.value === 1 ? "лайк" : "дизлайк"}`)
+            } else {
+                return await tx.postVote.create({ data: { value: value, user_id: userId, post_id: postId } })
+            }
+        })
+    }
+    async getStatistic(id: string, userId?: string) {
+        const stats = await prisma.post.findUnique({ where: { id }, select: { comments: { select: { 'id': true } }, postVotes: { select: { user_id: true, value: true } } } })
+        return {
+            comments: stats?.comments.length, votes: {
+                likes: stats?.postVotes.filter((v) => v.value === 1).length,
+                dislikes: stats?.postVotes.filter((v) => v.value === -1).length,
+                userVote: userId ? stats?.postVotes.find((v) => v.user_id === userId)?.value ?? null : null
+            }
+        }
     }
 }
 
