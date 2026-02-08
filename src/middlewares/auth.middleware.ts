@@ -5,7 +5,8 @@ import { verifyToken } from "~/utils/jwt.js";
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token: string | undefined = req.cookies.access_token
     if (!token) {
-        return res.status(403).json({
+
+        return res.status(401).json({
             message: "Нет доступа",
         });
     }
@@ -13,8 +14,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     if (!payload) {
         res.clearCookie('access_token')
-        res.clearCookie('refresh_token')
-        return res.status(403).json({
+        return res.status(401).json({
             message: "Токен не действителен",
         });
     }
