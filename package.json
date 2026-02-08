@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "start": "node index.js"
+    "start": "node index.js",
+    "studio": "npx prisma studio",
+    "prisma:generate": "prisma generate"
   },
   "author": "",
   "license": "ISC",
