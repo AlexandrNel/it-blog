@@ -38,9 +38,10 @@ export class AuthService {
         const user = await prisma.user.findUnique({ where: { email: data.email } })
         if (!user) throw new NotFoundError("Пользователь не найден")
         const isVerify = await bcrypt.compare(data.password, user.password)
-        if (!isVerify) throw new AppError("Не верный логин или пароль", 400)
+        if (!isVerify) throw new AppError("Не верный логин или пароль", 403)
         const token = signToken({ id: user.id, role: user.role })
+        const refresh = signToken({ id: user.id, role: user.role }, 'refresh')
         const { password, ...userWithoutPassword } = user
-        return { token, user: userWithoutPassword }
+        return { token, refresh, user: userWithoutPassword }
     }
 }
