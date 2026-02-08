@@ -1,4 +1,6 @@
 node_modules
 .env
-/prisma/database/generated/prisma
+.env.**
 tasks.md
+generated
+node_modules
