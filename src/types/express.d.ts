@@ -7,6 +7,10 @@ declare global {
             user?: {
                 id?: string
             }
+            pagination?: {
+                page: number,
+                limit: number
+            }
         }
     }
 }

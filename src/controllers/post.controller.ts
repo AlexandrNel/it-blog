@@ -4,14 +4,16 @@ import { validatePostSchema } from '~/dto/post.dto.js';
 import { AppError } from '~/lib/errors/AppError.js';
 import { NotFoundError } from '~/lib/errors/index.js';
 import { errorHandler } from '~/middlewares/errorHandler.js';
+import type { PaginationParams } from '~/middlewares/paginate.middleware.js';
 import { PostService } from '~/services/post.service.js';
 
 
 const postService = new PostService()
 
 export const getAll = async (req: Request, res: Response) => {
+    const { page, limit } = req.pagination as PaginationParams
     try {
-        const posts = await postService.getAll()
+        const posts = await postService.getAllWithPages(Number(limit), (Number(page)))
         res.json(posts);
     } catch (error) {
         errorHandler(error, res)
@@ -81,7 +83,7 @@ export const updatePost = async (req: Request, res: Response) => {
         const id = req.params.id
         const data = req.body
         if (!id) throw new AppError("Не передан id статьи")
-        const post = await postService.update({ authorId: userId, postId: id, ...data })
+        const post = await postService.update({ postId: id, ...data })
         res.json(post).status(200)
     } catch (error) {
         errorHandler(error, res)

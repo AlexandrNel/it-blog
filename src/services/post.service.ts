@@ -5,16 +5,63 @@ import { NotFoundError } from "~/lib/errors/index.js";
 import { prisma } from "~/lib/prisma.js";
 
 const includeTag = { select: { tag: { select: { id: true, name: true } } } }
-const includeAuthor = { omit: { password: true } }
+const includeAuthor = { select: { id: true, name: true, email: true, avatar: true } }
 
 export class PostService {
+
     async getAll() {
         const posts = await prisma.post.findMany({
             orderBy: { createdAt: "desc" },
             omit: { content: true },
             include: {
                 author: includeAuthor,
-                tags: includeTag
+                tags: includeTag,
+                postVotes: {
+                    select: { user_id: true, value: true }
+                },
+                comments: { select: { id: true } }
+            }
+        })
+        return posts.map((p) => ({
+            ...p, statistic: {
+                votes: {
+                    likes: p.postVotes.filter((v) => v.value > 0).length,
+                    dislikes: p.postVotes.filter((v) => v.value < 0).length,
+                },
+                comments: p.comments.length
+            }
+        }))
+    }
+    async getAllWithPages(limit: number = 10, page: number = 1) {
+        if (limit === Infinity) return this.getAll()
+        const posts = await prisma.$transaction(async (tx) => {
+            const count = await tx.post.count()
+            const offset = (page - 1) * limit
+            const total = Math.ceil(count / limit)
+            const data = await tx.post.findMany({
+                take: limit,
+                skip: offset,
+                orderBy: { createdAt: "desc" },
+                omit: { content: true },
+                include: {
+                    author: includeAuthor,
+                    tags: includeTag,
+                    postVotes: {
+                        select: { user_id: true, value: true }
+                    },
+                    comments: { select: { id: true } }
+                }
+            })
+            return {
+                data: data.map((p) => ({
+                    ...p, statistic: {
+                        votes: {
+                            likes: p.postVotes.filter((v) => v.value > 0).length,
+                            dislikes: p.postVotes.filter((v) => v.value < 0).length,
+                        },
+                        comments: p.comments.length
+                    }
+                })), pages: total
             }
         })
         return posts
