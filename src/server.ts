@@ -1,8 +1,5 @@
-import { app } from './app.js'
+import { initServer } from './app.js'
+import { initRedis } from './shared/redis/client.js';
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-})
-
+initServer()
+initRedis()

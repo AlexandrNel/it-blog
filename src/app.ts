@@ -3,9 +3,9 @@ import cors from "cors";
 import { authRouter, postRouter, tagRouter } from './routes/index.js'
 import cookieParser from "cookie-parser";
 
-export const app = express();
+const PORT = process.env.PORT || 3000;
+const app = express();
 app.set('trust proxy', true)
-
 
 app.use(
     express.json(),
@@ -23,4 +23,9 @@ app.use('/api',
     tagRouter
 )
 
-
+export function initServer() {
+    const server = app.listen(PORT, () => {
+        console.log(`Server is running at http://localhost:${PORT}`);
+    })
+    return server
+}
