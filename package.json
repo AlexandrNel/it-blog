@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "node index.js",
+    "dev": "tsx watch src/server.ts",
+    "start": "node server.js",
     "studio": "npx prisma studio",
     "prisma:generate": "prisma generate"
   },
