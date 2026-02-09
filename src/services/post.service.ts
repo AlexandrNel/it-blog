@@ -28,6 +28,7 @@ export class PostService {
                     likes: p.postVotes.filter((v) => v.value > 0).length,
                     dislikes: p.postVotes.filter((v) => v.value < 0).length,
                 },
+                views: p.views,
                 comments: p.comments.length
             }
         }))
@@ -59,6 +60,7 @@ export class PostService {
                             likes: p.postVotes.filter((v) => v.value > 0).length,
                             dislikes: p.postVotes.filter((v) => v.value < 0).length,
                         },
+                        views: p.views,
                         comments: p.comments.length
                     }
                 })), pages: total
