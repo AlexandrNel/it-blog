@@ -2,7 +2,7 @@
 import type { Request, Response } from 'express'
 import { validatePostSchema } from '~/dto/post.dto.js';
 import { AppError } from '~/lib/errors/AppError.js';
-import { NotFoundError, ValidationError } from '~/lib/errors/index.js';
+import { ForbiddenError, NotFoundError, ValidationError } from '~/lib/errors/index.js';
 import { errorHandler } from '~/middlewares/errorHandler.js';
 import type { PaginationParams } from '~/middlewares/paginate.middleware.js';
 import { PostService } from '~/services/post.service.js';
@@ -95,8 +95,6 @@ export const getStatistic = async (req: Request, res: Response) => {
         const id = req.params.id
         if (!id) throw new AppError("Не передан id статьи")
         const stats = await postService.getStatistic(id, user?.id)
-        console.log(stats);
-
         res.status(200).json(stats)
     } catch (error) {
         errorHandler(error, res)
@@ -115,4 +113,17 @@ export const likeOrDislikePost = async (req: Request, res: Response) => {
     } catch (error) {
         errorHandler(error, res)
     }
-};
+}
+export const incrementView = async (req: Request, res: Response) => {
+    try {
+        const canUpdate = req.updateView
+        const id = req.params.id
+        if (!id) throw new AppError("Не передан id статьи")
+        if (canUpdate) {
+            await postService.updateViews(id)
+            res.status(200).send()
+        } else throw new ValidationError('Пользователь уже просматривал эту статью')
+    } catch (error) {
+        errorHandler(error, res)
+    }
+}

@@ -10,7 +10,8 @@ declare global {
             pagination?: {
                 page: number,
                 limit: number
-            }
+            },
+            updateView?: boolean
         }
     }
 }

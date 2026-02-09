@@ -216,14 +216,18 @@ export class PostService {
         })
     }
     async getStatistic(id: string, userId?: string) {
-        const stats = await prisma.post.findUnique({ where: { id }, select: { comments: { select: { 'id': true } }, postVotes: { select: { user_id: true, value: true } } } })
+        const stats = await prisma.post.findUnique({ where: { id }, select: { views: true, comments: { select: { 'id': true } }, postVotes: { select: { user_id: true, value: true } } } })
         return {
+            views: stats?.views,
             comments: stats?.comments.length, votes: {
                 likes: stats?.postVotes.filter((v) => v.value === 1).length,
                 dislikes: stats?.postVotes.filter((v) => v.value === -1).length,
                 userVote: userId ? stats?.postVotes.find((v) => v.user_id === userId)?.value ?? null : null
             }
         }
+    }
+    async updateViews(id: string) {
+        return prisma.post.update({ where: { id }, data: { views: { increment: 1 } } })
     }
 }
 
