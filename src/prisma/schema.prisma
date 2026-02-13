@@ -35,20 +35,22 @@ model Profile {
 }
 
 model Post {
-  id        String     @id @default(uuid())
-  title     String
-  content   String
-  published Boolean    @default(false)
-  authorId  String     @map("author_id")
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  slug      String     @unique
-  desc      String
-  views     Int        @default(0)
-  postVotes PostVote[]
-  comments  Comment[]
-  tags      PostTag[]
-  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id         String     @id @default(uuid())
+  title      String
+  content    String
+  published  Boolean    @default(false)
+  authorId   String     @map("author_id")
+  categoryId String     @map("category_id")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+  slug       String     @unique
+  desc       String
+  views      Int        @default(0)
+  postVotes  PostVote[]
+  comments   Comment[]
+  tags       PostTag[]
+  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  author     User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@map("posts")
 }
@@ -77,6 +79,14 @@ model Tag {
   @@map("tags")
 }
 
+model Category {
+  id    String @id @default(uuid())
+  value String @unique
+  posts Post[]
+
+  @@map("categories")
+}
+
 model PostTag {
   postId String @map("post_id")
   tagId  String @map("tag_id")
@@ -88,7 +98,7 @@ model PostTag {
 }
 
 model PostVote {
-  id         String   @id @default(ulid())
+  id         String   @id @default(uuid())
   post_id    String
   user_id    String
   value      Int
@@ -101,7 +111,7 @@ model PostVote {
 }
 
 model CommentVote {
-  id         String   @id @default(ulid())
+  id         String   @id @default(uuid())
   comment_id String
   user_id    String
   value      Int
