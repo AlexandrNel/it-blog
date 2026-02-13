@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { authRouter, postRouter, tagRouter } from './routes/index.js'
+import { authRouter, postRouter, tagRouter, uploadRouter } from './routes/index.js'
 import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -20,8 +21,11 @@ app.use(
 app.use('/api',
     authRouter,
     postRouter,
-    tagRouter
+    tagRouter,
+    uploadRouter
 )
+
+app.use(errorMiddleware)
 
 export function initServer() {
     const server = app.listen(PORT, () => {
