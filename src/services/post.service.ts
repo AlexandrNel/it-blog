@@ -1,27 +1,33 @@
 import type { ParsedCreatePostDto } from "~/dto/post.dto.js";
+import type { Tag } from "~/generated/prisma/client.js";
 import { PrismaClientKnownRequestError } from "~/generated/prisma/internal/prismaNamespace.js";
 import { NotFoundError, ValidationError } from "~/lib/errors/index.js";
 import { prisma } from "~/lib/prisma.js";
 
 // ─── Shared query options ───────────────────────────────────────────────────
 
-const includeTag = { select: { tag: { select: { id: true, name: true, key: true } } } } as const;
+const includeTags = { select: { tag: { select: { id: true, name: true, key: true } } } } as const;
 const includeAuthor = { select: { id: true, name: true, email: true, avatar: true } } as const;
+const includeCategory = { select: { id: true, value: true, key: true } } as const
 
-const postVotesSelect = { select: { user_id: true, value: true } } as const;
-const commentsCountSelect = { select: { id: true } } as const;
+const includeVotes = { select: { user_id: true, value: true } } as const;
+const includeCommentsCount = { select: { id: true } } as const;
+const includeComments = true as const;
 
-const postListInclude = {
+const postPreviewInclude = {
     author: includeAuthor,
-    tags: includeTag,
-    postVotes: postVotesSelect,
-    comments: commentsCountSelect,
-} as const;
+    tags: includeTags,
+    postVotes: includeVotes,
+    comments: includeCommentsCount,
+    category: includeCategory
+} as const
 
-const postDetailInclude = {
+const fullPostInclude = {
     author: includeAuthor,
-    tags: includeTag,
-} as const;
+    tags: includeTags,
+    category: includeCategory
+} as const
+
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -49,20 +55,46 @@ function computeStatistic(post: PostWithVotesAndComments) {
     };
 }
 
-function mapPostToListItem<T extends { tags: { tag: unknown }[]; postVotes: unknown[]; comments: unknown[]; views: number }>(
+function mapPostToPreview<T extends { tags: { tag: Tag }[]; postVotes: unknown[]; comments: unknown[]; views: number }>(
     p: T
 ) {
+    const { postVotes, comments, tags, ...rest } = p
     return {
-        ...p,
+        ...rest,
         tags: normalizeTags(p.tags),
         statistic: computeStatistic(p as PostWithVotesAndComments),
     };
 }
 
-const listIncludeWithCategory = {
-    ...postListInclude,
-    category: { select: { id: true, value: true } },
-} as const;
+function mapPostToFull<T extends { tags: { tag: Tag }[] }>(
+    p: T
+) {
+    const { tags, ...rest } = p
+    return {
+        ...rest,
+        tags: normalizeTags(p.tags),
+    };
+}
+
+
+async function withUniqueSlug<T>(
+    baseSlug: string,
+    action: (slug: string) => Promise<T>,
+    maxTries = 3
+): Promise<T> {
+    for (let attempt = 0; attempt < maxTries; attempt++) {
+        const slug = attempt === 0 ? baseSlug : `${baseSlug}-${crypto.randomUUID().slice(0, 4)}`;
+        try {
+            return await action(slug);
+        } catch (error) {
+            if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
+                continue;
+            }
+            throw error;
+        }
+    }
+    throw new Error("Не удалось сгенерировать уникальный slug");
+}
 
 // ─── Service ─────────────────────────────────────────────────────────────────
 
@@ -71,13 +103,9 @@ export class PostService {
         const posts = await prisma.post.findMany({
             orderBy: { createdAt: "desc" },
             omit: { content: true },
-            include: listIncludeWithCategory,
+            include: postPreviewInclude,
         });
-        return posts.map((p) => ({
-            ...p,
-            tags: normalizeTags(p.tags),
-            statistic: computeStatistic(p),
-        }));
+        return posts.map(mapPostToPreview);
     }
 
     async getAllWithPages(limit: number = 10, page: number = 1) {
@@ -90,12 +118,12 @@ export class PostService {
                     skip: (page - 1) * limit,
                     orderBy: { createdAt: "desc" },
                     omit: { content: true },
-                    include: postListInclude,
+                    include: postPreviewInclude,
                 }),
             ]);
             const totalPages = Math.ceil(count / limit);
             return {
-                data: data.map(mapPostToListItem),
+                data: data.map(mapPostToPreview),
                 pages: totalPages,
             };
         });
@@ -112,7 +140,7 @@ export class PostService {
     private async getOne(where: { id?: string; slug?: string }) {
         const post = await prisma.post.findUnique({
             where: where as { id: string } | { slug: string },
-            include: postDetailInclude,
+            include: fullPostInclude,
         });
         if (!post) return null;
         return { ...post, tags: normalizeTags(post.tags) };
@@ -120,13 +148,10 @@ export class PostService {
 
     async getAllByTag(tag: string) {
         const posts = await prisma.post.findMany({
-            where: { tags: { some: { tag: { name: tag } } } },
-            include: {
-                author: { omit: { password: true } },
-                tags: includeTag,
-            },
+            where: { tags: { some: { tag: { key: tag } } } },
+            include: postPreviewInclude,
         });
-        return posts.map((p) => ({ ...p, tags: normalizeTags(p.tags) }));
+        return posts.map(mapPostToPreview);
     }
 
     async create(data: ParsedCreatePostDto) {
@@ -246,17 +271,14 @@ export class PostService {
     async getStatistic(id: string, userId?: string) {
         const stats = await prisma.post.findUnique({
             where: { id },
-            select: { views: true, comments: commentsCountSelect, postVotes: postVotesSelect },
+            select: { views: true, comments: includeCommentsCount, postVotes: includeVotes },
         });
         if (!stats) return null;
+        const base = computeStatistic(stats);
+        const userVote = userId ? stats.postVotes.find((v) => v.user_id === userId)?.value ?? null : null;
         return {
-            views: stats.views,
-            comments: stats.comments.length,
-            votes: {
-                likes: stats.postVotes.filter((v) => v.value === VOTE_LIKE).length,
-                dislikes: stats.postVotes.filter((v) => v.value === VOTE_DISLIKE).length,
-                userVote: userId ? stats.postVotes.find((v) => v.user_id === userId)?.value ?? null : null,
-            },
+            ...base,
+            votes: { ...base.votes, userVote },
         };
     }
     async updateViews(id: string) {
@@ -264,24 +286,6 @@ export class PostService {
     }
 }
 
-async function withUniqueSlug<T>(
-    baseSlug: string,
-    action: (slug: string) => Promise<T>,
-    maxTries = 3
-): Promise<T> {
-    for (let attempt = 0; attempt < maxTries; attempt++) {
-        const slug = attempt === 0 ? baseSlug : `${baseSlug}-${crypto.randomUUID().slice(0, 4)}`;
-        try {
-            return await action(slug);
-        } catch (error) {
-            if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
-                continue;
-            }
-            throw error;
-        }
-    }
-    throw new Error("Не удалось сгенерировать уникальный slug");
-}
 
 /** @deprecated Use CreatePostRequestDto from ~/dto/post.dto.js */
 export type CreatePostDataType = ParsedCreatePostDto;

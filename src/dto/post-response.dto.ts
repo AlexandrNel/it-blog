@@ -1,14 +1,11 @@
+import type { Category, Post, Tag } from "~/generated/prisma/client.js";
+
+/** Author shape in list/preview responses (only fields we select in postPreviewInclude). */
 export type AuthorDto = {
     id: string;
     name: string | null;
     email: string;
     avatar: string | null;
-};
-
-export type TagDto = {
-    id: string;
-    name: string;
-    key: string;
 };
 
 export type PostVotesStatisticDto = {
@@ -21,49 +18,31 @@ export type PostStatisticDto = {
     views: number;
     comments: number;
 };
-
-export type PostListItemDto = {
-    id: string;
-    title: string;
-    slug: string;
-    desc: string;
-    createdAt: Date;
-    updatedAt: Date;
-    views: number;
-    authorId: string;
-    categoryId: string;
-    author: AuthorDto;
-    tags: TagDto[];
-    category?: { id: string; value: string };
-    statistic: PostStatisticDto;
-};
-
-export type PostDetailDto = {
-    id: string;
-    title: string;
-    slug: string;
-    content: string;
-    desc: string;
-    createdAt: Date;
-    updatedAt: Date;
-    views: number;
-    authorId: string;
-    categoryId: string;
-    author: AuthorDto;
-    tags: TagDto[];
-};
-
-export type PostStatisticResponseDto = {
+export type PostStatisticWithUserVoteDto = {
+    votes: PostVotesStatisticDto & { userVote: number | null };
     views: number;
     comments: number;
-    votes: {
-        likes: number;
-        dislikes: number;
-        userVote: number | null;
-    };
 };
 
+export type PostFullDto = Post & {
+    author: AuthorDto;
+    tags: Tag[];
+    category: Category;
+}
+export type PostPreviewDto = Omit<Post, 'content'> & {
+    author: AuthorDto;
+    tags: Tag[];
+    category: Category
+    statistic: PostStatisticDto;
+}
+
+export type PostFullResponseDto = PostFullDto
+
+export type PostPreviewResponseDto = PostPreviewDto
+
+export type PostStatisticResponseDto = PostStatisticWithUserVoteDto
+
 export type PaginatedPostsResponseDto = {
-    data: PostListItemDto[];
+    data: PostPreviewDto[];
     pages: number;
 };

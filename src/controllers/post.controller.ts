@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
+import type { PostFullDto } from "~/dto/post-response.dto.js";
 import {
     type PaginatedPostsResponseDto,
-    type PostDetailDto,
-    type PostListItemDto,
+    type PostPreviewDto,
     type PostStatisticResponseDto,
     validateCreatePost,
 } from "~/dto/post.dto.js";
@@ -17,7 +17,7 @@ const postService = new PostService();
 
 function getParamId(req: Request): string {
     const id = req.params.id;
-    if (!id) throw new ValidationError("Не передан id статьи");
+    if (!id) throw new NotFoundError("Не передан id статьи");
     return id;
 }
 
@@ -56,7 +56,7 @@ export const getById = async (req: Request, res: Response) => {
         const id = getParamId(req);
         const post = await postService.getById(id);
         if (!post) throw new NotFoundError("Статья не найдена");
-        res.json(post as PostDetailDto);
+        res.json(post as PostFullDto);
     } catch (error) {
         errorHandler(error, res);
     }
@@ -67,7 +67,7 @@ export const getBySlug = async (req: Request, res: Response) => {
         const slug = getParamSlug(req);
         const post = await postService.getBySlug(slug);
         if (!post) throw new NotFoundError("Статья не найдена");
-        res.json(post as PostDetailDto);
+        res.json(post as PostFullDto);
     } catch (error) {
         errorHandler(error, res);
     }
@@ -77,7 +77,7 @@ export const getSomeByTag = async (req: Request, res: Response) => {
     try {
         const tag = getParamTag(req);
         const posts = await postService.getAllByTag(tag);
-        res.json(posts as PostDetailDto[]);
+        res.json(posts as PostPreviewDto[]);
     } catch (error) {
         errorHandler(error, res);
     }
@@ -122,7 +122,7 @@ export const likeOrDislikePost = async (req: Request, res: Response) => {
         const postId = getParamId(req);
         const value = isLike ? 1 : -1;
         await postService.likeOrDislike(userId, postId, value);
-        res.status(200).send();
+        res.status(204).json()
     } catch (error) {
         errorHandler(error, res);
     }
@@ -134,7 +134,7 @@ export const incrementView = async (req: Request, res: Response) => {
         const id = getParamId(req);
         if (!canUpdate) throw new ValidationError("Пользователь уже просматривал эту статью");
         await postService.updateViews(id);
-        res.status(200).send();
+        res.status(204).json()
     } catch (error) {
         errorHandler(error, res);
     }

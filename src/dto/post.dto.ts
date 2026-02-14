@@ -5,20 +5,18 @@
 
 export {
     createPostSchema,
+    validateCreatePost,
     type CreatePostRequestDto,
     type ParsedCreatePostDto,
-    validateCreatePost,
 } from "./post-request.dto.js";
 
 export {
     type AuthorDto,
     type PaginatedPostsResponseDto,
-    type PostDetailDto,
-    type PostListItemDto,
+    type PostPreviewDto,
     type PostStatisticDto,
     type PostStatisticResponseDto,
     type PostVotesStatisticDto,
-    type TagDto,
 } from "./post-response.dto.js";
 
 // ─── Legacy (deprecated) ─────────────────────────────────────────────────────
