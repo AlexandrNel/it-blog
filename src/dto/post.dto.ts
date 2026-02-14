@@ -1,29 +1,35 @@
-import slugify from "slugify";
-import z from "zod";
+/**
+ * Post DTOs barrel: re-exports request and response DTOs.
+ * For direct imports use ~/dto/post-request.dto.js or ~/dto/post-response.dto.js.
+ */
 
-export const postSchema = z.object({
-    content: z.string(),
-    title: z.string(),
-    slug: z.string(),
-    desc: z.string(),
-    tags: z.array(z.string()),
-    authorId: z.string()
-})
+export {
+    createPostSchema,
+    type CreatePostRequestDto,
+    type ParsedCreatePostDto,
+    validateCreatePost,
+} from "./post-request.dto.js";
 
-export const validatePostSchema = async (data: PostDataType) => {
-    const postSchema = z.object({
-        content: z.string(),
-        title: z.string().nonempty(),
-        slug: z.string().optional().transform((value) => {
-            if (value) return value
-            return slugify.default(String(data.title), { lower: true, strict: true })
-        }),
-        desc: z.string(),
-        tags: z.array(z.string()),
-        authorId: z.string()
-    })
-    const parseData = await postSchema.parseAsync(data)
-    return parseData
-}
+export {
+    type AuthorDto,
+    type PaginatedPostsResponseDto,
+    type PostDetailDto,
+    type PostListItemDto,
+    type PostStatisticDto,
+    type PostStatisticResponseDto,
+    type PostVotesStatisticDto,
+    type TagDto,
+} from "./post-response.dto.js";
 
-export type PostDataType = z.infer<typeof postSchema>
+// ─── Legacy (deprecated) ─────────────────────────────────────────────────────
+
+import { createPostSchema, type CreatePostRequestDto, validateCreatePost } from "./post-request.dto.js";
+
+/** @deprecated Use createPostSchema from post-request.dto */
+export const postSchema = createPostSchema;
+
+/** @deprecated Use CreatePostRequestDto from post-request.dto */
+export type PostDataType = CreatePostRequestDto;
+
+/** @deprecated Use validateCreatePost from post-request.dto */
+export const validatePostSchema = validateCreatePost;

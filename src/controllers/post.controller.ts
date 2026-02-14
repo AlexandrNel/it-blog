@@ -1,129 +1,141 @@
+import type { Request, Response } from "express";
+import {
+    type PaginatedPostsResponseDto,
+    type PostDetailDto,
+    type PostListItemDto,
+    type PostStatisticResponseDto,
+    validateCreatePost,
+} from "~/dto/post.dto.js";
+import { NotFoundError, ValidationError } from "~/lib/errors/index.js";
+import { errorHandler } from "~/middlewares/errorHandler.js";
+import type { PaginationParams } from "~/middlewares/paginate.middleware.js";
+import { PostService } from "~/services/post.service.js";
 
-import type { Request, Response } from 'express'
-import { validatePostSchema } from '~/dto/post.dto.js';
-import { AppError } from '~/lib/errors/AppError.js';
-import { ForbiddenError, NotFoundError, ValidationError } from '~/lib/errors/index.js';
-import { errorHandler } from '~/middlewares/errorHandler.js';
-import type { PaginationParams } from '~/middlewares/paginate.middleware.js';
-import { PostService } from '~/services/post.service.js';
+const postService = new PostService();
 
+// ─── Param helpers ───────────────────────────────────────────────────────────
 
-const postService = new PostService()
+function getParamId(req: Request): string {
+    const id = req.params.id;
+    if (!id) throw new ValidationError("Не передан id статьи");
+    return id;
+}
+
+function getParamSlug(req: Request): string {
+    const slug = req.params.slug;
+    if (!slug) throw new NotFoundError("Не указан slug");
+    return slug;
+}
+
+function getParamTag(req: Request): string {
+    const tag = req.params.tag;
+    if (!tag) throw new NotFoundError("Не указан тег");
+    return tag;
+}
+
+function getUserId(req: Request): string {
+    const id = req.user?.id;
+    if (!id) throw new ValidationError("Пользователь не авторизован");
+    return id;
+}
+
+// ─── Handlers ────────────────────────────────────────────────────────────────
 
 export const getAll = async (req: Request, res: Response) => {
-    const { page, limit } = req.pagination as PaginationParams
     try {
-        const posts = await postService.getAllWithPages(Number(limit), (Number(page)))
-        res.json(posts);
+        const { page, limit } = req.pagination as PaginationParams;
+        const result = await postService.getAllWithPages(Number(limit), Number(page));
+        res.json(result as PaginatedPostsResponseDto);
     } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
 };
 
 export const getById = async (req: Request, res: Response) => {
     try {
-        const params = req.params
-        const id = params.id
-        if (!id) throw new NotFoundError()
-        const posts = await postService.getById(id)
-        res.json(posts);
+        const id = getParamId(req);
+        const post = await postService.getById(id);
+        if (!post) throw new NotFoundError("Статья не найдена");
+        res.json(post as PostDetailDto);
     } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
 };
 
 export const getBySlug = async (req: Request, res: Response) => {
     try {
-        const params = req.params
-        const slug = params.slug
-        if (!slug) throw new NotFoundError()
-        const post = await postService.getBySlug(slug)
-        if (!post) throw new NotFoundError("Статья не найдена")
-        res.json(post);
+        const slug = getParamSlug(req);
+        const post = await postService.getBySlug(slug);
+        if (!post) throw new NotFoundError("Статья не найдена");
+        res.json(post as PostDetailDto);
     } catch (error) {
-        errorHandler(error, res)
-    }
-};
-export const getSomeByTag = async (req: Request, res: Response) => {
-    try {
-        const params = req.params
-        const tag = params.tag
-        if (!tag) throw new NotFoundError()
-        const posts = await postService.getAllByTag(tag)
-        if (!posts) throw new NotFoundError("Статьи не найдены")
-        res.json(posts);
-    } catch (error) {
-        errorHandler(error, res)
-    }
-};
-export const createPost = async (req: Request, res: Response) => {
-    try {
-        const userId = req.user?.id as string
-        const data = await validatePostSchema({ ...req.body, authorId: userId })
-        const post = await postService.create(data)
-        res.json(post);
-    } catch (error) {
-        errorHandler(error, res)
-    }
-};
-export const deletePost = async (req: Request, res: Response) => {
-    try {
-        const id = req.params.id
-        if (!id) throw new AppError("Не передан id статьи")
-        await postService.delete(id)
-        res.json().status(200)
-    } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
 };
 
-export const updatePost = async (req: Request, res: Response) => {
+export const getSomeByTag = async (req: Request, res: Response) => {
     try {
-        const userId = req.user?.id as string
-        const id = req.params.id
-        const data = req.body
-        if (!id) throw new AppError("Не передан id статьи")
-        const post = await postService.update({ postId: id, ...data })
-        res.json(post).status(200)
+        const tag = getParamTag(req);
+        const posts = await postService.getAllByTag(tag);
+        res.json(posts as PostDetailDto[]);
     } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
-}
+};
+
+export const createPost = async (req: Request, res: Response) => {
+    try {
+        const userId = getUserId(req);
+        const data = await validateCreatePost({ ...req.body, authorId: userId });
+        const post = await postService.create(data);
+        res.status(201).json(post);
+    } catch (error) {
+        errorHandler(error, res);
+    }
+};
+
+export const deletePost = async (req: Request, res: Response) => {
+    try {
+        const id = getParamId(req);
+        await postService.delete(id);
+        res.status(200).json({ success: true });
+    } catch (error) {
+        errorHandler(error, res);
+    }
+};
+
 export const getStatistic = async (req: Request, res: Response) => {
     try {
-        const user = req.user
-        const id = req.params.id
-        if (!id) throw new AppError("Не передан id статьи")
-        const stats = await postService.getStatistic(id, user?.id)
-        res.status(200).json(stats)
+        const id = getParamId(req);
+        const stats = await postService.getStatistic(id, req.user?.id);
+        if (!stats) throw new NotFoundError("Статья не найдена");
+        res.status(200).json(stats as PostStatisticResponseDto);
     } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
-}
+};
+
 export const likeOrDislikePost = async (req: Request, res: Response) => {
     try {
-        const isLike = req.path.endsWith('/like')
-        const userId = req.user?.id as string
-        const id = req.params.id
-        const value = isLike ? 1 : -1
-        if (!id) throw new AppError("Не передан id статьи")
-        if (!Number.isInteger(value)) throw new ValidationError("Неверное значение")
-        await postService.likeOrDislike(userId, id, value)
-        res.status(200).send()
+        const isLike = req.path.endsWith("/like");
+        const userId = getUserId(req);
+        const postId = getParamId(req);
+        const value = isLike ? 1 : -1;
+        await postService.likeOrDislike(userId, postId, value);
+        res.status(200).send();
     } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
-}
+};
+
 export const incrementView = async (req: Request, res: Response) => {
     try {
-        const canUpdate = req.updateView
-        const id = req.params.id
-        if (!id) throw new AppError("Не передан id статьи")
-        if (canUpdate) {
-            await postService.updateViews(id)
-            res.status(200).send()
-        } else throw new ValidationError('Пользователь уже просматривал эту статью')
+        const canUpdate = req.updateView;
+        const id = getParamId(req);
+        if (!canUpdate) throw new ValidationError("Пользователь уже просматривал эту статью");
+        await postService.updateViews(id);
+        res.status(200).send();
     } catch (error) {
-        errorHandler(error, res)
+        errorHandler(error, res);
     }
-}
+};
