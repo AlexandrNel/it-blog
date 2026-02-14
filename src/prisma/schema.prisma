@@ -73,6 +73,7 @@ model Comment {
 
 model Tag {
   id    String    @id @default(uuid())
+  key   String    @unique
   name  String    @unique
   posts PostTag[]
 
@@ -81,6 +82,7 @@ model Tag {
 
 model Category {
   id    String @id @default(uuid())
+  key   String @unique
   value String @unique
   posts Post[]
 

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { authRouter, postRouter, tagRouter, uploadRouter } from './routes/index.js'
+import { authRouter, categoryRouter, postRouter, tagRouter, uploadRouter } from './routes/index.js'
 import cookieParser from "cookie-parser";
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 
@@ -22,6 +22,7 @@ app.use('/api',
     authRouter,
     postRouter,
     tagRouter,
+    categoryRouter,
     uploadRouter
 )
 
