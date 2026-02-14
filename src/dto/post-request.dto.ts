@@ -10,8 +10,15 @@ export const createPostSchema = z.object({
     categoryId: z.string(),
     authorId: z.string(),
 });
-
+export const updatePostSchema = z.object({
+    content: z.string().optional(),
+    title: z.string().min(1, "Заголовок обязателен").optional(),
+    desc: z.string().optional(),
+    categoryId: z.string().nonempty().optional(),
+    tagIds: z.array(z.string()).optional(),
+})
 export type CreatePostRequestDto = z.infer<typeof createPostSchema>;
+export type UpdatePostRequestDto = z.infer<typeof updatePostSchema>;
 
 /** Parsed create-post payload (slug is always defined after validation). */
 export type ParsedCreatePostDto = Omit<CreatePostRequestDto, "slug"> & { slug: string };
@@ -38,3 +45,4 @@ export async function validateCreatePost(data: unknown): Promise<ParsedCreatePos
     });
     return schema.parseAsync(data);
 }
+

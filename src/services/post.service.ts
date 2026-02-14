@@ -1,3 +1,5 @@
+import slugify from "slugify";
+import type { UpdatePostRequestDto } from "~/dto/post-request.dto.js";
 import type { ParsedCreatePostDto } from "~/dto/post.dto.js";
 import type { Tag } from "~/generated/prisma/client.js";
 import { PrismaClientKnownRequestError } from "~/generated/prisma/internal/prismaNamespace.js";
@@ -175,84 +177,63 @@ export class PostService {
         });
     }
 
-    async delete(id: string) {
-        const post = await prisma.post.findUnique({ where: { id } });
-        if (!post) throw new NotFoundError("Статья с таким id не существует");
-        return prisma.post.delete({ where: { id } });
+    async delete(id: string, userId: string) {
+        const post = await prisma.post.findUnique({ where: { id, authorId: userId } });
+        if (!post) throw new NotFoundError("К сожалению, мы не смогли найти у вас такую статью");
+        return prisma.post.delete({ where: { id, authorId: userId } });
     }
 
-    // async update(data: UpdatePostDataType) {
-    //     const { authorId, postId, tagIds, title, ...others } = data
-    //     const post = await prisma.post.findUnique({ where: { id: postId }, select: { id: true, slug: true, title: true } })
-    //     if (!post) throw new NotFoundError("Такой статьи не существует")
+    async update(data: UpdatePostRequestDto, postId: string, userId: string) {
+        const { tagIds, title, ...others } = data
+        const post = await prisma.post.findUnique({ where: { id: postId, authorId: userId }, select: { id: true, slug: true, title: true, tags: true } })
+        if (!post) throw new NotFoundError("К сожалению, мы не смогли найти у вас такую статью")
 
-    //     return prisma.$transaction(async (tx) => {
-    //         const isChangedTitle = title && title.trim().toLowerCase() !== post.title.trim().toLowerCase()
+        return prisma.$transaction(async (tx) => {
+            const isChangedTitle = title && title.trim().toLowerCase() !== post.title.trim().toLowerCase()
 
-    //         if (!isChangedTitle) {
-    //             await tx.post.update({
-    //                 where: { id: postId },
-    //                 data: {
-    //                     ...others,
-    //                 },
-    //             })
-    //         } else {
-    //             const baseSlug = slugify.default(title, { lower: true, strict: true })
-    //             await withUniqueSlug(baseSlug, (slug) => {
-    //                 return tx.post.update({
-    //                     where: { id: postId },
-    //                     data: {
-    //                         slug,
-    //                         title,
-    //                         ...others
-    //                     },
-    //                 })
-    //             })
-    //         }
+            if (!isChangedTitle) {
+                await tx.post.update({
+                    where: { id: postId },
+                    data: {
+                        ...others,
+                    },
+                })
+            } else {
+                const baseSlug = slugify.default(title, { lower: true, strict: true })
+                await withUniqueSlug(baseSlug, (slug) => {
+                    return tx.post.update({
+                        where: { id: postId },
+                        data: {
+                            slug,
+                            title,
+                            ...others
+                        },
+                    })
+                })
+            }
 
-    //         /**
-    //          * ! РАЗОБРАТЬ ЭТУ ЧАСТЬ КОДА
-    //          * ! РЕФАКТОРИНГ, вынести повторяющуюся логику в отдельную функцию
-    //          */
-    //         if (tagIds) {
-    //             const existingTags = await tx.postTag.findMany({
-    //                 where: { postId },
-    //                 include: { tag: true }
-    //             })
-    //             const incomingTagNames = tags.map(t => t.trim().toLowerCase())
-    //             const persistedTags = await Promise.all(
-    //                 incomingTagNames.map(name =>
-    //                     tx.tag.upsert({
-    //                         where: { name },
-    //                         create: { name },
-    //                         update: {}
-    //                     })
-    //                 )
-    //             )
-    //             const existingTagIds = existingTags.map(pt => pt.tagId)
-    //             const newTagIds = persistedTags.map(t => t.id)
+            if (tagIds && data.tagIds) {
+                const existingTagIds = post.tags.map((t) => t.tagId)
+                const newIds = data.tagIds
+                const toAdd = newIds.filter(id => !existingTagIds.includes(id))
+                const toRemove = existingTagIds.filter(id => !newIds.includes(id))
+                if (toAdd.length) {
+                    await tx.postTag.createMany({
+                        data: toAdd.map(tagId => ({ postId, tagId }))
+                    })
+                }
 
-    //             const toAdd = newTagIds.filter(id => !existingTagIds.includes(id))
-    //             const toRemove = existingTagIds.filter(id => !newTagIds.includes(id))
-    //             if (toAdd.length) {
-    //                 await tx.postTag.createMany({
-    //                     data: toAdd.map(tagId => ({ postId, tagId }))
-    //                 })
-    //             }
+                if (toRemove.length) {
+                    await tx.postTag.deleteMany({
+                        where: { postId, tagId: { in: toRemove } }
+                    })
+                }
 
-    //             if (toRemove.length) {
-    //                 await tx.postTag.deleteMany({
-    //                     where: {
-    //                         postId,
-    //                         tagId: { in: toRemove }
-    //                     }
-    //                 })
-    //             }
-    //         }
+            }
 
-    //         return tx.post.findUnique({ where: { id: postId }, include: { author: includeAuthor, tags: includeTag } })
-    //     })
-    // }
+            return tx.post.findUnique({ where: { id: postId }, include: { author: includeAuthor, tags: includeTags } })
+        })
+    }
     async likeOrDislike(userId: string, postId: string, value: typeof VOTE_LIKE | typeof VOTE_DISLIKE) {
         return prisma.$transaction(async (tx) => {
             const existing = await tx.postVote.findUnique({
@@ -290,7 +271,3 @@ export class PostService {
 /** @deprecated Use CreatePostRequestDto from ~/dto/post.dto.js */
 export type CreatePostDataType = ParsedCreatePostDto;
 
-export type UpdatePostDataType = Partial<Omit<ParsedCreatePostDto, "slug" | "categoryId">> & {
-    authorId: string;
-    postId: string;
-};

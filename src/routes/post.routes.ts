@@ -1,5 +1,5 @@
 import express from 'express'
-import { createPost, getAll, getById, getBySlug, getSomeByTag, deletePost, likeOrDislikePost, getStatistic, incrementView, } from '~/controllers/post.controller.js';
+import { createPost, getAll, getById, getBySlug, getSomeByTag, deletePost, likeOrDislikePost, getStatistic, incrementView, updatePost, } from '~/controllers/post.controller.js';
 import { authMiddleware } from '~/middlewares/auth.middleware.js';
 import { paginateMiddleware } from '~/middlewares/paginate.middleware.js';
 import { postViewsMiddleware } from '~/middlewares/post-views.middleware.js';
@@ -15,6 +15,7 @@ router.get("/posts/:id/statistic", withUserMiddleware, getStatistic)
 
 router.post("/posts", authMiddleware, createPost)
 router.delete("/posts/:id", authMiddleware, deletePost)
+router.patch("/posts/:id", authMiddleware, updatePost)
 router.post("/posts/:id/like", authMiddleware, likeOrDislikePost)
 router.post("/posts/:id/dislike", authMiddleware, likeOrDislikePost)
 router.post("/posts/:id/views", postViewsMiddleware, incrementView)

@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import { updatePostSchema } from "~/dto/post-request.dto.js";
 import type { PostFullDto } from "~/dto/post-response.dto.js";
 import {
     type PaginatedPostsResponseDto,
@@ -94,10 +95,23 @@ export const createPost = async (req: Request, res: Response) => {
     }
 };
 
+export const updatePost = async (req: Request, res: Response) => {
+    try {
+        const userId = getUserId(req);
+        const id = getParamId(req)
+        const data = await updatePostSchema.parseAsync(req.body)
+        const post = await postService.update(data, id, userId);
+        res.status(201).json(post);
+    } catch (error) {
+        errorHandler(error, res);
+    }
+};
+
 export const deletePost = async (req: Request, res: Response) => {
     try {
+        const userId = getUserId(req);
         const id = getParamId(req);
-        await postService.delete(id);
+        await postService.delete(id, userId);
         res.status(200).json({ success: true });
     } catch (error) {
         errorHandler(error, res);
