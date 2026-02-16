@@ -11,7 +11,9 @@ declare global {
                 page: number,
                 limit: number
             },
-            updateView?: boolean
+            updateView?: {
+                ttl: number
+            }
         }
     }
 }

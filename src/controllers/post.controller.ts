@@ -104,9 +104,8 @@ export const likeOrDislikePost = asyncHandler(async (req: Request, res: Response
 });
 
 export const incrementView = asyncHandler(async (req: Request, res: Response) => {
-    const canUpdate = req.updateView;
+    const redisCache = req.updateView!;
     const id = getParamId(req);
-    if (!canUpdate) throw ApiError.BadRequest("Пользователь уже просматривал эту статью");
     await postService.updateViews(id);
-    res.status(204).json()
+    res.status(200).json({ ttl: redisCache.ttl })
 });
