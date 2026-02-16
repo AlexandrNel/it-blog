@@ -3,8 +3,8 @@ import type { UpdatePostRequestDto } from "~/dto/post-request.dto.js";
 import type { ParsedCreatePostDto } from "~/dto/post.dto.js";
 import type { Tag } from "~/generated/prisma/client.js";
 import { PrismaClientKnownRequestError } from "~/generated/prisma/internal/prismaNamespace.js";
-import { NotFoundError, ValidationError } from "~/lib/errors/index.js";
-import { prisma } from "~/lib/prisma.js";
+import { ApiError } from "~/shared/lib/api-error.js";
+import { prisma } from "~/shared/lib/prisma.js";
 
 // ─── Shared query options ───────────────────────────────────────────────────
 
@@ -144,7 +144,7 @@ export class PostService {
             where: where as { id: string } | { slug: string },
             include: fullPostInclude,
         });
-        if (!post) return null;
+        if (!post) throw ApiError.NotFoundError("Статья не найдена")
         return { ...post, tags: normalizeTags(post.tags) };
     }
 
@@ -179,14 +179,14 @@ export class PostService {
 
     async delete(id: string, userId: string) {
         const post = await prisma.post.findUnique({ where: { id, authorId: userId } });
-        if (!post) throw new NotFoundError("К сожалению, мы не смогли найти у вас такую статью");
+        if (!post) throw ApiError.NotFoundError("К сожалению, мы не смогли найти у вас такую статью");
         return prisma.post.delete({ where: { id, authorId: userId } });
     }
 
     async update(data: UpdatePostRequestDto, postId: string, userId: string) {
         const { tagIds, title, ...others } = data
         const post = await prisma.post.findUnique({ where: { id: postId, authorId: userId }, select: { id: true, slug: true, title: true, tags: true } })
-        if (!post) throw new NotFoundError("К сожалению, мы не смогли найти у вас такую статью")
+        if (!post) throw ApiError.NotFoundError("К сожалению, мы не смогли найти у вас такую статью")
 
         return prisma.$transaction(async (tx) => {
             const isChangedTitle = title && title.trim().toLowerCase() !== post.title.trim().toLowerCase()
@@ -240,7 +240,7 @@ export class PostService {
                 where: { user_id_post_id: { user_id: userId, post_id: postId } },
             });
             if (existing) {
-                throw new ValidationError(
+                throw ApiError.BadRequest(
                     `Вы уже поставили ${existing.value === VOTE_LIKE ? "лайк" : "дизлайк"}`
                 );
             }
@@ -254,7 +254,7 @@ export class PostService {
             where: { id },
             select: { views: true, comments: includeCommentsCount, postVotes: includeVotes },
         });
-        if (!stats) return null;
+        if (!stats) throw ApiError.NotFoundError();
         const base = computeStatistic(stats);
         const userVote = userId ? stats.postVotes.find((v) => v.user_id === userId)?.value ?? null : null;
         return {

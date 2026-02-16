@@ -1,8 +1,7 @@
 import express from "express";
 import multer from "multer";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { errorHandler } from "~/middlewares/errorHandler.js";
-import { UploadError } from "~/lib/errors/AppError.js";
+import { UploadError } from "~/shared/lib/upload-error.js";
 
 
 const allowedMemtypes = {

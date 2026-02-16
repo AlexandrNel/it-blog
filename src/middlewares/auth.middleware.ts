@@ -1,22 +1,16 @@
 import type { Request, Response, NextFunction } from 'express'
-import { verifyToken } from "~/utils/jwt.js";
+import { ApiError } from '~/shared/lib/api-error.js';
+import { verifyToken } from "~/shared/utils/jwt.js";
 
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token: string | undefined = req.cookies.access_token
-    if (!token) {
-
-        return res.status(401).json({
-            message: "Нет доступа",
-        });
-    }
+    if (!token) throw ApiError.UnauthorizedError()
     const payload = verifyToken(token)
 
     if (!payload) {
         res.clearCookie('access_token')
-        return res.status(401).json({
-            message: "Токен не действителен",
-        });
+        throw ApiError.UnauthorizedError("Токен не действителен")
     }
 
     req.user = payload

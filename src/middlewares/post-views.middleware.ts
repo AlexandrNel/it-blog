@@ -1,6 +1,5 @@
 import { hash } from 'crypto';
 import type { Request, Response, NextFunction } from 'express'
-import { ValidationError } from '~/lib/errors/index.js';
 import { getRedis } from '~/shared/redis/client.js'
 
 export type PaginationParams = {

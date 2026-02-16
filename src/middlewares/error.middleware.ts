@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { ZodError, z } from "zod";
-import { AppError, UploadError } from "~/lib/errors/AppError.js";
+import { ApiError } from "~/shared/lib/api-error.js";
+import { UploadError } from "~/shared/lib/upload-error.js";
 
 const errorMiddleware = (
     err: unknown,
@@ -8,8 +9,8 @@ const errorMiddleware = (
     res: Response,
     next: NextFunction,
 ) => {
-    if (err instanceof AppError) {
-        res.status(err.statusCode).json({ message: err.message });
+    if (err instanceof ApiError) {
+        res.status(err.statusCode).json({ message: err.message, errors: err.errors });
     } else if (err instanceof ZodError) {
         res.status(400).json({ message: "Неверно заполнены поля", errors: z.flattenError(err).fieldErrors })
     } else if (err instanceof UploadError) {
