@@ -34,10 +34,10 @@ function getParamTag(req: Request): string {
     return tag;
 }
 
-function getUserId(req: Request): string {
-    const id = req.user?.id;
-    if (!id) throw ApiError.BadRequest("Пользователь не авторизован");
-    return id;
+function getUser(req: Request) {
+    const user = req.user
+    if (!user) throw ApiError.BadRequest("Пользователь не авторизован");
+    return user;
 }
 
 // ─── Handlers ────────────────────────────────────────────────────────────────
@@ -67,25 +67,25 @@ export const getSomeByTag = asyncHandler(async (req: Request, res: Response) => 
 });
 
 export const createPost = asyncHandler(async (req: Request, res: Response) => {
-    const userId = getUserId(req);
-    const data = await validateCreatePost({ ...req.body, authorId: userId });
+    const user = getUser(req);
+    const data = await validateCreatePost({ ...req.body, authorId: user.id });
     const post = await postService.create(data);
     res.status(201).json(post);
 });
 
 export const updatePost = asyncHandler(async (req: Request, res: Response) => {
-    const userId = getUserId(req);
+    const user = getUser(req);
     const id = getParamId(req)
     const data = await updatePostSchema.parseAsync(req.body)
-    const post = await postService.update(data, id, userId);
+    const post = await postService.update(data, id, user.id);
     res.status(201).json(post);
 });
 
 export const deletePost = asyncHandler(async (req: Request, res: Response) => {
-    const userId = getUserId(req);
+    const user = getUser(req);
     const id = getParamId(req);
-    await postService.delete(id, userId);
-    res.status(200).json({ success: true });
+    await postService.delete(id, user.id);
+    res.status(200).json();
 });
 
 export const getStatistic = asyncHandler(async (req: Request, res: Response) => {
@@ -96,10 +96,10 @@ export const getStatistic = asyncHandler(async (req: Request, res: Response) => 
 
 export const likeOrDislikePost = asyncHandler(async (req: Request, res: Response) => {
     const isLike = req.path.endsWith("/like");
-    const userId = getUserId(req);
+    const user = getUser(req);
     const postId = getParamId(req);
     const value = isLike ? 1 : -1;
-    await postService.likeOrDislike(userId, postId, value);
+    await postService.likeOrDislike(user.id, postId, value);
     res.status(204).json()
 });
 
@@ -108,4 +108,14 @@ export const incrementView = asyncHandler(async (req: Request, res: Response) =>
     const id = getParamId(req);
     await postService.updateViews(id);
     res.status(200).json({ ttl: redisCache.ttl })
+});
+export const checkIsAuthor = asyncHandler(async (req: Request, res: Response) => {
+    const user = getUser(req)
+    const postId = getParamId(req);
+    const post = await postService.getById(postId);
+    if (post.author.id !== user.id && user.role !== 'ADMIN') {
+        throw ApiError.ForbiddenError()
+    } else {
+        res.status(200).json({ canEdit: true })
+    }
 });

@@ -1,11 +1,13 @@
 import "express-serve-static-core";
 import { Request } from 'express'
+import type { User } from "~/generated/prisma/client.ts";
 
 declare global {
     namespace Express {
         interface Request {
             user?: {
-                id?: string
+                role: User['role']
+                id: string
             }
             pagination?: {
                 page: number,

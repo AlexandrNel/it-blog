@@ -3,6 +3,8 @@ import z from "zod";
 
 export const createPostSchema = z.object({
     content: z.string(),
+    previewContent: z.string(),
+    previewImageUrl: z.string().nullable().optional(),
     title: z.string().min(1, "Заголовок обязателен"),
     slug: z.string().optional(),
     desc: z.string(),
@@ -12,6 +14,8 @@ export const createPostSchema = z.object({
 });
 export const updatePostSchema = z.object({
     content: z.string().optional(),
+    previewContent: z.string(),
+    previewImageUrl: z.string().nullable().optional(),
     title: z.string().min(1, "Заголовок обязателен").optional(),
     desc: z.string().optional(),
     categoryId: z.string().nonempty().optional(),
@@ -27,6 +31,8 @@ export async function validateCreatePost(data: unknown): Promise<ParsedCreatePos
     const raw = data as Record<string, unknown>;
     const schema = z.object({
         content: z.string(),
+         previewContent: z.string(),
+        previewImageUrl: z.string().nullable().optional(),
         title: z.string().min(1, "Заголовок обязателен"),
         slug: z
             .string()
@@ -42,6 +48,7 @@ export async function validateCreatePost(data: unknown): Promise<ParsedCreatePos
         tagIds: z.array(z.string()),
         authorId: z.string(),
         categoryId: z.string(),
+        
     });
     return schema.parseAsync(data);
 }

@@ -164,6 +164,8 @@ export class PostService {
                         categoryId: data.categoryId,
                         desc: data.desc,
                         content: data.content,
+                        previewContent: data.previewContent,
+                        previewImageUrl: data.previewImageUrl,
                         slug,
                         title: data.title,
                         authorId: data.authorId,
@@ -179,14 +181,14 @@ export class PostService {
 
     async delete(id: string, userId: string) {
         const post = await prisma.post.findUnique({ where: { id, authorId: userId } });
-        if (!post) throw ApiError.NotFoundError("К сожалению, мы не смогли найти у вас такую статью");
+        if (!post) throw ApiError.NotFoundError("К сожалению, мы не смогли найти такую статью");
         return prisma.post.delete({ where: { id, authorId: userId } });
     }
 
     async update(data: UpdatePostRequestDto, postId: string, userId: string) {
         const { tagIds, title, ...others } = data
         const post = await prisma.post.findUnique({ where: { id: postId, authorId: userId }, select: { id: true, slug: true, title: true, tags: true } })
-        if (!post) throw ApiError.NotFoundError("К сожалению, мы не смогли найти у вас такую статью")
+        if (!post) throw ApiError.NotFoundError("К сожалению, мы не смогли найти такую статью")
 
         return prisma.$transaction(async (tx) => {
             const isChangedTitle = title && title.trim().toLowerCase() !== post.title.trim().toLowerCase()

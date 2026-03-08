@@ -39,6 +39,7 @@ router.post("/photos/upload", authMiddleware, upload.single("image"), (req, res)
   if (!file) {
     res.status(400).json({ message: "Не удалось загрузить файл" })
   }
+  
   res.json({
     url: `/uploads/${req.file?.filename}`,
   });

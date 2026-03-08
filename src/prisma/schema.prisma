@@ -38,6 +38,8 @@ model Post {
   id         String     @id @default(uuid())
   title      String
   content    String
+  previewContent String  @map("preview_content")
+  previewImageUrl String? @map("preview_image_url")
   published  Boolean    @default(false)
   authorId   String     @map("author_id")
   categoryId String     @map("category_id")
