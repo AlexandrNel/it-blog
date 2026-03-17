@@ -1,21 +1,38 @@
 import type { User } from "~/generated/prisma/client.js";
 
 export class UserDto {
-    name;
-    email;
-    id;
-    avatar;
-    role
-    createdAt
-    updatedAt
+  email;
+  id;
+  role;
+  nickname;
+  avatar;
+  createdAt;
+  updatedAt;
+  isBlocked;
+  pendingEmail;
 
-    constructor(model: User) {
-        this.email = model.email
-        this.id = model.id
-        this.name = model.name
-        this.avatar = model.avatar
-        this.role = model.role
-        this.createdAt = model.createdAt
-        this.updatedAt = model.updatedAt
-    }
+  constructor(model: User, avatar?: string | null) {
+    this.id = model.id;
+    this.avatar = avatar ?? "";
+    this.email = model.email;
+    this.pendingEmail = model.pendingEmail;
+    this.role = model.role;
+    this.nickname = model.nickname;
+    this.isBlocked = model.isBlocked;
+    this.createdAt = model.createdAt;
+    this.updatedAt = model.updatedAt;
+  }
+}
+export class AuthorDto {
+  id;
+  email;
+  nickname;
+  avatar;
+
+  constructor(model: User, avatar?: string | null) {
+    this.id = model.id;
+    this.email = model.email;
+    this.nickname = model.nickname;
+    this.avatar = avatar ?? "";
+  }
 }

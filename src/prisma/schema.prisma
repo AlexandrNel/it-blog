@@ -10,12 +10,13 @@ datasource db {
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
-  name         String?
-  avatar       String?
-  role         Role          @default(USER)
-  createdAt    DateTime      @default(now()) @map("created_at")
+  nickname     String        @unique
+  pendingEmail String?       @unique @map("pending_email")
   password     String        @map("password_hash")
-  updatedAt    DateTime      @updatedAt @map("updated_at")
+  role         Role          @default(USER)
+  isBlocked    Boolean       @default(false) @map("is_blocked")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at")
   commentVotes CommentVote[]
   postVotes    PostVote[]
   comments     Comment[]
@@ -26,33 +27,41 @@ model User {
 }
 
 model Profile {
-  id     String  @id @default(uuid())
-  bio    String?
-  userId String  @unique @map("user_id")
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String   @id @default(uuid())
+  bio       String?
+  avatar    String?
+  firstName String?  @map("first_name")
+  lastName  String?  @map("last_name")
+  contacts  Json?
+  isPublic  Boolean  @default(true) @map("is_public")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("profiles")
 }
 
 model Post {
-  id         String     @id @default(uuid())
-  title      String
-  content    String
-  previewContent String  @map("preview_content")
-  previewImageUrl String? @map("preview_image_url")
-  published  Boolean    @default(false)
-  authorId   String     @map("author_id")
-  categoryId String     @map("category_id")
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime   @updatedAt @map("updated_at")
-  slug       String     @unique
-  desc       String
-  views      Int        @default(0)
-  postVotes  PostVote[]
-  comments   Comment[]
-  tags       PostTag[]
-  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  author     User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id              String     @id @default(uuid())
+  title           String
+  content         String
+  previewContent  String     @map("preview_content")
+  previewImageUrl String?    @map("preview_image_url")
+  published       Boolean    @default(false)
+  authorId        String     @map("author_id")
+  categoryId      String     @map("category_id")
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  slug            String     @unique
+  desc            String
+  views           Int        @default(0)
+  postVotes       PostVote[]
+  comments        Comment[]
+  tags            PostTag[]
+  category        Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  author          User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@map("posts")
 }
@@ -107,8 +116,8 @@ model PostVote {
   user_id    String
   value      Int
   created_at DateTime @default(now())
-  post       Post     @relation(fields: [post_id], references: [id])
-  user       User     @relation(fields: [user_id], references: [id])
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, post_id])
   @@index([post_id])
