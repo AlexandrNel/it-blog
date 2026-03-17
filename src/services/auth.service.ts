@@ -2,8 +2,13 @@ import { prisma } from "~/shared/lib/prisma.js";
 import bcrypt from "bcrypt";
 import { signToken } from "~/shared/utils/jwt.js";
 import { ApiError } from "~/shared/lib/api-error.js";
-import type { LoginDataType, RegisterDataType } from "~/dto/auth.dto.js";
+import {
+  loginSchema,
+  type LoginDataType,
+  type RegisterDataType,
+} from "~/dto/auth.dto.js";
 import { UserDto } from "~/dto/user.dto.js";
+import z from "zod";
 
 class AuthService {
   async getMe(userId: string) {
@@ -49,7 +54,11 @@ class AuthService {
     return { token, user: useDto };
   }
   async login(data: LoginDataType) {
-    const user = await prisma.user.findUnique({ where: { email: data.email } });
+    const result = await loginSchema.parseAsync(data);
+    const isEmail = await z.email().safeParseAsync(result.login);
+    const user = await prisma.user.findUnique({
+      where: isEmail ? { email: result.login } : { nickname: result.login },
+    });
     if (!user) throw ApiError.NotFoundError("Пользователь не найден");
     const useDto = new UserDto(user);
     const isVerify = await bcrypt.compare(data.password, user.password);

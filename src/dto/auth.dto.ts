@@ -7,7 +7,9 @@ export const registerSchema = z.object({
   password: z.string().min(8),
 });
 export const loginSchema = z.object({
-  email: z.email(),
+  login: z
+    .string("Введите почту или никнейм")
+    .nonempty("Введите почту или никнейм"),
   password: z.string().min(8),
 });
 

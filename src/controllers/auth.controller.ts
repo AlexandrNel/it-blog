@@ -28,8 +28,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).json(user);
 });
 export const login = asyncHandler(async (req: Request, res: Response) => {
-  const data = await loginSchema.parseAsync(req.body);
-  const { user, token, refresh } = await AuthService.login(data);
+  const { user, token, refresh } = await AuthService.login(req.body);
   res.cookie("access_token", token, cookieOptions);
   res.cookie("refresh_token", refresh, cookieOptions);
   res.json(user);
