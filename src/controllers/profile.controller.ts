@@ -28,7 +28,7 @@ function getUser(req: Request) {
 export const getProfileByUserId = asyncHandler(
   async (req: Request, res: Response) => {
     const id = getParamId(req);
-    const profile = await profileService.getById(id);
+    const profile = await profileService.getByUserIdOrNickname(id);
     res.status(200).json(profile as ProfileResponseDto);
   },
 );
