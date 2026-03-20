@@ -56,6 +56,7 @@ export const getAll = asyncHandler(async (req: Request, res: Response) => {
 
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const id = getParamId(req);
+
   const post = await postService.getById(id);
   res.json(post as PostFullDto);
 });

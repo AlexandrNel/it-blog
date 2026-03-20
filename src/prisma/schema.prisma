@@ -83,19 +83,24 @@ model Comment {
 }
 
 model Tag {
-  id    String    @id @default(uuid())
-  key   String    @unique
-  name  String    @unique
-  posts PostTag[]
+  id           String     @id @default(uuid())
+  key          String     @unique
+  name         String
+  availableFor Role[]     @default([USER]) @map("available_for")
+  posts        PostTag[]
+  category     Category[]
+  categoryId   String?    @map("category_id")
 
   @@map("tags")
 }
 
 model Category {
-  id    String @id @default(uuid())
-  key   String @unique
-  value String @unique
-  posts Post[]
+  id           String @id @default(uuid())
+  key          String @unique
+  value        String
+  availableFor Role[] @default([USER]) @map("available_for")
+  posts        Post[]
+  tags         Tag[]
 
   @@map("categories")
 }
@@ -121,6 +126,7 @@ model PostVote {
 
   @@unique([user_id, post_id])
   @@index([post_id])
+  @@map("post_votes")
 }
 
 model CommentVote {
@@ -134,6 +140,7 @@ model CommentVote {
 
   @@unique([user_id, comment_id])
   @@index([comment_id])
+  @@map("comment_votes")
 }
 
 enum Role {

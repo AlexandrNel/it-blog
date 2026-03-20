@@ -12,7 +12,12 @@ const includeTags = {
   select: { tag: { select: { id: true, name: true, key: true } } },
 } as const;
 const includeAuthor = {
-  select: { id: true, email: true, createdAt: true },
+  select: {
+    id: true,
+    email: true,
+    nickname: true,
+    profile: { select: { avatar: true } },
+  },
 } as const;
 const includeCategory = {
   select: { id: true, value: true, key: true },
@@ -162,7 +167,6 @@ export class PostService {
       ...post,
       author: {
         ...post.author,
-        createdAt: post.author.createdAt.toISOString(),
       },
       tags: normalizeTags(post.tags),
     };

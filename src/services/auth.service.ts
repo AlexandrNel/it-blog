@@ -11,7 +11,7 @@ import { UserDto } from "~/dto/user.dto.js";
 import z from "zod";
 
 class AuthService {
-  async getMe(userId: string) {
+  async getMe(userId?: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: { profile: { select: { avatar: true } } },
