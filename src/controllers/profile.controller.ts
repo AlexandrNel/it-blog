@@ -28,7 +28,7 @@ function getUser(req: Request) {
 export const getProfileByUserId = asyncHandler(
   async (req: Request, res: Response) => {
     const id = getParamId(req);
-    const profile = await profileService.getByUserIdOrNickname(id);
+    const profile = await profileService.getByUserIdOrUsername(id);
     res.status(200).json(profile as ProfileResponseDto);
   },
 );
@@ -48,12 +48,11 @@ export const getProfileStatisticByUserId = asyncHandler(
   },
 );
 
-export const updateProfileByUserId = asyncHandler(
+export const updateProfile = asyncHandler(
   async (req: Request, res: Response) => {
-    const viewer = getUser(req);
-    const id = getParamId(req);
+    const user = getUser(req);
     const data = await updateProfileSchema.parseAsync(req.body);
-    const profile = await profileService.updateById(id, viewer.id, data);
-    res.status(200).json(profile as ProfileResponseDto);
+    await profileService.updateProfile(user.id, data);
+    res.status(204).send();
   },
 );

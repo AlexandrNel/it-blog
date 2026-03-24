@@ -1,9 +1,9 @@
 import z from "zod";
-import { NicknameSchema } from "./nickname.dto.js";
+import { UsernameSchema } from "./user.dto.js";
 
 export const registerSchema = z.object({
   email: z.email(),
-  nickname: NicknameSchema.shape.nickname,
+  username: UsernameSchema.shape.username,
   password: z.string().min(8),
 });
 export const loginSchema = z.object({

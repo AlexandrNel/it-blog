@@ -10,7 +10,7 @@ datasource db {
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
-  nickname     String        @unique
+  username     String        @unique
   pendingEmail String?       @unique @map("pending_email")
   password     String        @map("password_hash")
   role         Role          @default(USER)
@@ -28,10 +28,11 @@ model User {
 
 model Profile {
   id        String   @id @default(uuid())
-  bio       String?
-  avatar    String?
-  firstName String?  @map("first_name")
-  lastName  String?  @map("last_name")
+  bio       String?  @default("")
+  avatar    String?  @default("")
+  firstName String?  @default("") @map("first_name")
+  lastName  String?  @default("") @map("last_name")
+  location  String?  @default("")
   contacts  Json?
   isPublic  Boolean  @default(true) @map("is_public")
   createdAt DateTime @default(now()) @map("created_at")

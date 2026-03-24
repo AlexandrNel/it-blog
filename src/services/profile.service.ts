@@ -1,12 +1,11 @@
 import { prisma } from "~/shared/lib/prisma.js";
 import { ApiError } from "~/shared/lib/api-error.js";
 import {
+  type ProfileContactsDto,
   type ProfileStatsDto,
   type UpdateProfileRequestDto,
 } from "~/dto/profile.dto.js";
 import { AuthorDto } from "~/dto/user.dto.js";
-import type { User } from "~/generated/prisma/client.js";
-import type { keyof } from "zod";
 
 const profileSelect = {
   bio: true,
@@ -18,52 +17,40 @@ const profileSelect = {
   createdAt: true,
   id: true,
 } as const;
-type ResponseByType = keyof Pick<User, "id" | "nickname">;
+
 export class ProfileService {
-  private isIdOrNickname(id: string): "id" | "nickname" {
-    const isNickname = id.match(/^[a-zA-Z0-9]{6,25}$/gim);
-    return isNickname ? "nickname" : "id";
+  private isIdOrUsername(id: string): "id" | "username" {
+    const isUsername = id.match(/^[a-zA-Z0-9]{6,25}$/gim);
+    return isUsername ? "username" : "id";
   }
-  async getByUserIdOrNickname(value: string) {
-    const type = this.isIdOrNickname(value);
+  async getByUserIdOrUsername(value: string) {
+    const type = this.isIdOrUsername(value);
     const user = await prisma.user.findUnique({
-      where: type === "nickname" ? { nickname: value } : { id: value },
+      where: type === "username" ? { username: value } : { id: value },
       include: { profile: { select: profileSelect } },
     });
     if (!user) throw ApiError.NotFoundError("Пользователь не найден");
-
-    return {
+    const result = {
       author: new AuthorDto(user, user.profile?.avatar),
-      contacts: user.profile?.contacts,
+      contacts: user.profile?.contacts as ProfileContactsDto,
       bio: user.profile?.bio ?? "",
+      profile: user.profile!,
     };
+    return result;
   }
 
-  async updateById(
-    userId: string,
-    viewerUserId: string,
-    data: UpdateProfileRequestDto,
-  ) {
-    if (viewerUserId !== userId) throw ApiError.ForbiddenError();
-
-    const exists = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { id: true },
-    });
-    if (!exists) throw ApiError.NotFoundError("Пользователь не найден");
-    await prisma.profile.update({
+  async updateProfile(userId: string, data: UpdateProfileRequestDto) {
+    return await prisma.profile.update({
       where: { userId: userId },
       data,
     });
-
-    return this.getByUserIdOrNickname(userId);
   }
   async getStatisticById(value: string) {
     return prisma.$transaction(async (tx) => {
-      const type = this.isIdOrNickname(value);
+      const type = this.isIdOrUsername(value);
       const profile = await tx.user
         .findUnique({
-          where: type === "nickname" ? { nickname: value } : { id: value },
+          where: type === "username" ? { username: value } : { id: value },
           include: { profile: true },
         })
         .then((u) => u?.profile);
@@ -85,9 +72,9 @@ export class ProfileService {
   }
 
   async getMetaById(value: string, viewerUserId?: string) {
-    const type = this.isIdOrNickname(value);
+    const type = this.isIdOrUsername(value);
     const user = await prisma.user.findUnique({
-      where: type === "nickname" ? { nickname: value } : { id: value },
+      where: type === "username" ? { username: value } : { id: value },
       include: { profile: true },
     });
     if (!user) throw ApiError.NotFoundError("Пользователь не найден");

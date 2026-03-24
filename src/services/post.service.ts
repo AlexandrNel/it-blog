@@ -15,7 +15,7 @@ const includeAuthor = {
   select: {
     id: true,
     email: true,
-    nickname: true,
+    username: true,
     profile: { select: { avatar: true } },
   },
 } as const;

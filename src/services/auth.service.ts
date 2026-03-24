@@ -26,10 +26,10 @@ class AuthService {
         where: { email: data.email },
       });
       const b = await tx.user.findUnique({
-        where: { nickname: data.nickname },
+        where: { username: data.username },
       });
       if (a) return { text: "email" };
-      if (b) return { text: "nickname" };
+      if (b) return { text: "username" };
       return null;
     });
     if (candidat)
@@ -41,7 +41,7 @@ class AuthService {
     const newUser = await prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
-          nickname: data.nickname,
+          username: data.username,
           email: data.email,
           password: passwordHash,
         },
@@ -53,11 +53,12 @@ class AuthService {
     const token = signToken({ id: useDto.id, role: useDto.role });
     return { token, user: useDto };
   }
+
   async login(data: LoginDataType) {
     const result = await loginSchema.parseAsync(data);
     const isEmail = await z.email().safeParseAsync(result.login);
     const user = await prisma.user.findUnique({
-      where: isEmail ? { email: result.login } : { nickname: result.login },
+      where: isEmail ? { email: result.login } : { username: result.login },
     });
     if (!user) throw ApiError.NotFoundError("Пользователь не найден");
     const useDto = new UserDto(user);

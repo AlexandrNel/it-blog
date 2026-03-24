@@ -4,7 +4,7 @@ import type { Category, Post, Tag } from "~/generated/prisma/client.js";
 export type AuthorDto = {
   id: string;
   email: string;
-  nickname: string;
+  username: string;
 };
 
 export type PostVotesStatisticDto = {
