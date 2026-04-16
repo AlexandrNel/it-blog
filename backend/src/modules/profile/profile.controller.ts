@@ -1,0 +1,58 @@
+import type { Request, Response } from 'express'
+import { asyncHandler } from '@/shared/helpers/asyncHandler.js'
+import { ApiError } from '@/shared/lib/api-error.js'
+import { ProfileService } from './profile.service.js'
+import type {
+  ProfileMetaInfoResponseDto,
+  ProfileResponseDto,
+  ProfileStatsResponseDto,
+} from './profile.dto.js'
+import { updateProfileSchema } from './profile.dto.js'
+
+const profileService = new ProfileService()
+
+function getParamId(req: Request): string {
+  const id = req.params.id
+  if (!id) throw ApiError.NotFoundError('Не передан id профиля')
+  return id
+}
+
+function getUser(req: Request) {
+  const user = req.user
+  if (!user) throw ApiError.BadRequest('Пользователь не авторизован')
+  return user
+}
+
+// --------------------------------------------------------------------
+
+export const getProfileByUserId = asyncHandler(
+  async (req: Request, res: Response) => {
+    const id = getParamId(req)
+    const profile = await profileService.getByUserIdOrUsername(id)
+    res.status(200).json(profile)
+  }
+)
+export const getProfileMetaByUserId = asyncHandler(
+  async (req: Request, res: Response) => {
+    const viewer = req.user
+    const id = getParamId(req)
+    const meta = await profileService.getMetaById(id, viewer?.id)
+    res.status(200).json(meta)
+  }
+)
+export const getProfileStatisticByUserId = asyncHandler(
+  async (req: Request, res: Response) => {
+    const id = getParamId(req)
+    const statistic = await profileService.getStatisticById(id)
+    res.status(200).json(statistic)
+  }
+)
+
+export const updateProfile = asyncHandler(
+  async (req: Request, res: Response) => {
+    const user = getUser(req)
+    const data = await updateProfileSchema.parseAsync(req.body)
+    await profileService.updateProfile(user.id, data)
+    res.status(204).send()
+  }
+)

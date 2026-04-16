@@ -1,0 +1,7 @@
+node_modules
+.env
+.env.**
+tasks.md
+generated
+node_modules
+uploads
