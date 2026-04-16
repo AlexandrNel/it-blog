@@ -1,0 +1,24 @@
+import { getPostsByTag, PostList } from "@/entities/article";
+import { Suspense } from "react";
+
+export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "params">) {
+	const { tag } = await params;
+	const tagValue = decodeURIComponent(tag);
+	return (
+		<div className="container mt-2">
+			<div className="">
+				<div className="mb-2 text-center">
+					<h2 className="text-2xl font-bold">Статьи по тэгу: {tagValue}</h2>
+				</div>
+				<Suspense>
+					<FetchTagsPosts tag={tag} />
+				</Suspense>
+			</div>
+		</div>
+	);
+}
+
+async function FetchTagsPosts({ tag }: { tag: string }) {
+	const articles = await getPostsByTag(tag);
+	return <PostList classNameWrapper="grid grid-cols-2 gap-1" postList={articles} />;
+}
