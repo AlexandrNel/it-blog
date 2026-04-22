@@ -1,37 +1,45 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../components/tiptap-ui-primitive/button";
-import { Spacer } from "../components/tiptap-ui-primitive/spacer";
-import { Toolbar, ToolbarGroup, ToolbarSeparator } from "../components/tiptap-ui-primitive/toolbar";
+import { Button } from "@/shared/ui/tiptap-editor/components/tiptap-ui-primitive/button";
+import { Spacer } from "@/shared/ui/tiptap-editor/components/tiptap-ui-primitive/spacer";
+import {
+	Toolbar,
+	ToolbarGroup,
+	ToolbarSeparator,
+} from "@/shared/ui/tiptap-editor/components/tiptap-ui-primitive/toolbar";
 
 // --- Tiptap UI ---
 
-import { HeadingDropdownMenu } from "../components/tiptap-ui/heading-dropdown-menu";
-import { ImageUploadButton } from "../components/tiptap-ui/image-upload-button";
-import { ListDropdownMenu } from "../components/tiptap-ui/list-dropdown-menu";
-import { BlockquoteButton } from "../components/tiptap-ui/blockquote-button";
-import { CodeBlockButton } from "../components/tiptap-ui/code-block-button";
+import { HeadingDropdownMenu } from "@/shared/ui/tiptap-editor/components/tiptap-ui/heading-dropdown-menu";
+import { ImageUploadButton } from "@/shared/ui/tiptap-editor/components/tiptap-ui/image-upload-button";
+import { ListDropdownMenu } from "@/shared/ui/tiptap-editor/components/tiptap-ui/list-dropdown-menu";
+import { BlockquoteButton } from "@/shared/ui/tiptap-editor/components/tiptap-ui/blockquote-button";
+import { CodeBlockButton } from "@/shared/ui/tiptap-editor/components/tiptap-ui/code-block-button";
 import {
 	ColorHighlightPopover,
 	ColorHighlightPopoverContent,
 	ColorHighlightPopoverButton,
-} from "../components/tiptap-ui/color-highlight-popover";
-import { LinkPopover, LinkContent, LinkButton } from "../components/tiptap-ui/link-popover";
-import { MarkButton } from "../components/tiptap-ui/mark-button";
-import { TextAlignButton } from "../components/tiptap-ui/text-align-button";
-import { UndoRedoButton } from "../components/tiptap-ui/undo-redo-button";
+} from "@/shared/ui/tiptap-editor/components/tiptap-ui/color-highlight-popover";
+import {
+	LinkPopover,
+	LinkContent,
+	LinkButton,
+} from "@/shared/ui/tiptap-editor/components/tiptap-ui/link-popover";
+import { MarkButton } from "@/shared/ui/tiptap-editor/components/tiptap-ui/mark-button";
+import { TextAlignButton } from "@/shared/ui/tiptap-editor/components/tiptap-ui/text-align-button";
+import { UndoRedoButton } from "@/shared/ui/tiptap-editor/components/tiptap-ui/undo-redo-button";
 
 // --- Icons ---
-import { ArrowLeftIcon } from "../components/tiptap-icons/arrow-left-icon";
-import { HighlighterIcon } from "../components/tiptap-icons/highlighter-icon";
-import { LinkIcon } from "../components/tiptap-icons/link-icon";
+import { ArrowLeftIcon } from "@/shared/ui/tiptap-editor/components/tiptap-icons/arrow-left-icon";
+import { HighlighterIcon } from "@/shared/ui/tiptap-editor/components/tiptap-icons/highlighter-icon";
+import { LinkIcon } from "@/shared/ui/tiptap-editor/components/tiptap-icons/link-icon";
 
 // Hooks
-import { useIsBreakpoint } from "../lib/use-is-breakpoint";
-import { useWindowSize } from "../lib/use-window-size";
-import { useCursorVisibility } from "../lib/use-cursor-visibility";
+import { useIsBreakpoint } from "@/shared/ui/tiptap-editor/lib/use-is-breakpoint";
+import { useWindowSize } from "@/shared/ui/tiptap-editor/lib/use-window-size";
+import { useCursorVisibility } from "@/shared/ui/tiptap-editor/lib/use-cursor-visibility";
 import { useCurrentEditor } from "@tiptap/react";
-import type { ToolType } from "../model/extentions";
+import type { ToolType } from "@/shared/ui/tiptap-editor/model/extentions";
 
 type ToolAvailableForExclusion = Exclude<
 	ToolType,

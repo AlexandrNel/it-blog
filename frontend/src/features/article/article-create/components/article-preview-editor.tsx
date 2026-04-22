@@ -3,7 +3,7 @@ import { memo, type CSSProperties } from "react";
 import { useEditorStore } from "../model/use-editor-store";
 import { EditorPreviewImage } from "./editor-preview-image";
 
-function EditorPreviewField() {
+function ArticlePreviewEditor() {
 	const content = useEditorStore((state) => state.previewContent);
 	const setContent = useEditorStore((state) => state.setPreviewContent);
 
@@ -26,5 +26,5 @@ function EditorPreviewField() {
 		</div>
 	);
 }
-const MemoizedEditorPreviewField = memo(EditorPreviewField);
-export { MemoizedEditorPreviewField as EditorPreviewField };
+const MemoizedArticlePreviewEditor = memo(ArticlePreviewEditor);
+export { MemoizedArticlePreviewEditor as ArticlePreviewEditor };

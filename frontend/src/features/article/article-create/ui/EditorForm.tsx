@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -33,7 +34,7 @@ import { isApiError } from "@/shared/lib/api/api-error";
 import { ComboboxMultiple } from "@/shared/ui/ComboboxMultiple";
 import { useParams, useRouter } from "next/navigation";
 import { Label } from "@/shared/ui/label";
-import { EditorPreviewField } from "../components/editor-preview-field";
+import { ArticlePreviewEditor } from "../components/article-preview-editor";
 
 export function EditorForm({ className, footer }: BaseProps & { footer?: React.ReactNode }) {
 	const { id } = useParams();
@@ -222,7 +223,7 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 				</FieldGroup>
 				<div className="mt-5">
 					<Label className="mb-2">Превью статьи</Label>
-					<EditorPreviewField />
+					<ArticlePreviewEditor />
 					{error && (
 						<FieldError>{"Напишите превью к статье. Должно быть не менее 50 символов"}</FieldError>
 					)}

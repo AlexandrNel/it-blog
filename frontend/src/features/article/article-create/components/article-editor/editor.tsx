@@ -10,22 +10,22 @@ import {
 } from "@tiptap/react";
 
 // --- Tiptap Node ---
-import "../components/tiptap-node/blockquote-node/blockquote-node.scss";
-import "../components/tiptap-node/code-block-node/code-block-node.scss";
-import "../components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss";
-import "../components/tiptap-node/list-node/list-node.scss";
-import "../components/tiptap-node/image-node/image-node.scss";
-import "../components/tiptap-node/heading-node/heading-node.scss";
-import "../components/tiptap-node/paragraph-node/paragraph-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/blockquote-node/blockquote-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/code-block-node/code-block-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/list-node/list-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/image-node/image-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/heading-node/heading-node.scss";
+import "@/shared/ui/tiptap-editor/components/tiptap-node/paragraph-node/paragraph-node.scss";
 
 // --- Styles ---
 import "./editor.scss";
 
-import { baseToolbarExtentions } from "../model/extentions";
+import { baseToolbarExtentions } from "@/shared/ui/tiptap-editor/model/extentions";
 import type { CSSProperties, ReactNode } from "react";
-import { EditorToolbar, type ToolbarOptions } from "./Toolbar";
-import { INITIAL_CONTENT } from "../consts";
-import { cn } from "../lib/tiptap-utils";
+import { EditorToolbar, type ToolbarOptions } from "./toolbar";
+import { INITIAL_CONTENT } from "@/shared/ui/tiptap-editor/consts";
+import { cn } from "@/shared/lib/utils";
 
 interface EditorProps {
 	content?: Content;

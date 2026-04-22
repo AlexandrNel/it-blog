@@ -10,9 +10,12 @@ import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
 import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { baseToolbarExtentions } from "@/shared/ui/tiptap-editor/model/extentions";
-const Editor = dynamic(() => import("@/shared/ui/tiptap-editor/ui/Editor"), {
-	ssr: false,
-});
+const Editor = dynamic(
+	() => import("@/features/article/article-create/components/article-editor/editor"),
+	{
+		ssr: false,
+	},
+);
 
 interface Props extends BaseProps {
 	content?: string;
