@@ -9,14 +9,14 @@ import type { ReactNode } from "react";
 
 export function EditorSettingsPage({ deleteButton }: { deleteButton?: ReactNode }) {
 	const { id } = useParams();
-	const setPage = useEditorStore((state) => state.setPage);
+	const setData = useEditorStore((state) => state.setData);
 
 	return (
 		<Container>
 			<EditorForm
 				footer={
 					<div className="flex justify-between mt-2">
-						<Button type="button" onClick={() => setPage(0)}>
+						<Button type="button" onClick={() => setData({ page: 0 })}>
 							Назад
 						</Button>
 						<div className="flex gap-2">

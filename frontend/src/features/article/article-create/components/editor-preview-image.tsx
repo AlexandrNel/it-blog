@@ -11,16 +11,16 @@ import { Button } from "@/shared/ui/button";
 export function EditorPreviewImage({ className }: BaseProps) {
 	const imagePath = useEditorStore((state) => state.previewImage);
 	const imageUrl = imagePath ? API_URL + imagePath : null;
-	const setImage = useEditorStore((state) => state.setPreviewImage);
+	const setData = useEditorStore((state) => state.setData);
 
 	const handleUploadImage = async (file: File) => {
 		const data = new FormData();
 		data.append("image", file);
 		try {
 			const image = await uploadImage(data);
-			setImage(image.url);
+			setData({ previewImage: image.url });
 		} catch {
-			setImage(null);
+			setData({ previewImage: null });
 		}
 	};
 	const onDragEnter = (e: DragEvent<HTMLLabelElement>) => {
@@ -82,9 +82,9 @@ export function EditorPreviewImage({ className }: BaseProps) {
 }
 
 function DeleteImageButton() {
-	const setImage = useEditorStore((state) => state.setPreviewImage);
+	const setData = useEditorStore((state) => state.setData);
 	const handleClick = () => {
-		setImage(null);
+		setData({ previewImage: null });
 	};
 	return (
 		<Button

@@ -1,4 +1,4 @@
-import { Editor } from "@/shared/ui/tiptap-editor";
+import Editor from "./article-editor/editor";
 import { memo, type CSSProperties } from "react";
 import { useEditorStore } from "../model/use-editor-store";
 import { EditorPreviewImage } from "./editor-preview-image";

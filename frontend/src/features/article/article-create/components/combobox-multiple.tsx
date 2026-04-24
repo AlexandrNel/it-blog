@@ -10,7 +10,7 @@ import {
 	ComboboxList,
 	ComboboxValue,
 	useComboboxAnchor,
-} from "./combobox";
+} from "@/shared/ui/combobox";
 import React from "react";
 
 export function ComboboxMultiple({

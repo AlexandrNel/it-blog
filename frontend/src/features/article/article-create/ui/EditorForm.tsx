@@ -3,6 +3,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useShallow } from "zustand/shallow";
 import type * as z from "zod";
 
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
@@ -16,6 +17,17 @@ import {
 import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { useEditorStore } from "../model/use-editor-store";
+import { useQueries } from "@tanstack/react-query";
+import { queryCategories } from "@/entities/category/api/query";
+import { queryTags } from "@/entities/tag/api/query";
+import { formSchema, type FormSchemaType } from "../model/schema";
+import { PostAPI } from "@/entities/article";
+import { toast } from "sonner";
+import { isApiError } from "@/shared/lib/api/api-error";
+import { ComboboxMultiple } from "@/features/article/article-create/components/combobox-multiple";
+import { useParams, useRouter } from "next/navigation";
+import { Label } from "@/shared/ui/label";
+import { ArticlePreviewEditor } from "../components/article-preview-editor";
 import {
 	Combobox,
 	ComboboxContent,
@@ -24,17 +36,6 @@ import {
 	ComboboxItem,
 	ComboboxList,
 } from "@/shared/ui/combobox";
-import { useQueries } from "@tanstack/react-query";
-import { queryCategories } from "@/entities/category/api/query";
-import { queryTags } from "@/entities/tag/api/query";
-import { formSchema, type FormSchemaType } from "../model/schema";
-import { PostAPI } from "@/entities/article";
-import { toast } from "sonner";
-import { isApiError } from "@/shared/lib/api/api-error";
-import { ComboboxMultiple } from "@/shared/ui/ComboboxMultiple";
-import { useParams, useRouter } from "next/navigation";
-import { Label } from "@/shared/ui/label";
-import { ArticlePreviewEditor } from "../components/article-preview-editor";
 
 export function EditorForm({ className, footer }: BaseProps & { footer?: React.ReactNode }) {
 	const { id } = useParams();
@@ -43,33 +44,34 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 		return typeof id === "string";
 	};
 
-	const title = useEditorStore((state) => state.title);
-	const description = useEditorStore((state) => state.description);
-	const tagIds = useEditorStore((state) => state.tags);
-	const categoryId = useEditorStore((state) => state.category);
-	const content = useEditorStore((state) => state.content);
-	const previewContent = useEditorStore((state) => state.previewContent);
-	const image = useEditorStore((state) => state.previewImage);
-	const setTitle = useEditorStore((state) => state.setTitle);
-	const setCategory = useEditorStore((state) => state.setCategory);
-	const setDescription = useEditorStore((state) => state.setDescription);
-	const setTags = useEditorStore((state) => state.setTags);
+	const { title, desc, tags, category, content, previewContent, previewImage, setData } =
+		useEditorStore(
+			useShallow((state) => ({
+				title: state.title,
+				desc: state.description,
+				tags: state.tags,
+				category: state.category,
+				content: state.content,
+				previewContent: state.previewContent,
+				previewImage: state.previewImage,
+				setData: state.setData,
+			})),
+		);
 
-	const [categories, tags] = useQueries({
+	const [categoriesData, tagsData] = useQueries({
 		queries: [queryCategories(), queryTags()],
 	});
-	const { data: categoryData = [] } = categories;
-	const { data: tagData = [] } = tags;
+	const { data: categoryData = [] } = categoriesData;
+	const { data: tagData = [] } = tagsData;
 
-	const CATEGORY_MAP = Object.fromEntries(categoryData.map((obj) => [obj.value, obj.id]));
 	const TAGS_MAP = Object.fromEntries(tagData.map((obj) => [obj.name, obj.id]));
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		values: {
-			title: title,
-			desc: description,
-			category: categoryId ?? "",
-			tags: tagIds,
+			title,
+			desc,
+			tags,
+			category: category ?? { id: "", value: "", key: "" },
 		},
 	});
 	const previewLength = useEditorStore((state) => state.previewLength);
@@ -86,10 +88,10 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 		const fetchData = {
 			...rest,
 			tagIds: tags.map((tag) => TAGS_MAP[tag]),
-			categoryId: CATEGORY_MAP[category],
+			categoryId: category.id,
 			content: JSON.stringify(content),
 			previewContent: JSON.stringify(previewContent),
-			previewImageUrl: image,
+			previewImageUrl: previewImage,
 		};
 		if (previewLength <= 50) {
 			setError(true);
@@ -128,7 +130,7 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 									{...field}
 									onChange={(e) => {
 										field.onChange(e);
-										setTitle(e.currentTarget.value);
+										setData({ title: e.currentTarget.value });
 									}}
 									id="form-title"
 									aria-invalid={fieldState.invalid}
@@ -149,7 +151,7 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 									<InputGroupTextarea
 										{...field}
 										onChange={(e) => {
-											setDescription(e.target.value);
+											setData({ description: e.target.value });
 											field.onChange(e);
 										}}
 										id="form-description"
@@ -177,21 +179,24 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 								<Combobox
 									{...field}
 									id="form-category"
+									items={categoryData}
+									itemToStringValue={(item) => item.value}
+									value={field.value}
 									onValueChange={(v) => {
-										field.onChange(v);
-										setCategory(v);
+										setData({ category: v });
 									}}
-									items={categoryData.map((c) => c.value)}
 								>
 									<ComboboxInput placeholder="Выберите категорию" />
 									<ComboboxContent>
 										<ComboboxEmpty>No items found.</ComboboxEmpty>
 										<ComboboxList>
-											{(category) => (
-												<ComboboxItem key={category} value={category}>
-													{category}
-												</ComboboxItem>
-											)}
+											{(category) => {
+												return (
+													<ComboboxItem key={category.key} value={category}>
+														{category.value}
+													</ComboboxItem>
+												);
+											}}
 										</ComboboxList>
 									</ComboboxContent>
 								</Combobox>
@@ -209,7 +214,7 @@ export function EditorForm({ className, footer }: BaseProps & { footer?: React.R
 									<ComboboxMultiple
 										{...field}
 										onChange={(v) => {
-											setTags(v);
+											setData({ tags: v });
 											field.onChange(v);
 										}}
 										id="form-tags"

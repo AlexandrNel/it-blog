@@ -1,15 +1,14 @@
 "use client";
 
 import { Container } from "@/shared/ui/container";
-import { ButtonToSettings } from "./ButtonToSettings";
+import { ButtonNext } from "../components/button-next";
 import { useEditorStore } from "../model/use-editor-store";
 import dynamic from "next/dynamic";
-import { HeadingInput } from "./HeadingInput";
+import { Title } from "../components/title";
 import type { JSONContent } from "@tiptap/core";
 import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
 import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
-import { baseToolbarExtentions } from "@/shared/ui/tiptap-editor/model/extentions";
 const Editor = dynamic(
 	() => import("@/features/article/article-create/components/article-editor/editor"),
 	{
@@ -22,8 +21,7 @@ interface Props extends BaseProps {
 }
 
 export function EditoWritePage({ className }: Props) {
-	const setContent = useEditorStore((state) => state.setContent);
-	const setLength = useEditorStore((state) => state.setLength);
+	const setData = useEditorStore((state) => state.setData);
 	const post = useEditorStore((state) => state.post);
 	const content = safeParseJson<JSONContent>(post?.content);
 
@@ -33,14 +31,15 @@ export function EditoWritePage({ className }: Props) {
 				key={post?.id}
 				classNameContentWraper="bg-card rounded-lg"
 				content={content}
+				header={<Title />}
 				onChange={(editor) => {
-					setContent(editor.getJSON());
-					setLength(editor.getText().length);
+					const content = editor.getJSON();
+					const length = editor.getText().length;
+					setData({ content, length });
 				}}
-				header={<HeadingInput />}
 			>
 				<div className="p-4">
-					<ButtonToSettings />
+					<ButtonNext />
 				</div>
 			</Editor>
 		</Container>
