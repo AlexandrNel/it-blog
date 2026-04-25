@@ -1,12 +1,13 @@
 "use client";
 
-import { useEditorStore } from "../model/use-editor-store";
-import { EditoWritePage } from "./EditorWritePage";
-import { EditorSettingsPage } from "./EditorSettingsPage";
-import type { Post } from "@/entities/article/";
-import { Activity, type ReactNode, useEffect } from "react";
+import { Activity, useEffect } from "react";
 
-export function ArticleCreate({ post, deleteButton }: { post?: Post; deleteButton: ReactNode }) {
+import type { Post } from "@/entities/article/";
+import { useEditorStore } from "../model/use-editor-store";
+import { EditorSettingsPage } from "./editor-settings";
+import { EditoWritePage } from "./editor-write";
+
+export function ArticleCreate({ post }: { post?: Post }) {
 	const page = useEditorStore((state) => state.page);
 	const setPost = useEditorStore((state) => state.setPost);
 	const reset = useEditorStore((state) => state.reset);
@@ -20,8 +21,8 @@ export function ArticleCreate({ post, deleteButton }: { post?: Post; deleteButto
 		<>
 			<EditoWritePage className={page === 0 ? "block" : "hidden"} />
 			<Activity mode={page === 1 ? "visible" : "hidden"}>
-				<EditorSettingsPage deleteButton={deleteButton} />
+				<EditorSettingsPage />
 			</Activity>
 		</>
 	);
-}
+} 
