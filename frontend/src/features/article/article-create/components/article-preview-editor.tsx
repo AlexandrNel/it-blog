@@ -2,13 +2,16 @@ import Editor from "./article-editor/editor";
 import { memo, type CSSProperties } from "react";
 import { useEditorStore } from "../model/use-editor-store";
 import { EditorPreviewImage } from "./editor-preview-image";
+import { cn } from "@/shared/lib/utils";
+import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
+import type { JSONContent } from "@tiptap/core";
 
-function ArticlePreviewEditor() {
-	const content = useEditorStore((state) => state.previewContent);
-	const setContent = useEditorStore((state) => state.setPreviewContent);
-
+function ArticlePreviewEditor({ error }: { error?: string | null }) {
+	const post = useEditorStore((state) => state.post);
+	const setData = useEditorStore((state) => state.setData);
+	const content = safeParseJson<JSONContent>(post?.previewContent);
 	return (
-		<div className="p-2 border rounded-lg ">
+		<div className={cn("p-2 border rounded-lg  ", { "border-red-500": !!error })}>
 			<Editor
 				style={{ "--tt-content-padding": "1rem 3rem 8rem" } as CSSProperties}
 				header={<EditorPreviewImage />}
@@ -16,11 +19,13 @@ function ArticlePreviewEditor() {
 					toolbar: { disabled: { image: true }, heading: { levels: [3] } },
 				}}
 				content={content}
-				onMount={(e) => {
-					setContent(e.getJSON(), e.getText().length);
+				onMount={(editor) => {
+					setData({ previewLength: editor.getText().length });
 				}}
-				onChange={(e) => {
-					setContent(e.getJSON(), e.getText().length);
+				onChange={(editor) => {
+					const previewContent = editor.getJSON();
+					const previewLength = editor.getText().length;
+					setData({ previewContent, previewLength });
 				}}
 			/>
 		</div>

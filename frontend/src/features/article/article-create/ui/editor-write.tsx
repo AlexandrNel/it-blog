@@ -11,9 +11,7 @@ import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 const Editor = dynamic(
 	() => import("@/features/article/article-create/components/article-editor/editor"),
-	{
-		ssr: false,
-	},
+	{ ssr: false },
 );
 
 interface Props extends BaseProps {

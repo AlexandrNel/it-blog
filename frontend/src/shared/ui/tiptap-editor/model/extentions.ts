@@ -12,7 +12,7 @@ import StarterKit from "@tiptap/starter-kit";
 
 export const baseToolbarExtentions = [
   StarterKit.configure({
-    heading: { levels: [2, 3, 4, 5] },
+    heading: { levels: [3, 4, 5] },
     codeBlock: {
       enableTabIndentation: true,
     },
