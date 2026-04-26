@@ -19,9 +19,12 @@ export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner
 				<Row justify={"between"}>
 					<Row>
 						<UserCard
-							fullName={author.displayName}
-							username={author.username}
-							avatarUrl={author.avatar}
+							data={{
+								fullName: author.displayName,
+								username: author.username,
+								avatarUrl: author.avatar,
+								date: "",
+							}}
 						/>
 					</Row>
 					<Row>

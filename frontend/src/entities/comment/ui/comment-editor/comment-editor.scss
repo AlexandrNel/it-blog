@@ -8,7 +8,10 @@
     content: attr(data-placeholder);
   }
 }
-
+.tiptap.ProseMirror {
+  border: none;
+  outline: none;
+}
 .tiptap.ProseMirror .comment-paragraph:not(:first-child):not(td p):not(th p) {
   margin-top: 0;
   margin-bottom: 0;

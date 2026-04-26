@@ -13,6 +13,7 @@ import { FormField } from "@/shared/ui/form-components";
 import { NicknameField } from "@/features/nickname-input";
 import { useSettings } from "@/entities/settings";
 import { Spinner } from "@/shared/ui/spinner";
+import { isApiError } from "@/shared/lib/api/api-error";
 
 export function AccountForm() {
 	const { data, isLoading } = useSettings();
@@ -37,7 +38,11 @@ export function AccountForm() {
 			onError: (err) => setError("username", { message: err.message }),
 		}),
 	);
-
+	const onErrorCheck = (error: unknown) => {
+		if (isApiError(error) && error.status === 400) {
+			setError("username", { type: "server", message: error.message });
+		}
+	};
 	const isFething = isSubmitting || isLoading;
 
 	return (
@@ -54,8 +59,8 @@ export function AccountForm() {
 							</FieldDescription>
 							<NicknameField
 								{...field}
+								onErrorCheck={onErrorCheck}
 								onSuccessCheck={() => clearErrors("username")}
-								onErrorCheck={(err) => applyApiFieldErrors(err, setError)}
 								onSuccessGenerate={(data) => setValue("username", data.username)}
 								value={field.value}
 								onChange={field.onChange}

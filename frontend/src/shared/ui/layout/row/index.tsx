@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type { PropsWithChildren } from "react";
 import { alignVariants, gapVariants, justifyVariants } from "../variants";
 
-const variants = cva("flex flex-wrap", {
+const variants = cva("flex", {
 	variants: {
 		gap: gapVariants,
 		justify: justifyVariants,

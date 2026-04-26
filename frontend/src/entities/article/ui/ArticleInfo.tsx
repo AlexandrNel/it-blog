@@ -7,10 +7,12 @@ interface Props extends BaseProps, Pick<Post, "author" | "createdAt"> {}
 export const ArticleInfo = ({ author, createdAt }: Props) => {
   return (
     <UserCard
-      fullName={author.displayName}
-      avatarUrl={author.avatar}
-      username={author.username}
-      date={createdAt}
+      data={{
+        fullName: author.displayName,
+        avatarUrl: author.avatar,
+        username: author.username,
+        date: createdAt,
+      }}
       asLink
     ></UserCard>
   );

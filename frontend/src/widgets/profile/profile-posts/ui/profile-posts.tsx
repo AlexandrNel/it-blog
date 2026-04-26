@@ -1,7 +1,4 @@
-import { getPostByUserId } from "@/entities/article";
-import { Card } from "@/shared/ui/card";
-import { Column } from "@/shared/ui/layout";
-import { ProfilePostCard } from "./profile-post-card";
+import { getPostByUserId, PostCard } from "@/entities/article";
 import { cacheLife } from "next/cache";
 
 export async function ProfilePosts({ userId }: { userId: string }) {
@@ -12,7 +9,7 @@ export async function ProfilePosts({ userId }: { userId: string }) {
 	return (
 		<>
 			{posts?.map((p) => (
-				<ProfilePostCard key={p.id} post={p} />
+				<PostCard key={p.id} post={p} />
 			))}
 		</>
 	);

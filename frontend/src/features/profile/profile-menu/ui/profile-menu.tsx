@@ -22,10 +22,17 @@ export function ProfileMenu() {
 			<DropdownMenuTrigger className="rounded-full cursor-pointer">
 				<UserAvatar avatarUrl={user.avatar} name={user.displayName} />
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="p-3" side="bottom" align="end">
-				<DropdownMenuGroup>
-					<UserCard avatarUrl={user.avatar} fullName={user.displayName} username={user.username} />
-				</DropdownMenuGroup>
+				<DropdownMenuContent className="p-3" side="bottom" align="end">
+					<DropdownMenuGroup>
+						<UserCard
+							data={{
+								avatarUrl: user.avatar,
+								fullName: user.displayName,
+								username: user.username,
+								date: "",
+							}}
+						/>
+					</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem asChild>

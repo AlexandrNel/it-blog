@@ -9,9 +9,9 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
-	onSuccessGenerate: (data: { username: string }) => void;
-	onSuccessCheck: (data: { isAvailable: boolean }) => void;
-	onErrorCheck: (error: unknown) => void;
+	onSuccessGenerate?: (data: { username: string }) => void;
+	onSuccessCheck?: (data: { isAvailable: boolean }) => void;
+	onErrorCheck?: (error: unknown) => void;
 	email?: string;
 };
 
@@ -53,7 +53,7 @@ export const NicknameField = ({
 						disabled={generate.isPending}
 						onClick={() => generate.mutate()}
 						type="button"
-						size={"icon"}
+						size={"icon-lg"}
 					>
 						<Dices className="text-foreground" />
 					</Button>
