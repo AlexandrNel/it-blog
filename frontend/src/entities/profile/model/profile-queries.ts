@@ -3,17 +3,22 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ProfileAPI } from "../api/client";
 import type {
+	Profile,
 	ProfileConnectionKind,
 	ProfileConnectionsPage,
 	ProfileConnectionsSummary,
 } from "./profile";
+
+export const profileKeys = {
+	summary: ["profile", "connections", "summary"],
+};
 
 export const useProfileConnections = ({
 	userId,
 	type,
 	enabled,
 }: {
-	userId: string;
+	userId: Profile["author"]["id"];
 	type: ProfileConnectionKind;
 	enabled: boolean;
 }) => {

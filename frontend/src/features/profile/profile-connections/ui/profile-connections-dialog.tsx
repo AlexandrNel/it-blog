@@ -19,22 +19,7 @@ import type {
 	ProfileConnectionUser,
 } from "@/entities/profile/model/profile";
 import { useProfileConnections } from "@/entities/profile/model/profile-queries";
-
-const modalCopy: Record<
-	ProfileConnectionKind,
-	{ title: string; empty: string; description: string }
-> = {
-	followers: {
-		title: "Подписчики",
-		empty: "Нет подписчиков",
-		description: "Люди, которые подписаны на этот профиль.",
-	},
-	following: {
-		title: "Подписки",
-		empty: "Нет подписок",
-		description: "Профили, на которые подписан этот пользователь.",
-	},
-};
+import { modalCopy } from "../lib/constants";
 
 export function ProfileConnectionsDialog({
 	userId,
@@ -108,8 +93,8 @@ export function ProfileConnectionsDialog({
 				<div ref={scrollRef} className="max-h-[420px] overflow-y-auto px-6 py-4">
 					{isLoading ? (
 						<div className="space-y-3">
-							{["skeleton-1", "skeleton-2", "skeleton-3", "skeleton-4", "skeleton-5"].map((key) => (
-								<ConnectionSkeleton key={key} />
+							{new Array(5).fill(null).map((_, i) => (
+								<ConnectionSkeleton key={`skeleton-${i}`} />
 							))}
 						</div>
 					) : users.length ? (

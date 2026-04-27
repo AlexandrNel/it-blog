@@ -19,7 +19,7 @@ export function ProfileConnectionsActions({ userId }: { userId: string }) {
 
 	return (
 		<Row className="gap-4">
-			<ProfileConnectionsDialog userId={userId} type="following" count={0} />
+			<ProfileConnectionsDialog userId={userId} type="following" count={data?.following} />
 			<ProfileConnectionsDialog userId={userId} type="followers" count={data?.followers} />
 		</Row>
 	);

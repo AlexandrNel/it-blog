@@ -5,24 +5,23 @@ import type {
 	ProfileConnectionsPage,
 	ProfileConnectionsSummary,
 } from "../model/profile";
-import { getMockProfileConnections, getMockProfileConnectionsSummary } from "./mock-connections";
 
 export class ProfileAPI extends BaseAPI {
 	static getConnections({
 		userId,
 		type,
-		page,
-		limit = 5,
+		page = 1,
+		limit = 10,
 	}: {
 		userId: string;
 		type: ProfileConnectionKind;
 		page: number;
 		limit?: number;
 	}): Promise<ProfileConnectionsPage> {
-		return getMockProfileConnections({ userId, type, page, limit });
+		return BaseAPI.get(`/profile/${userId}/connections/${type}?page=${page}&limit=${limit}`);
 	}
 
 	static getConnectionsSummary(userId: string): Promise<ProfileConnectionsSummary> {
-		return getMockProfileConnectionsSummary(userId);
+		return BaseAPI.get(`/profile/${userId}/connections/summary`);
 	}
 }

@@ -9,6 +9,11 @@ export type {
 	ProfileConnectionsSummary,
 } from "./model/profile";
 export {
+	useProfileConnections,
+	useProfileConnectionsSummary,
+	profileKeys,
+} from "./model/profile-queries";
+export {
 	getProfileById,
 	getProfileStatisticById,
 	getProfileMetaById,
