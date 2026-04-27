@@ -5,12 +5,10 @@ import { useRef, type ChangeEvent, type DragEvent } from "react";
 import { useEditorStore } from "../model/use-editor-store";
 import { uploadImage } from "@/shared/api/uploadImage";
 import Image from "next/image";
-import { API_URL } from "@/shared/config/env";
 import { Button } from "@/shared/ui/button";
 
 export function EditorPreviewImage({ className }: BaseProps) {
-	const imagePath = useEditorStore((state) => state.previewImage);
-	const imageUrl = imagePath ? API_URL + imagePath : null;
+	const imageUrl = useEditorStore((state) => state.previewImage);
 	const setData = useEditorStore((state) => state.setData);
 
 	const handleUploadImage = async (file: File) => {

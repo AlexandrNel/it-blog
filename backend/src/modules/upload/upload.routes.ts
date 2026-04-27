@@ -1,9 +1,12 @@
 import express from 'express'
+import { config } from '@/config/index.js'
 import multer from 'multer'
 import { authMiddleware } from '@/middlewares/auth.middleware.js'
 import { UploadError } from '@/shared/lib/upload-error.js'
+import { execFile } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { promisify } from 'node:util'
 
 const allowedMemtypes = {
   'image/jpeg': true,
@@ -14,10 +17,12 @@ const allowedMemtypes = {
 }
 
 const uploadsDir = path.resolve(process.cwd(), 'uploads')
+const maxUploadSizeBytes = 5 * 1024 * 1024
 
 const ensureUploadsDir = async () => {
   await fs.promises.mkdir(uploadsDir, { recursive: true })
 }
+
 
 const storage = multer.diskStorage({
   destination: async (_, __, cb) => {
@@ -35,11 +40,11 @@ const storage = multer.diskStorage({
     ) {
       callback(null, name.concat('.', extention))
     } else {
-      callback(new UploadError(extention + ' не поддерживаемый тип файла'), '')
+      callback(new UploadError(`${extention} unsupported file type`), '')
     }
   },
 })
-const upload = multer({ storage, limits: { fileSize: 5242880 } })
+const upload = multer({ storage, limits: { fileSize: maxUploadSizeBytes } })
 
 const router = express.Router()
 
@@ -49,15 +54,24 @@ router.post(
   '/photos/upload',
   authMiddleware,
   upload.single('image'),
-  (req, res) => {
+  async (req, res, next) => {
     const file = req.file
+
     if (!file) {
-      res.status(400).json({ message: 'Не удалось загрузить файл' })
+      res.status(400).json({ message: 'Failed to upload file' })
+      return
     }
 
-    res.json({
-      url: `/uploads/${req.file?.filename}`,
-    })
+    try {
+      const imagePath = `/uploads/${file.filename}`
+
+      res.json({
+        path: imagePath,
+        url: new URL(imagePath, config.appUrl).toString(),
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 )
 

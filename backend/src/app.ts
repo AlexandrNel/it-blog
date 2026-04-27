@@ -38,8 +38,9 @@ app.use(
   categoryRouter,
   userRouter,
   followRouter,
-  uploadRouter
+  uploadRouter,
 )
+
 
 app.use(errorMiddleware)
 
