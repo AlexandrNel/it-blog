@@ -53,7 +53,6 @@ export const CommentEditor = memo(
 				CodeBlock,
 				Document,
 				Text,
-				Paragraph,
 				Italic,
 				Link,
 				Strike,

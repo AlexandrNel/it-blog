@@ -1,31 +1,16 @@
-"use cache";
 import { cn } from "@/shared/lib/utils";
 import { TagList } from "@/entities/tag";
 import { ArticleInfo, ArticlePreview, getPostBySlug, getTagForCache } from "@/entities/article";
 import { ArticleStatistic } from "./ArticlesStatistic";
 import { ArticleView } from "@/features/article/article-tracking";
 import { EditorContent } from "@/shared/ui/tiptap-editor";
-import { EditBlock } from "@/features/article/article-menu";
 import { notFound } from "next/navigation";
-import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
+import { EditBlock } from "@/features/article/article-menu";
+import { Suspense } from "react";
 
-export async function generateMetadata(props: PageProps<"/articles/[id]">): Promise<Metadata> {
-	const { id } = await props.params;
-	const post = await getPostBySlug(id);
-	if (!post) return {};
-
-	return {
-		title: post.title,
-		description: post.desc,
-		publisher: post.author.username,
-		other: {
-			date: new Date(post.createdAt).toUTCString(),
-		},
-	};
-}
-
-export async function PostSection({ params }: PageProps<"/articles/[id]">) {
+async function _PostSection({ params }: Pick<PageProps<"/articles/[id]">, "params">) {
+	"use cache";
 	cacheLife("max");
 
 	const id = (await params).id;
@@ -60,3 +45,11 @@ export async function PostSection({ params }: PageProps<"/articles/[id]">) {
 		</article>
 	);
 }
+
+export const PostSection = ({ params }: Pick<PageProps<"/articles/[id]">, "params">) => {
+	return (
+		<Suspense fallback={<div className="h-96 bg-card rounded-lg animate-pulse mb-2" />}>
+			<_PostSection params={params} />
+		</Suspense>
+	);
+};
