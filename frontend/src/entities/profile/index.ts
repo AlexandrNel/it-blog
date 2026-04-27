@@ -3,6 +3,10 @@ export type {
 	ProfileContacts,
 	ProfileStatistic,
 	ProfileMetaInfo,
+	ProfileConnectionKind,
+	ProfileConnectionUser,
+	ProfileConnectionsPage,
+	ProfileConnectionsSummary,
 } from "./model/profile";
 export {
 	getProfileById,
