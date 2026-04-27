@@ -2,7 +2,10 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
     cacheComponents: true,
-    images: { remotePatterns: [{ "hostname": "example.com" }, {hostname: "localhost"}] }
+    images: { remotePatterns: [{ "hostname": "example.com" }, {hostname: "localhost"}] },
+    logging: {
+        browserToTerminal: true,
+    }
 }
 
 export default nextConfig
