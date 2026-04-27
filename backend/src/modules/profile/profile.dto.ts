@@ -51,12 +51,31 @@ export type ProfileDto = {
   contacts: ProfileContactsDto | null
   bio: string
 }
+
 export type ProfileStatsDto = {
   unpublishedPosts: number
   publishedPosts: number
   subscribers: number
   viewers: number
   comments: number
+}
+
+export type ProfileConnectionKind = 'followers' | 'following'
+
+export type ProfileConnectionUser = Pick<
+  Author,
+  'id' | 'avatar' | 'displayName' | 'username'
+>
+
+export type ProfileConnectionsPageDto = {
+  users: ProfileConnectionUser[]
+  nextPage: number | null
+  total: number
+}
+
+export type ProfileConnectionsSummaryDto = {
+  followers: number
+  following: number
 }
 
 export type ProfileMetaInfoDto =
@@ -75,3 +94,5 @@ export type ProfileMetaInfoDto =
 export type ProfileResponseDto = ProfileDto
 export type ProfileStatsResponseDto = ProfileStatsDto
 export type ProfileMetaInfoResponseDto = ProfileMetaInfoDto
+export type ProfileConnectionsPageResponseDto = ProfileConnectionsPageDto
+export type ProfileConnectionsSummaryResponseDto = ProfileConnectionsSummaryDto

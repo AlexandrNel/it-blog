@@ -6,6 +6,7 @@ import { Row, Column } from "@/shared/ui/layout/";
 import { cacheLife, cacheTag } from "next/cache";
 import { Button } from "@/shared/ui/button";
 import { FollowButton } from "@/features/profile/follow-profile";
+import { ProfileConnectionsActions } from "@/features/profile/profile-connections";
 
 export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner: boolean }) {
 	"use cache";
@@ -15,18 +16,16 @@ export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner
 
 	return (
 		<Card>
-			<Column>
+			<Column className="gap-3">
 				<Row justify={"between"}>
-					<Row>
-						<UserCard
-							data={{
-								fullName: author.displayName,
-								username: author.username,
-								avatarUrl: author.avatar,
-								date: "",
-							}}
-						/>
-					</Row>
+					<UserCard
+						data={{
+							fullName: author.displayName,
+							username: author.username,
+							avatarUrl: author.avatar,
+							date: "",
+						}}
+					/>
 					<Row>
 						{isOwner ? (
 							<Button asChild>
@@ -38,6 +37,7 @@ export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner
 					</Row>
 				</Row>
 				<p>{bio}</p>
+				<ProfileConnectionsActions userId={userId} />
 			</Column>
 		</Card>
 	);
