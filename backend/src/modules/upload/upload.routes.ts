@@ -2,6 +2,8 @@ import express from 'express'
 import multer from 'multer'
 import { authMiddleware } from '@/middlewares/auth.middleware.js'
 import { UploadError } from '@/shared/lib/upload-error.js'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const allowedMemtypes = {
   'image/jpeg': true,
@@ -11,9 +13,16 @@ const allowedMemtypes = {
   'image/webp': true,
 }
 
+const uploadsDir = path.resolve(process.cwd(), 'uploads')
+
+const ensureUploadsDir = async () => {
+  await fs.promises.mkdir(uploadsDir, { recursive: true })
+}
+
 const storage = multer.diskStorage({
-  destination: (_, __, cb) => {
-    cb(null, 'uploads')
+  destination: async (_, __, cb) => {
+    await ensureUploadsDir()
+    cb(null, uploadsDir)
   },
   filename(req, file, callback) {
     const name = crypto.randomUUID().slice(0, 8)
@@ -34,7 +43,7 @@ const upload = multer({ storage, limits: { fileSize: 5242880 } })
 
 const router = express.Router()
 
-router.use('/uploads', express.static('uploads'))
+router.use('/uploads', express.static(uploadsDir))
 
 router.post(
   '/photos/upload',
