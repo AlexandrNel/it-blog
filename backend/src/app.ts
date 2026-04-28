@@ -16,6 +16,7 @@ import { errorMiddleware } from './middlewares/error.middleware.js'
 
 const PORT = process.env.PORT || 3000
 const app = express()
+
 app.set('trust proxy', true)
 
 app.use(
@@ -28,6 +29,7 @@ app.use(
     credentials: true,
   })
 )
+
 app.use(
   '/api',
   authRouter,

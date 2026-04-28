@@ -3,10 +3,8 @@ import { config } from '@/config/index.js'
 import multer from 'multer'
 import { authMiddleware } from '@/middlewares/auth.middleware.js'
 import { UploadError } from '@/shared/lib/upload-error.js'
-import { execFile } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-import { promisify } from 'node:util'
 
 const allowedMemtypes = {
   'image/jpeg': true,
@@ -63,7 +61,7 @@ router.post(
     }
 
     try {
-      const imagePath = `/uploads/${file.filename}`
+      const imagePath = `/api/uploads/${file.filename}`
 
       res.json({
         path: imagePath,
