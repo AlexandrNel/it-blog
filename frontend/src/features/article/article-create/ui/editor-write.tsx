@@ -5,7 +5,7 @@ import { ButtonNext } from "../components/button-next";
 import { useEditorStore } from "../model/use-editor-store";
 import dynamic from "next/dynamic";
 import { Title } from "../components/title";
-import type { JSONContent } from "@tiptap/core";
+import type { Editor as EditorType, JSONContent } from "@tiptap/core";
 import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
 import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
@@ -22,7 +22,11 @@ export function EditoWritePage({ className }: Props) {
 	const setData = useEditorStore((state) => state.setData);
 	const post = useEditorStore((state) => state.post);
 	const content = safeParseJson<JSONContent>(post?.content);
-
+	const updateStore = (editor: EditorType) => {
+		const content = editor.getJSON();
+		const length = editor.getText().length;
+		setData({ content, length });
+	};
 	return (
 		<Container className={cn(className)}>
 			<Editor
@@ -30,11 +34,8 @@ export function EditoWritePage({ className }: Props) {
 				classNameContentWraper="bg-card rounded-lg"
 				content={content}
 				header={<Title />}
-				onChange={(editor) => {
-					const content = editor.getJSON();
-					const length = editor.getText().length;
-					setData({ content, length });
-				}}
+				onMount={updateStore}
+				onChange={updateStore}
 			>
 				<div className="p-4">
 					<ButtonNext />

@@ -1,10 +1,28 @@
 import slugify from 'slugify'
 import z from 'zod'
 
+const DEFAULT_POSITION = {x: 50, y: 50}
+
+export const previewImagePositionSchema = z.preprocess(
+  (val) => {
+    if (val === null || val === undefined) return DEFAULT_POSITION
+    if (typeof val === 'string') {
+      try { return JSON.parse(val) } catch { return DEFAULT_POSITION }
+    }
+    return val
+  },
+  z.object({
+    x: z.number(),
+    y: z.number(),
+  }).catch(DEFAULT_POSITION)
+)
+
+export const previewImageSchema = z.object({url: z.string(), position: previewImagePositionSchema}).nullable().default(null)
+
 export const createPostSchema = z.object({
   content: z.string(),
   previewContent: z.string(),
-  previewImageUrl: z.string().nullable().optional(),
+  previewImage: previewImageSchema,
   title: z.string().min(1, 'Заголовок обязателен'),
   slug: z.string().optional(),
   desc: z.string(),
@@ -15,7 +33,7 @@ export const createPostSchema = z.object({
 export const updatePostSchema = z.object({
   content: z.string().optional(),
   previewContent: z.string(),
-  previewImageUrl: z.string().nullable().optional(),
+ previewImage: previewImageSchema,
   title: z.string().min(1, 'Заголовок обязателен').optional(),
   desc: z.string().optional(),
   categoryId: z.string().nonempty().optional(),
@@ -23,6 +41,8 @@ export const updatePostSchema = z.object({
 })
 export type CreatePostRequestDto = z.infer<typeof createPostSchema>
 export type UpdatePostRequestDto = z.infer<typeof updatePostSchema>
+export type PreviewImagePositionDto = z.infer<typeof previewImagePositionSchema>
+export type PreviewImageDto = z.infer<typeof previewImageSchema>
 
 /** Parsed create-post payload (slug is always defined after validation). */
 export type ParsedCreatePostDto = Omit<CreatePostRequestDto, 'slug'> & {
@@ -36,7 +56,7 @@ export async function validateCreatePost(
   const schema = z.object({
     content: z.string(),
     previewContent: z.string(),
-    previewImageUrl: z.string().nullable().optional(),
+   previewImage: previewImageSchema,
     title: z.string().min(1, 'Заголовок обязателен'),
     slug: z
       .string()

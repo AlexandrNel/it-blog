@@ -11,11 +11,13 @@ export type PostStatistic = {
   votes: { likes: number; dislikes: number; userVote: number | null }
 }
 
-export type BasePost = Post & {
+export type BasePost = Omit<Post, "previewImageUrl" | "previewImagePosition"> & {
   author: Author
   tags: PostTag[]
   category: PostCategory
   statistic: PostStatistic
+} & {
+  previewImage: {url: Post['previewImageUrl'], position: Post['previewImagePosition']} | null
 }
 
 export type PostFull = Omit<BasePost, 'statistic'>

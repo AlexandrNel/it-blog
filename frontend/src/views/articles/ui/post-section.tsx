@@ -31,7 +31,7 @@ async function _PostSection({ params }: Pick<PageProps<"/articles/[id]">, "param
 				<div className="px-5 py-3  rounded-lg">
 					<ArticleInfo author={data.author} createdAt={data.createdAt} />
 					<h1 className="font-bold text-[25px] mb-2 ">{data.title}</h1>
-					<ArticlePreview previewContent={data.previewContent} imageUrl={data.previewImageUrl} />
+					<ArticlePreview previewContent={data.previewContent} image={data.previewImage} />
 
 					<div className={`mb-5 text-[16px] `}>
 						<EditorContent content={data.content} />

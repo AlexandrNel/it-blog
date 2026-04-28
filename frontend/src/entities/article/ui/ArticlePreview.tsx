@@ -2,30 +2,36 @@ import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import type { BaseProps } from "@/shared/types/components";
 import { EditorContent } from "@/shared/ui/tiptap-editor";
+import type { Post } from "../model/post";
 
 interface Props extends BaseProps {
-	imageUrl?: string;
+	image?: Post["previewImage"];
 	previewContent: string;
 }
 
-export const ArticlePreview = ({ className, imageUrl, previewContent }: Props) => {
+export const ArticlePreview = ({ className, image, previewContent }: Props) => {
 	return (
 		<>
-			<div
-				className={cn("overflow-hidden relative w-full", className, {
-					"md:h-[300px] min-[450px]:h-[200px] h-[150px]": !!imageUrl,
-				})}
-			>
-				{imageUrl && (
+			{image?.url && (
+				<div
+					className={cn(
+						"overflow-hidden relative w-full mb-3 rounded-lg bg-slate-50 dark:bg-[#272727]",
+						className,
+						{
+							"md:h-[400px] min-[450px]:h-[300px] h-[150px]": !!image?.url,
+						},
+					)}
+				>
 					<Image
 						unoptimized
 						fill
-						className="dark:brightness-75 mx-auto h-full w-auto object-cover rounded-lg"
-						src={imageUrl}
+						className="dark:brightness-75 mx-auto h-full w-auto object-cover "
+						style={{ objectPosition: `${image.position.x}% ${image.position.y}%` }}
+						src={image.url}
 						alt=""
 					/>
-				)}
-			</div>
+				</div>
+			)}
 			<div className={cn("max-h-[200px] overflow-hidden text-ellipsis line-clamp-6  ")}>
 				<EditorContent content={previewContent} />
 			</div>

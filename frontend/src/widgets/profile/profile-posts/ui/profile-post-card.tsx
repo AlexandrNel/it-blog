@@ -33,7 +33,7 @@ export function ProfilePostCard({ post }: { post: PostWithStatistic }) {
 						</Link>
 					))}
 				</Row>
-				<ArticlePreview imageUrl={post.previewImageUrl} previewContent={post.previewContent} />
+				<ArticlePreview image={post.previewImage} previewContent={post.previewContent} />
 				<Button asChild className=" self-start" variant={"secondary"}>
 					<Link href={`/articles/${post.slug}`}>Читать далее</Link>
 				</Button>

@@ -49,24 +49,25 @@ model Profile {
 }
 
 model Post {
-  id              String     @id @default(uuid())
-  title           String
-  content         String
-  previewContent  String     @map("preview_content")
-  previewImageUrl String?    @default("") @map("preview_image_url")
-  published       Boolean    @default(false)
-  authorId        String     @map("author_id")
-  categoryId      String     @map("category_id")
-  createdAt       DateTime   @default(now()) @map("created_at")
-  updatedAt       DateTime   @updatedAt @map("updated_at")
-  slug            String     @unique
-  desc            String
-  views           Int        @default(0)
-  postVotes       PostVote[]
-  comments        Comment[]
-  tags            PostTag[]
-  category        Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  author          User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id                   String     @id @default(uuid())
+  title                String
+  content              String
+  previewContent       String     @map("preview_content")
+  previewImageUrl      String?    @map("preview_image_url")
+  previewImagePosition Json?      @map("preview_image_position")
+  published            Boolean    @default(false)
+  authorId             String     @map("author_id")
+  categoryId           String     @map("category_id")
+  createdAt            DateTime   @default(now()) @map("created_at")
+  updatedAt            DateTime   @updatedAt @map("updated_at")
+  slug                 String     @unique
+  desc                 String
+  views                Int        @default(0)
+  postVotes            PostVote[]
+  comments             Comment[]
+  tags                 PostTag[]
+  category             Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  author               User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@map("posts")
 }

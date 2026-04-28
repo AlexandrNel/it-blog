@@ -2,8 +2,15 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useEditorStore } from "../model/use-editor-store";
+import z from "zod";
 
 export const MIN_LENGTH = 50;
+export const MAX_LENGTH = 3000;
+
+const LengthSchema = z
+	.number()
+	.min(MIN_LENGTH, { error: `Превью должно содержать не менее ${MIN_LENGTH} символов` })
+	.max(MAX_LENGTH, { error: `Превью должно содержать не более ${MAX_LENGTH} символов` });
 
 export const useValidatePreviewEditor = () => {
 	const previewLength = useEditorStore((state) => state.previewLength);
@@ -16,11 +23,11 @@ export const useValidatePreviewEditor = () => {
 	}, [previewLength, error]);
 
 	const validatePreview = useCallback(() => {
-		const isValid = previewLength >= MIN_LENGTH;
-		if (!isValid) {
-			setError(`Превью должно содержать не менее ${MIN_LENGTH} символов`);
+		const result = LengthSchema.safeParse(previewLength);
+		if (result.error) {
+			setError(result.error.message);
 		}
-		return isValid;
+		return result.success;
 	}, [previewLength]);
 
 	return { error, validatePreview };
