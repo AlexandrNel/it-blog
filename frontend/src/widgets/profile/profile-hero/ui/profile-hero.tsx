@@ -5,8 +5,9 @@ import { Card } from "@/shared/ui/card";
 import { Row, Column } from "@/shared/ui/layout/";
 import { cacheLife, cacheTag } from "next/cache";
 import { Button } from "@/shared/ui/button";
-import { FollowButton } from "@/features/profile/follow-profile";
 import { ProfileConnectionsActions } from "@/features/profile/profile-connections";
+import { FollowButton } from "@/features/profile/follow-profile";
+import { CheckAuthButton } from "@/entities/auth";
 
 export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner: boolean }) {
 	"use cache";
@@ -32,7 +33,9 @@ export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner
 								<Link href="/settings">Редактировать профиль</Link>
 							</Button>
 						) : (
-							<FollowButton userId={author.id} />
+							<CheckAuthButton>
+								<FollowButton userId={author.id} />
+							</CheckAuthButton>
 						)}
 					</Row>
 				</Row>

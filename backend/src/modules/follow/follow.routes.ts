@@ -16,7 +16,7 @@ const followLimit = rateLimit({
   windowMs: 10 * 1000,
   limit: 5,
   message: {
-    message: "Ну что ты тыкаешь, тыкаешь, решись уже — подписан ты или нет)"
+    message: "Что ты тыкаешь?) Решись уже — подписан ты или нет."
   }
 })
 

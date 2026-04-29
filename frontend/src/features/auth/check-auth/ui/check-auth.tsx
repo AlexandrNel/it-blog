@@ -1,4 +1,4 @@
-import { auth } from "../api/server";
+import { auth } from "@/entities/auth/api/server";
 import { redirect } from "next/navigation";
 
 export async function CheckAuth({ children }: { children: React.ReactNode }) {

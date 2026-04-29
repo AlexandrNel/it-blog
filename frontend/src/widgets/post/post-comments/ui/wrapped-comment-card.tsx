@@ -10,7 +10,7 @@ import { Activity, memo, type PropsWithChildren } from "react";
 import { DeleteCommentButton } from "@/features/comments/delete-comment";
 import { useCommentLifecycle } from "../model/useCommentLifecycle";
 import { EditComment } from "@/features/comments/edit-comment";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/entities/auth";
 
 type Props = {
 	level?: number;

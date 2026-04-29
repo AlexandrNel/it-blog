@@ -1,5 +1,5 @@
 "use client";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/entities/auth";
 import { cn } from "@/shared/lib/utils";
 import type { BaseProps } from "@/shared/types/components";
 import { EllipsisVertical, Pencil } from "lucide-react";

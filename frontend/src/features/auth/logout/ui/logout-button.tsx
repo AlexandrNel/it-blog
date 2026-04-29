@@ -1,5 +1,5 @@
 import { Button } from "@/shared/ui/button";
-import { useAuthStore } from "../model/AuthStore";
+import { useAuthStore } from "@/entities/auth";
 
 export const LogoutButton = () => {
 	const { logout } = useAuthStore();

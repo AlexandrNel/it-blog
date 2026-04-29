@@ -3,12 +3,12 @@ import { Suspense } from "react";
 import { ArticleSection } from "./article-section";
 import { PageLayout } from "@/shared/layouts/PageLayout";
 import { FeedSidebar } from "./feed-sidebar";
-import { SortToolbar } from "@/features/article/article-sort";
+import { SortToolbar, SortToolbarSkeleton } from "@/features/article/article-sort";
 
 export default async function Page({ searchParams }: Pick<PageProps<"/">, "searchParams">) {
 	return (
 		<PageLayout className="pb-2" sidebar={<FeedSidebar />}>
-			<Suspense>
+			<Suspense fallback={<SortToolbarSkeleton />}>
 				<SortToolbar className="mb-2" />
 			</Suspense>
 			<Suspense fallback={<PostListSkeleton />}>

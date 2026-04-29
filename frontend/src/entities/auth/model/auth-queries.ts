@@ -4,7 +4,7 @@ import type { ApiError } from "@/shared/lib/api";
 import type { User } from "@/entities/user";
 import type { LoginRequest, RegisterRequest } from "../api/types";
 import { toast } from "sonner";
-import { useAuthStore } from "./AuthStore";
+import { useAuthStore } from "./auth-store";
 
 export const useLogin = () => {
 	const { setUser } = useAuthStore();

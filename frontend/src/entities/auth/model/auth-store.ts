@@ -10,7 +10,7 @@ interface AuthStore {
 	logout: () => void;
 }
 
-export const useAuthStore = create<AuthStore>()((set) => ({
+export const useAuthStore = create<AuthStore>()((set, get) => ({
 	user: null,
 	fetchUser: async () => {
 		try {

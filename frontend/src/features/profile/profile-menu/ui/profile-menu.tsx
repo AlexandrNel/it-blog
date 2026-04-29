@@ -1,7 +1,7 @@
 "use client";
 
 import { UserAvatar, UserCard } from "@/entities/user";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/entities/auth";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -22,17 +22,17 @@ export function ProfileMenu() {
 			<DropdownMenuTrigger className="rounded-full cursor-pointer">
 				<UserAvatar avatarUrl={user.avatar} name={user.displayName} />
 			</DropdownMenuTrigger>
-				<DropdownMenuContent className="p-3" side="bottom" align="end">
-					<DropdownMenuGroup>
-						<UserCard
-							data={{
-								avatarUrl: user.avatar,
-								fullName: user.displayName,
-								username: user.username,
-								date: "",
-							}}
-						/>
-					</DropdownMenuGroup>
+			<DropdownMenuContent className="p-3" side="bottom" align="end">
+				<DropdownMenuGroup>
+					<UserCard
+						data={{
+							avatarUrl: user.avatar,
+							fullName: user.displayName,
+							username: user.username,
+							date: "",
+						}}
+					/>
+				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem asChild>

@@ -25,6 +25,8 @@ export const ArticlePreview = ({ className, image, previewContent }: Props) => {
 					<Image
 						unoptimized
 						fill
+						priority
+						loading="eager"
 						className="dark:brightness-75 mx-auto h-full w-auto object-cover "
 						style={{ objectPosition: `${image.position.x}% ${image.position.y}%` }}
 						src={image.url}
