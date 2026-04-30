@@ -6,6 +6,7 @@ import type {
   PostVote,
 } from './post.types.js'
 import type { fullInclude, previewInclude } from '../lib/post.selector.js'
+import { previewImagePositionSchema } from './post.validation.js'
 
 export function toStatistic(
   votes: PostVote[],
@@ -41,10 +42,12 @@ export type PrismaFullPost = NonNullable<
 >
 
 export function toPreview(post: PrismaPreviewPost): PostPreview {
-  const { postVotes, comments, tags, content, author, ...rest } = post
+  const { postVotes, comments, tags, content, author, previewImagePosition, previewImageUrl, ...rest } = post
   const { id, username, email, avatar, displayName } = author
+  const previewImage = toPreviewImage({previewImagePosition, previewImageUrl})
   return {
     ...rest,
+    previewImage,
     tags: tags.map((t) => t.tag),
     statistic: toStatistic(postVotes, comments, post.views),
     author: { id, username, email, avatar, displayName },
@@ -52,6 +55,17 @@ export function toPreview(post: PrismaPreviewPost): PostPreview {
 }
 
 export function toFull(post: PrismaFullPost): PostFull {
-  const { tags, ...rest } = post
-  return { ...rest, tags: tags.map((t) => t.tag) }
+  const { tags, previewImagePosition, previewImageUrl, ...rest } = post
+  const previewImage = toPreviewImage({previewImagePosition, previewImageUrl})
+  return { ...rest, tags: tags.map((t) => t.tag),  previewImage,}
 }
+
+function toPreviewImage ({previewImagePosition, previewImageUrl: url}
+  :Pick<PrismaPreviewPost, 'previewImageUrl' | 'previewImagePosition'>){
+    if(url){
+      const position = previewImagePositionSchema.parse(previewImagePosition)
+      return {url, position}
+    }
+    return null
+}
+

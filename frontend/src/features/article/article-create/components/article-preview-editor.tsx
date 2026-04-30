@@ -1,7 +1,7 @@
 import Editor from "./article-editor/editor";
 import { memo, type CSSProperties } from "react";
 import { useEditorStore } from "../model/use-editor-store";
-import { EditorPreviewImage } from "./editor-preview-image";
+import { EditorPreviewImageWrapper } from "@/features/article/article-create/components/editor-preview-image";
 import { cn } from "@/shared/lib/utils";
 import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
 import type { JSONContent } from "@tiptap/core";
@@ -14,7 +14,7 @@ function ArticlePreviewEditor({ error }: { error?: string | null }) {
 		<div className={cn("p-2 border rounded-lg  ", { "border-red-500": !!error })}>
 			<Editor
 				style={{ "--tt-content-padding": "1rem 3rem 8rem" } as CSSProperties}
-				header={<EditorPreviewImage />}
+				header={<EditorPreviewImageWrapper />}
 				options={{
 					toolbar: { disabled: { image: true }, heading: { levels: [3] } },
 				}}

@@ -90,12 +90,12 @@ export class PostService {
   }
 
   async create(data: ParsedCreatePostDto) {
-    const { tagIds, ...rest } = data
+    const { tagIds, previewImage, ...rest } = data
     return withUniqueSlug(data.slug, async (slug) => {
       return prisma.$transaction(async (tx) => {
         // TODO: убрать published, когда будет модерация
         const post = await tx.post.create({
-          data: { ...rest, slug, published: true },
+          data: { ...rest, slug, published: true, ...(previewImage ? {previewImageUrl: previewImage.url, previewImagePosition: previewImage.position} : {}) },
         })
         await tx.postTag.createMany({
           data: data.tagIds.map((tagId) => ({
@@ -133,9 +133,13 @@ export class PostService {
     const existingTagIds = post.tags.map((t) => t.tag.id)
     const toAdd = tagIds?.filter((id) => !existingTagIds.includes(id)) ?? []
     const toRemove = existingTagIds.filter((id) => !tagIds?.includes(id))
-
+    const {previewImage, ...rest} = data
     return this.repo.update({
-      dataToUpdate: { ...data, slug },
+      dataToUpdate: {
+        ...rest,
+        slug,
+        previewImage: previewImage ?? null,
+      },
       postId,
       tagsToAdd: toAdd,
       tagsToRemove: toRemove,

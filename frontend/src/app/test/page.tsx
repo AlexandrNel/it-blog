@@ -1,18 +1,15 @@
-"use client";
-
-import { formatDate } from "@/shared/lib/utils/date/format-date";
-import { Suspense } from "react";
+import { CheckAuthButton } from "@/features/auth/check-auth/ui/check-auth-button";
+import { Card } from "@/shared/ui/card";
+import { Child } from "./child";
 
 export default function Page() {
-  return (
-    <Suspense>
-      <Fetch />
-    </Suspense>
-  );
-}
-
-function Fetch() {
-  const DATE = "2026-02-05T17:46:43.272Z";
-  const value = formatDate(DATE);
-  return <>{value}</>;
+	return (
+		<div className="flex grow justify-center items-center">
+			<Card className="w-[700px] h-screen">
+				<CheckAuthButton>
+					<Child />
+				</CheckAuthButton>
+			</Card>
+		</div>
+	);
 }

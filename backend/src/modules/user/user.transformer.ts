@@ -1,4 +1,4 @@
-import type { Profile, User as UserPrisma } from '@/generated/prisma/client.js'
+import type { Profile, User as UserPrisma } from '../../../generated/prisma/client.js'
 import type { Author, User } from './user.types.js'
 
 export const toUser = (user: UserPrisma): User => {

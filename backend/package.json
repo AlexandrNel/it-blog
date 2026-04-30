@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "tsup src/server.ts --format esm",
+    "build": "tsup src/server.ts --format esm --clean",
     "dev": "tsx watch src/server.ts",
     "db:deploy": "npx prisma migrate deploy && npx prisma generate",
     "start": "node dist/server.js ",
@@ -22,12 +22,14 @@
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
+    "express-rate-limit": "^8.4.1",
     "express-validator": "^7.3.1",
     "ioredis": "^5.9.2",
     "jsonwebtoken": "^9.0.3",
     "multer": "2.0.2",
     "nodemon": "^3.1.11",
     "pg": "^8.18.0",
+    "prisma": "^7.5.0",
     "slugify": "^1.6.6",
     "unique-names-generator": "^4.7.1",
     "zod": "^4.3.6"
@@ -42,7 +44,6 @@
     "@types/node": "^24.10.12",
     "@types/pg": "^8.16.0",
     "prettier": "^3.8.1",
-    "prisma": "^7.5.0",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"

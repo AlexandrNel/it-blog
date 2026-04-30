@@ -5,7 +5,7 @@ export const uploadImage = async (
 	_onProgress?: (event: { progress: number }) => void,
 	signal?: AbortSignal,
 ) => {
-	const res = await api.post<{ url: string }>("/photos/upload", formData, {
+	const res = await api.post<{ url: string; path: string }>("/photos/upload", formData, {
 		signal: signal,
 		onUploadProgress: (progressEvent) => {
 			console.log(progressEvent);

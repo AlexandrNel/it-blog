@@ -127,7 +127,7 @@ export class PostRepository {
     tagsToRemove: string[]
   }) => {
     const {
-      dataToUpdate: { slug, categoryId, tagIds, ...rest },
+      dataToUpdate: { slug, categoryId, tagIds, previewImage, ...rest },
       postId,
       tagsToAdd,
       tagsToRemove,
@@ -140,8 +140,9 @@ export class PostRepository {
           where: { id: data.postId },
           data: {
             slug: newSlug,
-            ...rest,
             category: { connect: { id: categoryId } },
+            ...(previewImage ? {previewImageUrl: previewImage.url, previewImagePosition: previewImage.position}:{ previewImageUrl: null, previewImagePosition: {x: 0, y: 0}}),
+            ...rest,
           },
         })
       })

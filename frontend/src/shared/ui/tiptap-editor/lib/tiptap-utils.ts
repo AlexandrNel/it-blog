@@ -7,7 +7,6 @@ import { AllSelection, NodeSelection, Selection, TextSelection } from "@tiptap/p
 import { cellAround, CellSelection } from "@tiptap/pm/tables";
 import { findParentNodeClosestToPos, type Editor, type NodeWithPos } from "@tiptap/react";
 import { uploadImage } from "@/shared/api/uploadImage";
-import { API_URL } from "@/shared/config/env";
 import { toast } from "sonner";
 import { ApiError } from "@/shared/lib/api/api-error";
 
@@ -361,7 +360,7 @@ export const handleImageUpload = async (
 
 	try {
 		const data = await uploadImage(formData, onProgress, abortSignal);
-		return API_URL + data.url;
+		return data.url;
 	} catch (error) {
 		if (error instanceof ApiError) {
 			toast(error.message);

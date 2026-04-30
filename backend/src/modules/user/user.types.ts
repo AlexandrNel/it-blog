@@ -1,4 +1,4 @@
-import type { User as UserType } from '@/generated/prisma/client.js'
+import type { User as UserType } from '../../../generated/prisma/client.js'
 
 export type User = Omit<UserType, 'password'>
 export type Author = Pick<

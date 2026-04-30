@@ -84,7 +84,7 @@ export interface UploadOptions {
 function useFileUpload(options: UploadOptions) {
 	const [fileItems, setFileItems] = useState<FileItem[]>([]);
 
-	const uploadFile = async (file: File): Promise<string | null> => {
+	const uploadFile = async (file: File): Promise<{ file: File; url: string } | null> => {
 		if (file.size > options.maxSize) {
 			const error = new Error(
 				`File size exceeds maximum allowed (${options.maxSize / 1024 / 1024}MB)`,
@@ -130,7 +130,7 @@ function useFileUpload(options: UploadOptions) {
 					),
 				);
 				options.onSuccess?.(url);
-				return url;
+				return { file, url };
 			}
 
 			return null;
@@ -147,7 +147,7 @@ function useFileUpload(options: UploadOptions) {
 		}
 	};
 
-	const uploadFiles = async (files: File[]): Promise<string[]> => {
+	const uploadFiles = async (files: File[]): Promise<Array<{ file: File; url: string }>> => {
 		if (!files || files.length === 0) {
 			options.onError?.(new Error("No files to upload"));
 			return [];
@@ -165,7 +165,7 @@ function useFileUpload(options: UploadOptions) {
 		const results = await Promise.all(uploadPromises);
 
 		// Filter out null results (failed uploads)
-		return results.filter((url): url is string => url !== null);
+		return results.filter((result): result is { file: File; url: string } => result !== null);
 	};
 
 	const removeFileItem = (fileId: string) => {
@@ -314,7 +314,7 @@ const ImageUploadDragArea: React.FC<ImageUploadDragAreaProps> = ({ onFile, child
 	};
 
 	return (
-		// biome-ignore lint/a11y/noStaticElementInteractions: <explanation>
+		// biome-ignore lint/a11y/noStaticElementInteractions: drag-and-drop area handles pointer interaction
 		<div
 			className={`tiptap-image-upload-drag-area ${isDragActive ? "drag-active" : ""} ${isDragOver ? "drag-over" : ""}`}
 			onDragEnter={handleDragEnter}
@@ -347,7 +347,7 @@ const ImageUploadPreview: React.FC<ImageUploadPreviewProps> = ({ fileItem, onRem
 		const k = 1024;
 		const sizes = ["Bytes", "KB", "MB", "GB"];
 		const i = Math.floor(Math.log(bytes) / Math.log(k));
-		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+		return `${parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
 	};
 
 	return (
@@ -426,35 +426,43 @@ export const ImageUploadNode: React.FC<NodeViewProps> = (props) => {
 	const { fileItems, uploadFiles, removeFileItem, clearAllFiles } = useFileUpload(uploadOptions);
 
 	const handleUpload = async (files: File[]) => {
-		const urls = await uploadFiles(files);
+		const uploadedFiles = await uploadFiles(files);
+		const pos = props.getPos();
 
-		if (urls.length > 0) {
-			const pos = props.getPos();
-
-			if (isValidPosition(pos)) {
-				const imageNodes = urls.map((url, index) => {
-					const filename = files[index]?.name.replace(/\.[^/.]+$/, "") || "unknown";
-					return {
-						type: extension.options.type,
-						attrs: {
-							...extension.options,
-							src: url,
-							alt: filename,
-							title: filename,
-						},
-					};
-				});
-
-				props.editor
-					.chain()
-					.focus()
-					.deleteRange({ from: pos, to: pos + props.node.nodeSize })
-					.insertContentAt(pos, imageNodes)
-					.run();
-
-				focusNextNode(props.editor);
-			}
+		if (!isValidPosition(pos)) {
+			return;
 		}
+
+		if (uploadedFiles.length === 0) {
+			props.editor
+				.chain()
+				.focus()
+				.deleteRange({ from: pos, to: pos + props.node.nodeSize })
+				.run();
+			return;
+		}
+
+		const imageNodes = uploadedFiles.map(({ file, url }) => {
+			const filename = file.name.replace(/\.[^/.]+$/, "") || "unknown";
+			return {
+				type: extension.options.type,
+				attrs: {
+					...extension.options,
+					src: url,
+					alt: filename,
+					title: filename,
+				},
+			};
+		});
+
+		props.editor
+			.chain()
+			.focus()
+			.deleteRange({ from: pos, to: pos + props.node.nodeSize })
+			.insertContentAt(pos, imageNodes)
+			.run();
+
+		focusNextNode(props.editor);
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -3,7 +3,7 @@ import type { Post, Statistic } from "../model/post";
 export type PostRequest = {
 	content: string;
 	previewContent: string;
-	previewImage?: string;
+	previewImage: Post["previewImage"];
 	title: string;
 	desc: string;
 	tagIds: string[];

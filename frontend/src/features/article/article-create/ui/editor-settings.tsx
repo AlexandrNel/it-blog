@@ -13,8 +13,10 @@ export function EditorSettingsPage() {
 	return (
 		<Container>
 			<FormProvider {...form}>
-				<ArticleEditorForm />
-				<ArticleSettingsFooter />
+				<div className={"bg-card rounded-lg p-4 mt-2"}>
+					<ArticleEditorForm />
+					<ArticleSettingsFooter />
+				</div>
 			</FormProvider>
 		</Container>
 	);

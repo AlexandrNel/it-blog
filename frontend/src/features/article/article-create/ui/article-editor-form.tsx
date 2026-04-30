@@ -38,7 +38,7 @@ export function ArticleEditorForm({ className }: BaseProps) {
 	const form = useFormContext<FormSchemaType>();
 
 	return (
-		<div className={cn("bg-card rounded-lg p-4 mt-2", className)}>
+		<>
 			<FieldGroup>
 				<Controller
 					name="title"
@@ -166,6 +166,6 @@ export function ArticleEditorForm({ className }: BaseProps) {
 					}}
 				/>
 			</div>
-		</div>
+		</>
 	);
 }

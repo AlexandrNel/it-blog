@@ -35,7 +35,7 @@ export const PostCard = ({ className, post, header }: Props) => {
 						{post.title}
 					</Link>
 				</h2>
-				<ArticlePreview previewContent={post.previewContent} imageUrl={post.previewImageUrl} />
+				<ArticlePreview previewContent={post.previewContent} image={post.previewImage} />
 				<Button asChild className="my-1 mt-2 text-sm max-md:hidden" size={"xs"} variant={"outline"}>
 					<Link href={`/articles/${post.slug}`}>Читать далее</Link>
 				</Button>

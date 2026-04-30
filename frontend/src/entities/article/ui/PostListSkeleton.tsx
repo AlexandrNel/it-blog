@@ -9,7 +9,9 @@ export const PostListSkeleton = ({
 	return (
 		<div className={className}>
 			{[...Array(count)].map((_, i) => (
-				<PostCardSkeleton key={`post-card-skeleton-${i}`} />
+				<div key={`post-card-skeleton-${i}`} className="mb-2">
+					<PostCardSkeleton />
+				</div>
 			))}
 		</div>
 	);

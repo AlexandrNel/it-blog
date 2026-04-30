@@ -2,35 +2,41 @@ import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import type { BaseProps } from "@/shared/types/components";
 import { EditorContent } from "@/shared/ui/tiptap-editor";
-import { API_URL } from "@/shared/config/env";
+import type { Post } from "../model/post";
 
 interface Props extends BaseProps {
-  imageUrl?: string;
-  previewContent: string;
+	image?: Post["previewImage"];
+	previewContent: string;
 }
 
-export const ArticlePreview = ({ className, imageUrl, previewContent }: Props) => {
-  const url = API_URL! + imageUrl;
-  return (
-    <>
-      <div
-        className={cn("overflow-hidden relative w-full", className, {
-          "md:h-[300px] min-[450px]:h-[200px] h-[150px]": !!imageUrl,
-        })}
-      >
-        {imageUrl && (
-          <Image
-            unoptimized
-            fill
-            className="dark:brightness-75 mx-auto h-full w-auto object-cover rounded-lg"
-            src={url}
-            alt=""
-          />
-        )}
-      </div>
-      <div className={cn("max-h-[200px] overflow-hidden text-ellipsis line-clamp-6  ")}>
-        <EditorContent content={previewContent} />
-      </div>
-    </>
-  );
+export const ArticlePreview = ({ className, image, previewContent }: Props) => {
+	return (
+		<>
+			{image?.url && (
+				<div
+					className={cn(
+						"overflow-hidden relative w-full mb-3 rounded-lg bg-slate-50 dark:bg-[#272727]",
+						className,
+						{
+							"md:h-[400px] min-[450px]:h-[300px] h-[150px]": !!image?.url,
+						},
+					)}
+				>
+					<Image
+						unoptimized
+						fill
+						priority
+						loading="eager"
+						className="dark:brightness-75 mx-auto h-full w-auto object-cover "
+						style={{ objectPosition: `${image.position.x}% ${image.position.y}%` }}
+						src={image.url}
+						alt=""
+					/>
+				</div>
+			)}
+			<div className={cn("max-h-[200px] overflow-hidden text-ellipsis line-clamp-6  ")}>
+				<EditorContent content={previewContent} />
+			</div>
+		</>
+	);
 };
