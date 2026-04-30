@@ -9,7 +9,7 @@ import {
   type UpdateProfileRequestDto,
 } from './profile.dto.js'
 import { toAuthor } from '../user/index.js'
-import type { Prisma } from '@/generated/prisma/client.js'
+import type { Prisma } from '../../../generated/prisma/client.js'
 
 const profileSelect: Pick<
   Prisma.ProfileSelect,

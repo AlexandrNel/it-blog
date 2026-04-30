@@ -1,6 +1,6 @@
 import { prisma } from '@/shared/lib/prisma.js'
 import { ApiError } from '@/shared/lib/api-error.js'
-import type { Comment, Prisma } from '@/generated/prisma/client.js'
+import type { Comment, Prisma } from '../../../generated/prisma/client.js'
 import { buildCollapsedTree } from './utils/build-collapsed-tree.js'
 import {
   isPrismaError,

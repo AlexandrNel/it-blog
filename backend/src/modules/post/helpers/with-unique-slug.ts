@@ -1,4 +1,4 @@
-import { PrismaClientKnownRequestError } from '@/generated/prisma/internal/prismaNamespace.js'
+import { PrismaClientKnownRequestError } from '../../../../generated/prisma/internal/prismaNamespace.js'
 
 export async function withUniqueSlug<T>(
   base: string,
