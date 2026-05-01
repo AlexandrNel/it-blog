@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import type { BaseProps } from "@/shared/types/components";
 import { UserAvatar } from "./user-avatar";
-import type { PropsWithChildren } from "react";
+import { Fragment, type PropsWithChildren } from "react";
 import { formatUsername } from "../model/user.formatters";
 import Link from "next/link";
 import { Row } from "@/shared/ui/layout";
@@ -25,38 +25,50 @@ export const UserCard = ({ className, asLink = false, data }: PropsWithChildren<
 	const formattedDate = formatDate(date);
 	return (
 		<div className={cn("flex gap-2 items-center", className)}>
-			<UserAvatar className="size-11" name={fullName || username} avatarUrl={avatarUrl} />
+			<UserAvatar
+				className="md:size-11 size-10"
+				name={fullName || username}
+				avatarUrl={avatarUrl}
+			/>
 			<Row>
 				<div className="flex flex-col justify-between">
 					{fullName ? (
-						<>
+						<Fragment>
 							<div className="flex items-center gap-1.5">
 								<Wrapper asLink={asLink} href={`/profile/${username}`} className=" leading-tight">
-									<span className="text-[15px] font-medium ">{fullName}</span>
+									<FullName name={fullName} />
 								</Wrapper>
 								{formattedDate && (
-									<>
+									<Fragment>
 										<span className="text-[13px]  text-muted-foreground">·</span>
-										<span className="text-[13px] ">{formattedDate}</span>
-									</>
+										<PostDate date={formattedDate} />
+									</Fragment>
 								)}
 							</div>
-							<span className="text-[13px] text-muted-foreground">{formatUsername(username)}</span>
-						</>
+							<UserName name={formatUsername(username)} />
+						</Fragment>
 					) : (
-						<>
+						<Fragment>
 							<Wrapper asLink={asLink} href={`/profile/${username}`}>
-								<span className="text-[15px] font-medium text-primary">
-									{formatUsername(username)}
-								</span>
+								<FullName name={formatUsername(username)} />
 							</Wrapper>
-							{formattedDate && <span className="text-[13px] text-tertiary">{formattedDate}</span>}
-						</>
+							{formattedDate && <PostDate date={formattedDate} />}
+						</Fragment>
 					)}
 				</div>
 			</Row>
 		</div>
 	);
+};
+
+export const FullName = ({ name, className }: { name: string; className?: string }) => {
+	return <span className={cn("md:text-[15px] text-[14px] font-medium", className)}>{name}</span>;
+};
+export const UserName = ({ name, className }: { name: string; className?: string }) => {
+	return <span className={cn("text-[13px] text-muted-foreground", className)}>{name}</span>;
+};
+export const PostDate = ({ date, className }: { date: string; className?: string }) => {
+	return <span className={cn("md:text-[13px] text-xs", className)}>{date}</span>;
 };
 
 function Wrapper({

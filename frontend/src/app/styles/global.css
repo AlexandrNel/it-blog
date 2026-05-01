@@ -156,7 +156,7 @@
 
 @layer components {
   .card {
-    @apply bg-card text-card-foreground p-4 rounded-lg;
+    @apply bg-card text-card-foreground p-4 max-[426px]:p-2 rounded-lg;
   }
 }
 

@@ -1,11 +1,10 @@
 "use client";
 import { useAuthStore } from "@/entities/auth";
-import { SquarePen } from "lucide-react";
+import { Search, SquarePen } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { ProfileMenu } from "@/features/profile/profile-menu";
-import { SearchPost } from "@/features/article/article-search";
 
 export function HeaderMenu() {
 	const user = useAuthStore((state) => state.user);
@@ -14,7 +13,11 @@ export function HeaderMenu() {
 	const isEditPage = Boolean(path === "editor");
 	return (
 		<div className="flex gap-2 items-center">
-			<SearchPost />
+			<Button asChild variant={"outline"}>
+				<Link href={"/search"}>
+					<Search /> <span className="md:block hidden">Найти</span>
+				</Link>
+			</Button>
 			{user ? (
 				isEditPage ? (
 					<Button variant={"outline"} asChild>
@@ -25,7 +28,7 @@ export function HeaderMenu() {
 						<Button asChild variant={"outline"}>
 							<Link href={"/editor"}>
 								<SquarePen strokeWidth={1} />
-								Написать статью
+								<span className="md:block hidden">Написать статью</span>
 							</Link>
 						</Button>
 						<ProfileMenu />

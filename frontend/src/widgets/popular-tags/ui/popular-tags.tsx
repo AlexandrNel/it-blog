@@ -3,12 +3,11 @@ import { Column, Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Suspense } from "react";
 import { cookies } from "next/headers";
-type CookiesType = Awaited<ReturnType<typeof cookies>>;
+import { getHeadersWithCookies } from "@/shared/lib/api";
+
 async function PopularTagsFetch() {
-	// TODO: заменить передачу заголовков на функцию
-	const headers = new Headers();
-	const cookieRaw = (await cookies()).toString();
-	headers.set("Cookie", cookieRaw);
+	const cookie = await cookies();
+	const headers = getHeadersWithCookies(cookie);
 	const list = await getTagList({ headers });
 	return (
 		<div className="bg-card rounded-lg p-3">
