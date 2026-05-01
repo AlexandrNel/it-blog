@@ -9,13 +9,14 @@ import { ProfileHeroStats, ProfileHeroStatsSkeleton } from "@/widgets/profile/pr
 import { getHeadersWithCookies } from "@/shared/lib/api";
 import { type PropsWithChildren, Suspense } from "react";
 import { ProfileTabs } from "@/widgets/profile/profile-tabs";
+import { cookies } from "next/headers";
 
 export default async function ProfilePage({
 	params,
 	children,
 }: PropsWithChildren<LayoutProps<"/profile/[id]">>) {
-	const [param, headers] = await Promise.all([params, getHeadersWithCookies()]);
-	const meta = await getProfileMetaById(param.id, headers);
+	const [param, cookie] = await Promise.all([params, cookies()]);
+	const meta = await getProfileMetaById(param.id, getHeadersWithCookies(cookie));
 
 	if (!meta) return notFound();
 

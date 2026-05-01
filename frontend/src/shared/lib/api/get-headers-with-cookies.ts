@@ -1,10 +1,9 @@
-"use server";
-import { cookies } from "next/headers";
+import type { cookies as cookiesFunc } from "next/headers";
+export type CookiesType = Awaited<ReturnType<typeof cookiesFunc>>;
 
-export async function getHeadersWithCookies() {
-	const cookieStore = await cookies();
-	const cookieRaw = cookieStore.toString();
-	const localHeaders = new Headers();
-	localHeaders.set("Cookie", cookieRaw);
-	return localHeaders;
+export function getHeadersWithCookies(cookies: CookiesType) {
+	const cookieRaw = cookies.toString();
+	const headers = new Headers();
+	headers.set("Cookie", cookieRaw);
+	return headers;
 }

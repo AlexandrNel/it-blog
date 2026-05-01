@@ -2,9 +2,14 @@ import { getTagList, TagList } from "@/entities/tag";
 import { Column, Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Suspense } from "react";
-
+import { cookies } from "next/headers";
+type CookiesType = Awaited<ReturnType<typeof cookies>>;
 async function PopularTagsFetch() {
-	const list = await getTagList();
+	// TODO: заменить передачу заголовков на функцию
+	const headers = new Headers();
+	const cookieRaw = (await cookies()).toString();
+	headers.set("Cookie", cookieRaw);
+	const list = await getTagList({ headers });
 	return (
 		<div className="bg-card rounded-lg p-3">
 			<h2 className="text-lg font-bold mb-3">Популярные теги</h2>

@@ -1,4 +1,3 @@
-import { Column } from "@/shared/ui/layout";
 import { PopularTags } from "@/widgets/popular-tags";
 
 export function FeedSidebar() {

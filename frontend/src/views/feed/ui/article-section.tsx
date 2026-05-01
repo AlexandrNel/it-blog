@@ -23,6 +23,10 @@ export async function ArticleSection({
 					posts.data.map((p) => (
 						<li key={p.id} className="mb-2">
 							<PostCard header={<EditBlock postId={p.id} authorId={p.author.id} />} post={p} />
+							<PostCard header={<EditBlock postId={p.id} authorId={p.author.id} />} post={p} />
+							<PostCard header={<EditBlock postId={p.id} authorId={p.author.id} />} post={p} />
+							<PostCard header={<EditBlock postId={p.id} authorId={p.author.id} />} post={p} />
+							<PostCard header={<EditBlock postId={p.id} authorId={p.author.id} />} post={p} />
 						</li>
 					))
 				)}
