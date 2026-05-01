@@ -48,6 +48,10 @@
 }
 
 :root {
+  --container-width: 1120px;
+  --container-padding: 8px;
+  --header-hight: 56px;
+
   --radius: 0.625rem;
   --background: rgb(238, 238, 238);
   --foreground: oklch(0.145 0 0);
@@ -146,7 +150,7 @@
 
 @layer utilities {
   .container {
-    @apply max-w-280 w-full mx-auto px-4 max-md:px-2;
+    @apply max-w-(--container-width) px-(--container-padding) w-full mx-auto;
   }
 }
 

@@ -3,14 +3,10 @@ import Link from "next/link";
 import { Button } from "@/shared/ui/button";
 import { HeaderMenu } from "./header-menu";
 import { Suspense } from "react";
-import { HEADER_HIGHT } from "@/shared/lib/constants";
 
 export const Header = () => {
 	return (
-		<header
-			style={{ height: HEADER_HIGHT }}
-			className="flex justify-between rounded-lg bg-white items-center shadow mb-px sticky z-10 top-0"
-		>
+		<header className="flex justify-between lg:rounded-lg bg-white items-center border-b sticky z-10 top-0 h-(--header-hight)">
 			<div className={`container flex justify-between items-center`}>
 				{/* logo */}
 				<Link href={`/`}>

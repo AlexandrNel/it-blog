@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<QueryProvider>
 						<div className="min-h-screen flex flex-col">
 							<Header />
-							<main className="flex grow">{children}</main>
+							{children}
 							<Footer />
 						</div>
 						<Toaster />
