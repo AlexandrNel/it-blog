@@ -1,4 +1,4 @@
-import { getProfileById } from "@/entities/profile";
+import { getProfileById } from "@/entities/profile/index.server";
 import Link from "next/link";
 import { UserCard } from "@/entities/user";
 import { Card } from "@/shared/ui/card";
@@ -8,15 +8,18 @@ import { Button } from "@/shared/ui/button";
 import { ProfileConnectionsActions } from "@/features/profile/profile-connections";
 import { FollowButton } from "@/features/profile/follow-profile";
 import { CheckAuthButton } from "@/entities/auth";
+import { Suspense } from "react";
 
-export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner: boolean }) {
+type Props = { userId: string; isOwner: boolean };
+
+export async function _ProfileHero({ userId, isOwner }: Props) {
 	"use cache";
 	cacheLife("days");
 	cacheTag("profile", userId);
 	const { author, bio } = await getProfileById(userId);
 
 	return (
-		<Card>
+		<Card className="max-md:-mx-(--container-padding) max-md:rounded-none">
 			<Column className="gap-3">
 				<Row justify={"between"}>
 					<UserCard
@@ -45,3 +48,11 @@ export async function ProfileHero({ userId, isOwner }: { userId: string; isOwner
 		</Card>
 	);
 }
+
+export const ProfileHero = (props: Props) => {
+	return (
+		<Suspense>
+			<_ProfileHero {...props} />
+		</Suspense>
+	);
+};

@@ -6,14 +6,13 @@ import "./page-layout.scss";
 interface Props extends BasePropsWithChildren {
 	sidebar?: React.ReactNode;
 	position?: "left" | "right";
-	hideSidebar?: boolean;
 }
 
-export const PageLayout = async ({ className, sidebar, children, hideSidebar = false }: Props) => {
+export const PageLayout = async ({ className, sidebar, children }: Props) => {
 	return (
 		<main className={cn("main-layout container", className)}>
-			<section className="main-layout__section">{children}</section>
-			{!hideSidebar && <aside className={"main-layout__aside"}>{sidebar}</aside>}
+			<div className="main-layout__section">{children}</div>
+			{!!sidebar && <aside className={"main-layout__aside"}>{sidebar}</aside>}
 		</main>
 	);
 };

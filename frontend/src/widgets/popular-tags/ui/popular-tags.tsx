@@ -1,14 +1,11 @@
-import { getTagList, TagList } from "@/entities/tag";
+import { TagList } from "@/entities/tag";
+import { getTagList } from "@/entities/tag/index.server";
 import { Column, Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Suspense } from "react";
-import { cookies } from "next/headers";
-import { getHeadersWithCookies } from "@/shared/lib/api";
 
 async function PopularTagsFetch() {
-	const cookie = await cookies();
-	const headers = getHeadersWithCookies(cookie);
-	const list = await getTagList({ headers });
+	const list = await getTagList();
 	return (
 		<div className="bg-card rounded-lg p-3">
 			<h2 className="text-lg font-bold mb-3">Популярные теги</h2>

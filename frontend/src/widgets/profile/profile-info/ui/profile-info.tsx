@@ -1,4 +1,4 @@
-import { getProfileById } from "@/entities/profile";
+import { getProfileById } from "@/entities/profile/index.server";
 import { Card } from "@/shared/ui/card";
 import { GitHubIcon } from "@/shared/ui/icons";
 import { Column, Row } from "@/shared/ui/layout";
@@ -7,7 +7,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export async function ProfileSidebar({ userId }: { userId: string }) {
+export async function ProfileInfo({ userId }: { userId: string }) {
 	"use cache";
 	cacheLife("days");
 	cacheTag("profile", userId);

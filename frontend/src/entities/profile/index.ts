@@ -13,8 +13,3 @@ export {
 	useProfileConnectionsSummary,
 	profileKeys,
 } from "./model/profile-queries";
-export {
-	getProfileById,
-	getProfileStatisticById,
-	getProfileMetaById,
-} from "./api/server";

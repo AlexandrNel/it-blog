@@ -1,9 +1,15 @@
-import { getProfileStatisticById } from "@/entities/profile";
+import { getProfileStatisticById } from "@/entities/profile/index.server";
 import { Card } from "@/shared/ui/card";
 import { Column, Grid } from "@/shared/ui/layout";
 import { cacheLife, cacheTag } from "next/cache";
+import { Suspense } from "react";
+import { ProfileHeroStatsSkeleton } from "./profile-hero-stats-skeleton";
 
-export async function ProfileHeroStats({ userId }: { userId: string }) {
+type Props = {
+	userId: string;
+};
+
+export async function _ProfileHeroStats({ userId }: Props) {
 	"use cache";
 	cacheLife("minutes");
 	cacheTag("profile", userId, "statistic");
@@ -31,5 +37,13 @@ const StatChip = ({ text, subText, label }: { text: string; subText?: string; la
 			</p>
 			<span className="text-base text-muted-foreground">{label}</span>
 		</Column>
+	);
+};
+
+export const ProfileHeroStats = (props: Props) => {
+	return (
+		<Suspense fallback={<ProfileHeroStatsSkeleton />}>
+			<_ProfileHeroStats {...props} />
+		</Suspense>
 	);
 };

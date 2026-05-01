@@ -50,7 +50,7 @@
 :root {
   --container-width: 1120px;
   --container-padding: 8px;
-  --header-hight: 56px;
+  --header-height: 56px;
 
   --radius: 0.625rem;
   --background: rgb(238, 238, 238);
@@ -178,7 +178,7 @@
   }
 
   h1 {
-    @apply text-2xl;
+    @apply md:text-2xl text-xl;
   }
   h2 {
     @apply text-xl;

@@ -2,7 +2,7 @@ import { Card } from "@/shared/ui/card";
 import { Column, Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 
-export function ProfileSidebarSkeleton() {
+export function ProfileInfoSkeleton() {
 	return (
 		<Card>
 			<Column gap={"lg"}>

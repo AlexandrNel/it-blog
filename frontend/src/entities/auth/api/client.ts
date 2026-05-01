@@ -1,4 +1,3 @@
-"use client";
 import { BaseAPI } from "@/shared/api/base-api";
 import type { User } from "@/entities/user";
 import type { LoginRequest, RegisterRequest } from "./types";
