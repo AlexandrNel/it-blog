@@ -16,7 +16,7 @@ export const ArticlePreview = ({ className, image, previewContent }: Props) => {
 				<div
 					className={cn(
 						"overflow-hidden relative w-full md:mb-3 mb-2 rounded-lg bg-slate-50 dark:bg-[#272727]",
-						{ "md:h-[400px] min-[450px]:h-[300px] h-[150px]": !!image?.url },
+						{ "pb-[50%] min-h-38": !!image?.url },
 						className,
 					)}
 				>

@@ -20,19 +20,17 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-}
-
 @media screen and (max-width: 1024px) {
   .main-layout {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
     &__aside {
       order: -1;
       position: static;
       margin: 0 calc(var(--container-padding) * -1);
     }
     &__section {
+      min-width: 0;
       width: 100%;
       order: 1;
     }
