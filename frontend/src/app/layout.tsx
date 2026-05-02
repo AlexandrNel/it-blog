@@ -2,7 +2,6 @@ import type React from "react";
 import { Roboto } from "next/font/google";
 import "./styles/global.css";
 import { Header } from "@/widgets/Header";
-import { Footer } from "@/widgets/Footer";
 import { Toaster } from "@/shared/ui/sonner";
 import { GettingUser } from "@/entities/auth";
 import { QueryProvider } from "./providers/query-provider";
@@ -16,14 +15,11 @@ const roboto = Roboto({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="ru" className={roboto.className}>
-			<body>
+			<body className="min-h-screen flex flex-col">
 				<NuqsAdapter>
 					<QueryProvider>
-						<div className="min-h-screen flex flex-col">
-							<Header />
-							{children}
-							<Footer />
-						</div>
+						<Header />
+						{children}
 						<Toaster />
 						<GettingUser />
 					</QueryProvider>

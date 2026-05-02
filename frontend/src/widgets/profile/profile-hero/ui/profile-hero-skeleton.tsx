@@ -4,19 +4,22 @@ import { Skeleton } from "@/shared/ui/skeleton";
 
 export function ProfileHeroSkeleton() {
 	return (
-		<Card>
-			<Column>
-				<Row justify={"between"}>
-					<Row>
-						<Skeleton className="size-9 rounded-full" />
-						<Skeleton className="w-[80px] h-5" />
-					</Row>
-					<Row>
+		<div>
+			<Skeleton className="min-h-35 pb-[30%] flex" />
+			<Card className="relative">
+				<Column>
+					<div className="rounded-full bg-card p-1 absolute -top-7.5">
+						<Skeleton className="size-15 rounded-full " />
+					</div>
+					<Row justify={"end"}>
 						<Skeleton className="w-[190px] h-9" />
 					</Row>
-				</Row>
-				<Skeleton className="w-full h-15" />
-			</Column>
-		</Card>
+					<Row>
+						<Skeleton className="w-[80px] h-5" />
+					</Row>
+					<Skeleton className="w-full h-15" />
+				</Column>
+			</Card>
+		</div>
 	);
 }

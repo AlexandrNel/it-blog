@@ -5,7 +5,7 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 	const { tag } = await params;
 	const tagValue = decodeURIComponent(tag);
 	return (
-		<div className="container mt-2">
+		<div className="mt-2">
 			<div className="">
 				<div className="mb-2 text-center">
 					<h2 className="text-2xl font-bold">Статьи по тэгу: {tagValue}</h2>

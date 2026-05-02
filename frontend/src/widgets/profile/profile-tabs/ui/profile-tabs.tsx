@@ -7,38 +7,44 @@ import { Suspense } from "react";
 type LinkItem = {
 	label: string;
 	path: string;
+	isMobile?: boolean;
 };
 
-const LINKS = {
+type LinkKey = "POSTS" | "COMMENTS" | "PROFILE";
+
+const LINKS: Record<LinkKey, LinkItem> = {
 	POSTS: { label: "Статьи", path: "" },
 	COMMENTS: { label: "Комментарии", path: "/comments" },
+	PROFILE: { label: "Профиль", path: "/about", isMobile: true },
 };
-
-type LinksKey = keyof typeof LINKS;
 
 type Props = { userId: string };
 
 export async function _Tabs({ userId }: Props) {
 	const stats = await getProfileStatisticById(userId);
-	const statsMap = {
-		POSTS: stats?.publishedPosts ?? "",
-		COMMENTS: stats?.comments ?? "",
+	const statsMap: Record<LinkKey, string> = {
+		POSTS: stats?.publishedPosts.toString() ?? "",
+		COMMENTS: stats?.comments.toString() ?? "",
+		PROFILE: "",
 	};
 	return (
-		<Card>
+		<Card className="max-md:-mx-(--container-padding) max-md:rounded-none max-md:mb-2">
 			<Row className="flex-nowrap overflow-auto">
 				{Object.entries(LINKS).map(([key, value]) => {
-					const label = `${value.label} ${statsMap[key as LinksKey]}`;
-					return <TabWithCount key={key} data={{ ...value, label }} userId={userId} />;
+					const label = `${value.label} ${statsMap[key as LinkKey]}`;
+					return (
+						<TabItem
+							className={value.isMobile ? "lg:hidden" : ""}
+							key={key}
+							text={label}
+							href={`/profile/${userId}${value.path}`}
+						/>
+					);
 				})}
 			</Row>
 		</Card>
 	);
 }
-
-const TabWithCount = async ({ userId, data }: { userId: string; data: LinkItem }) => {
-	return <TabItem text={data.label} href={`/profile/${userId}${data.path}`} />;
-};
 
 export const Tabs = (props: Props) => {
 	return (

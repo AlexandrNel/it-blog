@@ -16,8 +16,8 @@ export async function ProfileInfo({ userId }: { userId: string }) {
 		<Card>
 			<Column gap={"lg"}>
 				<Column gap={"sm"}>
-					<h2 className="text-xl font-bold">О профиле</h2>
-					<p className="text-muted-foreground leading-tight">
+					<h2>О профиле</h2>
+					<p className="text-muted-foreground max-lg:text-sm leading-tight">
 						Краткая информация и публичные ссылки автора
 					</p>
 				</Column>

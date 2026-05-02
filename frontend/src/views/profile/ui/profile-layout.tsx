@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import { ViewTransition, type PropsWithChildren } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ProfileVisibility } from "./profile-visibility";
@@ -27,7 +27,7 @@ export default async function ProfilePage({
 	return (
 		<PageLayout sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}>
 			<ProfileVisibility meta={meta}>
-				<Column>
+				<Column className="max-md:gap-0 lg:mt-0 md:mt-2">
 					<ProfileHero userId={param.id} isOwner={meta.isOwner} />
 					{!isMobile && <ProfileStats userId={param.id} />}
 					<ProfileTabs userId={param.id} />

@@ -181,7 +181,7 @@
     @apply md:text-2xl text-xl;
   }
   h2 {
-    @apply text-xl;
+    @apply md:text-xl text-base;
   }
   h3 {
     @apply text-lg;

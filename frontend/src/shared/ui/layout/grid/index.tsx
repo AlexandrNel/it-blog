@@ -22,7 +22,7 @@ const gridVariants = cva("grid", {
 		columns: 3,
 		gap: "md",
 		justify: "start",
-		align: "stretch",
+		align: "start",
 	},
 });
 
