@@ -12,6 +12,23 @@ export async function generateMetadata(props: PageProps<"/articles/[id]">): Prom
 		title: post.title,
 		description: post.desc,
 		publisher: post.author.username,
+		alternates: {
+			canonical: `/articles/${id}`,
+		},
+		openGraph: {
+			images: post.previewImage?.url,
+			type: "article",
+			title: post.title,
+			description: post.desc,
+			url: `/articles/${id}`,
+			publishedTime: new Date(post.createdAt).toISOString(),
+			authors: [post.author.username],
+		},
+		twitter: {
+			images: post.previewImage?.url,
+			title: post.title,
+			description: post.desc,
+		},
 		other: {
 			date: new Date(post.createdAt).toUTCString(),
 		},

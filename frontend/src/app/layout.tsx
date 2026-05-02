@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type React from "react";
 import { Roboto } from "next/font/google";
 import "./styles/global.css";
@@ -11,6 +12,43 @@ const roboto = Roboto({
 	subsets: ["latin", "cyrillic"],
 	weight: ["400", "500", "600", "700"],
 });
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+
+export const metadata: Metadata = {
+	metadataBase: new URL(siteUrl),
+	title: {
+		default: "IT Blog",
+		template: "%s | IT Blog",
+	},
+	description: "IT Blog про разработку, практики и инженерные заметки.",
+	applicationName: "IT Blog",
+	keywords: ["it blog", "frontend", "backend", "web development", "программирование"],
+	alternates: {
+		canonical: "/",
+	},
+	robots: {
+		index: true,
+		follow: true,
+	},
+	openGraph: {
+		type: "website",
+		locale: "ru_RU",
+		siteName: "IT Blog",
+		title: "IT Blog",
+		description: "IT Blog про разработку, практики и инженерные заметки.",
+		url: "/",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "IT Blog",
+		description: "IT Blog про разработку, практики и инженерные заметки.",
+	},
+	icons: {
+		// TODO: положи свой favicon в `frontend/public/favicon.ico`.
+		icon: "/favicon.ico",
+	},
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
