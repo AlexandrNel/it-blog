@@ -1,44 +1,40 @@
+import { ViewTransition, type PropsWithChildren } from "react";
 import { notFound } from "next/navigation";
-import { ProfileSidebar, ProfileSidebarSkeleton } from "@/widgets/profile/profile-sidebar";
-import { ProfileHero, ProfileHeroSkeleton } from "@/widgets/profile/profile-hero";
+import dynamic from "next/dynamic";
 import { ProfileVisibility } from "./profile-visibility";
-import { getProfileMetaById } from "@/entities/profile/";
-import { Column } from "@/shared/ui/layout";
-import { PageLayout } from "@/shared/layouts/PageLayout";
-import { ProfileHeroStats, ProfileHeroStatsSkeleton } from "@/widgets/profile/profile-hero-stats";
-import { getHeadersWithCookies } from "@/shared/lib/api";
-import { type PropsWithChildren, Suspense } from "react";
+import { ProfileHero } from "@/widgets/profile/profile-hero";
 import { ProfileTabs } from "@/widgets/profile/profile-tabs";
+import { getProfileMetaById } from "@/entities/profile/index.server";
+import { Column } from "@/shared/ui/layout";
+import { PageLayout } from "@/shared/layouts/page-layout";
+import { isMobileRequest } from "@/shared/lib/utils/server/is-mobile-request";
+
+const ProfileSidebar = dynamic(() => import("./profile-sidebar").then((mod) => mod.ProfileSidebar));
+
+const ProfileStats = dynamic(() =>
+	import("@/widgets/profile/profile-hero-stats").then((mod) => mod.ProfileHeroStats),
+);
 
 export default async function ProfilePage({
 	params,
 	children,
 }: PropsWithChildren<LayoutProps<"/profile/[id]">>) {
-	const [param, headers] = await Promise.all([params, getHeadersWithCookies()]);
-	const meta = await getProfileMetaById(param.id, headers);
+	const param = await params;
+	const [meta, isMobile] = await Promise.all([getProfileMetaById(param.id), isMobileRequest()]);
 
 	if (!meta) return notFound();
-
+	const isHide = meta.isBlocked || !meta.isPublic || !isMobile;
 	return (
 		<PageLayout
-			hideSidebar={meta.isBlocked || !meta.isPublic}
-			sidebar={
-				<Suspense fallback={<ProfileSidebarSkeleton />}>
-					<ProfileSidebar userId={param.id} />
-				</Suspense>
-			}
+			withoutPaddingTop
+			className="md:mt-2"
+			sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}
 		>
 			<ProfileVisibility meta={meta}>
-				<Column>
-					<Suspense fallback={<ProfileHeroSkeleton />}>
-						<ProfileHero userId={param.id} isOwner={meta.isOwner} />
-					</Suspense>
-					<Suspense fallback={<ProfileHeroStatsSkeleton />}>
-						<ProfileHeroStats userId={param.id} />
-					</Suspense>
-					<Suspense>
-						<ProfileTabs userId={param.id} />
-					</Suspense>
+				<Column className="max-md:gap-0">
+					<ProfileHero userId={param.id} isOwner={meta.isOwner} />
+					{!isMobile && <ProfileStats userId={param.id} />}
+					<ProfileTabs userId={param.id} />
 					{children}
 				</Column>
 			</ProfileVisibility>

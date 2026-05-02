@@ -23,9 +23,9 @@ export const PostCard = ({ className, post, header }: Props) => {
 	return (
 		<div className={cardClasses}>
 			{header}
-			<div className="px-5 py-3  mt-auto  rounded-lg">
-				<ArticleInfo author={post.author} createdAt={post.createdAt} />
-				<h2 className="font-bold text-xl transition-all hover:underline w-max mt-2 mb-2">
+			<div className="md:p-5 p-2  mt-auto  rounded-lg">
+				<ArticleInfo className="z-5 relative" author={post.author} createdAt={post.createdAt} />
+				<h2 className="font-bold md:text-xl text-lg transition-all hover:underline w-max my-2">
 					<Link
 						className={cn(
 							"max-md:before:absolute max-md:before:content-[''] max-md:before:inset-0 max-md:before:z-1 max-md:before:block max-md:before:w-full max-md:before:h-full",

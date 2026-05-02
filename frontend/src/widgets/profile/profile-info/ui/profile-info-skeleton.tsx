@@ -1,10 +1,11 @@
+import type { BaseProps } from "@/shared/types/components";
 import { Card } from "@/shared/ui/card";
 import { Column, Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 
-export function ProfileSidebarSkeleton() {
+export function ProfileInfoSkeleton({ className }: BaseProps) {
 	return (
-		<Card>
+		<Card className={className}>
 			<Column gap={"lg"}>
 				<Column gap={"sm"}>
 					<Skeleton className="h-7 w-[50%]" />

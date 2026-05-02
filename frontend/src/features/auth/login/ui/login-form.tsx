@@ -7,15 +7,21 @@ import { useLogin } from "@/entities/auth";
 import { applyApiFieldErrors } from "@/shared/lib/zod";
 import { FieldError, FieldGroup } from "@/shared/ui/field";
 import { FormField, FormInputPassword } from "@/shared/ui/form-components";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LoginSchema, type LoginValuesType } from "../model/login-schema";
 import { Separator } from "@/shared/ui/separator";
 import { cn } from "@/shared/lib/utils";
 import type { BaseProps } from "@/shared/types/components";
 import { Heading } from "@/shared/ui/heading";
 
-export function LoginForm({ className }: BaseProps) {
+type Props = BaseProps & {
+	onLogin?: () => void;
+	onError?: () => void;
+};
+
+export function LoginForm({ className, onLogin, onError }: Props) {
 	const router = useRouter();
+	const pathname = usePathname();
 	const { mutate, error, isPending } = useLogin();
 	const {
 		register,
@@ -23,12 +29,19 @@ export function LoginForm({ className }: BaseProps) {
 		setError,
 		formState: { errors },
 	} = useForm<LoginValuesType>({ resolver: zodResolver(LoginSchema) });
+
 	const onSubmit: SubmitHandler<LoginValuesType> = async (data) => {
 		mutate(data, {
 			onError: (err) => {
+				onError?.();
 				applyApiFieldErrors(err, setError);
 			},
-			onSuccess: () => router.push("/"),
+			onSuccess: () => {
+				onLogin?.();
+				if (pathname === "/login") {
+					router.push("/");
+				} else router.refresh();
+			},
 		});
 	};
 

@@ -11,8 +11,8 @@ const columnVariants = cva("flex flex-col", {
 		align: alignVariants,
 	},
 	defaultVariants: {
-		justify: "start",
-		align: "stretch",
+		justify: "none",
+		align: "none",
 		gap: "md",
 	},
 });

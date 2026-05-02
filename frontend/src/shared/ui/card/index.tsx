@@ -3,16 +3,13 @@ import type { BaseProps } from "@/shared/types/components";
 import type { HTMLAttributes, PropsWithChildren } from "react";
 
 export function Card({
-  children,
-  className,
-  ...attributes
+	children,
+	className,
+	...attributes
 }: PropsWithChildren<BaseProps & HTMLAttributes<HTMLDivElement>>) {
-  return (
-    <div
-      className={cn("bg-card text-foreground p-4 rounded-lg", className)}
-      {...attributes}
-    >
-      {children}
-    </div>
-  );
+	return (
+		<div className={cn("card", className)} {...attributes}>
+			{children}
+		</div>
+	);
 }

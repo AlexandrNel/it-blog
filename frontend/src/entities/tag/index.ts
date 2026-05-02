@@ -1,4 +1,3 @@
-export { getTagList } from "./api/server";
 export * from "./model/tag";
 export { Tag } from "./ui/Tag";
 export { TagList } from "./ui/TagList";

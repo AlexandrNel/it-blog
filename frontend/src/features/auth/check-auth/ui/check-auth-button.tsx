@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: <explanation> */
 "use client";
 
-import { useEffect, useRef, useState, type PropsWithChildren } from "react";
+import { useCallback, useEffect, useRef, useState, type PropsWithChildren } from "react";
 import { useAuthStore } from "../../../../entities/auth/model/auth-store";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/shared/ui/dialog";
 import { LoginForm } from "@/features/auth/login";
@@ -12,17 +12,24 @@ export const CheckAuthButton = ({ children }: Props) => {
 	const { user } = useAuthStore();
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
+
+	const handleClick = useCallback((e: PointerEvent) => {
+		if (!user) {
+			e.preventDefault();
+			e.stopPropagation();
+			setIsOpen(true);
+		}
+	}, []);
+
+	const onSuccessAuth = () => {
+		setIsOpen(false);
+		wrapperRef.current?.removeEventListener("click", handleClick);
+	};
+
 	useEffect(() => {
 		const el = wrapperRef.current;
 		if (!el) return;
 
-		const handleClick = (e: PointerEvent) => {
-			if (!user) {
-				e.preventDefault();
-				e.stopPropagation();
-				setIsOpen(true);
-			}
-		};
 		el.addEventListener("click", handleClick);
 
 		return () => {
@@ -35,7 +42,7 @@ export const CheckAuthButton = ({ children }: Props) => {
 			<div ref={wrapperRef}>{children}</div>
 			<DialogContent>
 				<DialogTitle hidden>Авторизация</DialogTitle>
-				<LoginForm />
+				<LoginForm onLogin={onSuccessAuth} />
 				<DialogDescription hidden></DialogDescription>
 			</DialogContent>
 		</Dialog>

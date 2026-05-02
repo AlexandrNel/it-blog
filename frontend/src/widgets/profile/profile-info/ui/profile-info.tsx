@@ -1,4 +1,4 @@
-import { getProfileById } from "@/entities/profile";
+import { getProfileById } from "@/entities/profile/index.server";
 import { Card } from "@/shared/ui/card";
 import { GitHubIcon } from "@/shared/ui/icons";
 import { Column, Row } from "@/shared/ui/layout";
@@ -7,7 +7,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export async function ProfileSidebar({ userId }: { userId: string }) {
+export async function ProfileInfo({ userId }: { userId: string }) {
 	"use cache";
 	cacheLife("days");
 	cacheTag("profile", userId);
@@ -16,8 +16,8 @@ export async function ProfileSidebar({ userId }: { userId: string }) {
 		<Card>
 			<Column gap={"lg"}>
 				<Column gap={"sm"}>
-					<h2 className="text-xl font-bold">О профиле</h2>
-					<p className="text-muted-foreground leading-tight">
+					<h2>О профиле</h2>
+					<p className="text-muted-foreground max-lg:text-sm leading-tight">
 						Краткая информация и публичные ссылки автора
 					</p>
 				</Column>

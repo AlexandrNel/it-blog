@@ -1,4 +1,5 @@
-import { getTagList, TagList } from "@/entities/tag";
+import { TagList } from "@/entities/tag";
+import { getTagList } from "@/entities/tag/index.server";
 import { Column, Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Suspense } from "react";

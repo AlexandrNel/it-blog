@@ -1,9 +1,10 @@
+"server-only";
 import { serverSafeFetch } from "@/shared/api/server";
 import type { Tag } from "../model/tag";
-import { getHeadersWithCookies } from "@/shared/lib/api";
+import { cookies } from "next/headers";
 
 export const getTagList = async (): Promise<Tag[]> => {
-	const headers = await getHeadersWithCookies();
-	const res = await serverSafeFetch<Tag[]>(`/tags/popular`, { headers });
+	const cookieRaw = (await cookies()).toString();
+	const res = await serverSafeFetch<Tag[]>(`/tags/popular`, { headers: { Cookie: cookieRaw } });
 	return res.data ?? [];
 };

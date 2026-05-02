@@ -5,7 +5,7 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 	const { tag } = await params;
 	const tagValue = decodeURIComponent(tag);
 	return (
-		<div className="container mt-2">
+		<div className="mt-2">
 			<div className="">
 				<div className="mb-2 text-center">
 					<h2 className="text-2xl font-bold">Статьи по тэгу: {tagValue}</h2>
@@ -20,5 +20,7 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 
 async function FetchTagsPosts({ tag }: { tag: string }) {
 	const articles = await getPostsByTag(tag);
-	return <PostList classNameWrapper="grid grid-cols-2 gap-1" postList={articles} />;
+	return (
+		<PostList classNameWrapper="lg:grid lg:grid-cols-2 flex flex-col gap-1" postList={articles} />
+	);
 }

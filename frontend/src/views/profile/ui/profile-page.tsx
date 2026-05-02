@@ -1,13 +1,11 @@
 import { notFound } from "next/navigation";
 import { ProfilePosts, ProfilePostsSkeleton } from "@/widgets/profile/profile-posts";
-import { getProfileMetaById } from "@/entities/profile/";
-
-import { getHeadersWithCookies } from "@/shared/lib/api";
+import { getProfileMetaById } from "@/entities/profile/index.server";
 import { Suspense } from "react";
 
 export default async function ProfilePage({ params }: PageProps<"/articles/[id]">) {
-	const [param, headers] = await Promise.all([params, getHeadersWithCookies()]);
-	const meta = await getProfileMetaById(param.id, headers);
+	const param = await params;
+	const meta = await getProfileMetaById(param.id);
 
 	if (!meta) return notFound();
 

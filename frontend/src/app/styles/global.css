@@ -48,6 +48,10 @@
 }
 
 :root {
+  --container-width: 1120px;
+  --container-padding: 8px;
+  --header-height: 56px;
+
   --radius: 0.625rem;
   --background: rgb(238, 238, 238);
   --foreground: oklch(0.145 0 0);
@@ -146,13 +150,13 @@
 
 @layer utilities {
   .container {
-    @apply max-w-280 w-full mx-auto px-4 max-md:px-2;
+    @apply max-w-(--container-width) px-(--container-padding) w-full mx-auto;
   }
 }
 
 @layer components {
   .card {
-    @apply bg-card text-card-foreground p-4 rounded-lg;
+    @apply bg-card text-card-foreground p-4 max-[426px]:p-2 rounded-lg;
   }
 }
 
@@ -174,10 +178,10 @@
   }
 
   h1 {
-    @apply text-2xl;
+    @apply md:text-2xl text-xl;
   }
   h2 {
-    @apply text-xl;
+    @apply md:text-xl text-base;
   }
   h3 {
     @apply text-lg;
