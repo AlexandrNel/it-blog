@@ -1,7 +1,7 @@
 import { PostListSkeleton } from "@/entities/article";
 import { Suspense } from "react";
 import { ArticleSection } from "./article-section";
-import { PageLayout } from "@/shared/layouts/PageLayout";
+import { PageLayout } from "@/shared/layouts/page-layout";
 import { FeedSidebar } from "./feed-sidebar";
 import { SortToolbar, SortToolbarSkeleton } from "@/features/article/article-sort";
 

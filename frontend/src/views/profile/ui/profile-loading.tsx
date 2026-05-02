@@ -1,4 +1,4 @@
-import { PageLayout } from "@/shared/layouts/PageLayout";
+import { PageLayout } from "@/shared/layouts/page-layout";
 import { Column } from "@/shared/ui/layout";
 import { ProfileInfoSkeleton } from "@/widgets/profile/profile-info";
 import { ProfileHeroSkeleton } from "@/widgets/profile/profile-hero";

@@ -22,8 +22,8 @@ export async function _ProfileHero({ userId, isOwner }: Props) {
 
 	return (
 		<div>
-			<ProfileCover className="max-md:-mx-(--container-padding)" />
-			<Card className="relative max-md:-mx-(--container-padding) max-md:rounded-none rounded-t-none max-md:border-b">
+			<ProfileCover className="max-md:-mx-(--container-padding) max-md:rounded-none " />
+			<Card className="relative max-md:-mx-(--container-padding) max-md:rounded-none  max-md:border-b">
 				<div className="bg-card p-1 rounded-full absolute -top-7.5 ">
 					<UserAvatar
 						className="size-15"

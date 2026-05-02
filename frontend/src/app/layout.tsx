@@ -15,11 +15,13 @@ const roboto = Roboto({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="ru" className={roboto.className}>
-			<body className="min-h-screen flex flex-col">
+			<body>
 				<NuqsAdapter>
 					<QueryProvider>
-						<Header />
-						{children}
+						<div className="min-h-screen grid grid-rows-[max-content] grid-cols-1 w-full max-w-full ">
+							<Header />
+							{children}
+						</div>
 						<Toaster />
 						<GettingUser />
 					</QueryProvider>

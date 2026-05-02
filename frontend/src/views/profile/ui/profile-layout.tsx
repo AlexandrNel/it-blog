@@ -6,7 +6,7 @@ import { ProfileHero } from "@/widgets/profile/profile-hero";
 import { ProfileTabs } from "@/widgets/profile/profile-tabs";
 import { getProfileMetaById } from "@/entities/profile/index.server";
 import { Column } from "@/shared/ui/layout";
-import { PageLayout } from "@/shared/layouts/PageLayout";
+import { PageLayout } from "@/shared/layouts/page-layout";
 import { isMobileRequest } from "@/shared/lib/utils/server/is-mobile-request";
 
 const ProfileSidebar = dynamic(() => import("./profile-sidebar").then((mod) => mod.ProfileSidebar));
@@ -25,9 +25,13 @@ export default async function ProfilePage({
 	if (!meta) return notFound();
 	const isHide = meta.isBlocked || !meta.isPublic || !isMobile;
 	return (
-		<PageLayout sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}>
+		<PageLayout
+			withoutPaddingTop
+			className="md:mt-2"
+			sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}
+		>
 			<ProfileVisibility meta={meta}>
-				<Column className="max-md:gap-0 lg:mt-0 md:mt-2">
+				<Column className="max-md:gap-0">
 					<ProfileHero userId={param.id} isOwner={meta.isOwner} />
 					{!isMobile && <ProfileStats userId={param.id} />}
 					<ProfileTabs userId={param.id} />
