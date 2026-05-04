@@ -7,6 +7,7 @@ import {
   followRouter,
   postRouter,
   profileRouter,
+  seoRouter,
   tagRouter,
   uploadRouter,
   userRouter,
@@ -36,13 +37,13 @@ app.use(
   postRouter,
   commentsRouter,
   profileRouter,
+  seoRouter,
   tagRouter,
   categoryRouter,
   userRouter,
   followRouter,
-  uploadRouter,
+  uploadRouter
 )
-
 
 app.use(errorMiddleware)
 
