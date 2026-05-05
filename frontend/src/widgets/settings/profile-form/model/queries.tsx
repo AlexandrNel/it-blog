@@ -6,7 +6,7 @@ import { updateProfile } from "@/shared/actions/update-profile";
 export const useUpdateProfile = () => {
 	return useMutation({
 		mutationFn: ProfileSettingsAPI.updateProfile,
-		onSuccess: async () => updateProfile(),
+		onSuccess: async (_, vars) => updateProfile(vars.userId),
 		mutationKey: SETTINGS_KEY.all,
 	});
 };

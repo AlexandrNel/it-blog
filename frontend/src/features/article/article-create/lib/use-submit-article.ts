@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import { toast } from "sonner";
 
-import { Post, PostAPI } from "@/entities/article";
+import { type Post, PostAPI } from "@/entities/article";
 import { queryTags } from "@/entities/tag/api/query";
 import { isApiError } from "@/shared/lib/api/api-error";
 import { useEditorStore } from "../model/use-editor-store";
@@ -51,7 +51,6 @@ export function useSubmitArticle() {
 				newImage = null;
 			}
 		}
-		console.log(newImage, previewImage);
 
 		const fetchData = {
 			...rest,

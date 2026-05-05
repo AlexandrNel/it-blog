@@ -1,6 +1,6 @@
-import { getTagForCache } from "@/entities/article/model/getTagForCache";
 import { auth } from "@/entities/auth/api/server";
 import { serverSafeFetch } from "@/shared/api/server";
+import { CACHE_TAGS } from "@/shared/config/cache-keys";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
@@ -13,7 +13,7 @@ export async function POST(_: Request, ctx: RouteContext<"/api/posts/[id]/revali
 		headers: { Cookie: cookieRaw },
 	});
 	if (data?.canEdit) {
-		revalidateTag(getTagForCache(id), "max");
+		revalidateTag(CACHE_TAGS.post(id), "max");
 		return Response.json({ success: true });
 	}
 	return new Response(undefined, { status: 403 });
