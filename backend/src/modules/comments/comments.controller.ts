@@ -7,13 +7,13 @@ import { isIdOrUsername } from '@/shared/helpers/username-or-id.js'
 export class CommentController {
   constructor(private service: CommentService) {}
 
-  getByPostId = asyncHandler(async (req, res) => {
-    const postId = requireParam(req, 'postId', 'Не передан postId')
-
-    res.json(await this.service.getByPostId(postId))
+  getCommentTreeByPostSlug = asyncHandler(async (req, res) => {
+    const slug = requireParam(req, 'slug', 'Не передан slug')
+    res.json(await this.service.getCommentTreeByPostSlug(slug))
   })
+
   getBySlug = asyncHandler(async (req, res) => {
-    const slug = requireParam(req, 'slug', 'Не передан postId')
+    const slug = requireParam(req, 'slug', 'Не передан slug')
 
     res.json(await this.service.getBySlug(slug))
   })
@@ -26,10 +26,10 @@ export class CommentController {
   })
 
   createForPost = asyncHandler(async (req, res) => {
-    const postId = requireParam(req, 'postId', 'Не передан postId')
+    const slug = requireParam(req, 'slug', 'Не передан slug')
     const { content } = await CommentPayloadSchema.parseAsync(req.body)
     const user = requireUser(req)
-    const comment = await this.service.createForPost(postId, user.id, content)
+    const comment = await this.service.createForPost(slug, user.id, content)
     res.status(201).json(comment)
   })
 
@@ -41,7 +41,9 @@ export class CommentController {
     res.status(201).json(comment)
   })
   editComment = asyncHandler(async (req, res) => {
+    
     const commentId = requireParam(req, 'commentId', 'Не передан commentId')
+    console.log(commentId);
     const { content } = await CommentPayloadSchema.parseAsync(req.body)
     const user = requireUser(req)
     await this.service.editComment(commentId, user.id, content)

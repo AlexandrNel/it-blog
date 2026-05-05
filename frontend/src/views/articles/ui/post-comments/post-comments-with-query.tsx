@@ -3,8 +3,9 @@ import { usePostComments } from "@/entities/comment";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { WrappedCommentCard } from "./wrapped-comment-card";
 
-export function PostWithQuery({ postId }: { postId: string }) {
-	const { data, isLoading } = usePostComments(postId);
+export function PostWithQuery({ slug }: { slug: string }) {
+	const { data, isLoading } = usePostComments(slug);
+	console.log(data);
 
 	return (
 		<ul>

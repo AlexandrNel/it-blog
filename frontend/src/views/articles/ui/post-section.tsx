@@ -19,9 +19,9 @@ async function _PostSection({ params }: Pick<PageProps<"/articles/[slug]">, "par
 
 	return (
 		<article className="mb-2">
-			<div className={cn(` transition-all bg-card text-foreground rounded-lg relative group`)}>
+			<div className={cn(`transition-all bg-card text-foreground rounded-lg relative group`)}>
 				{/* Text content of article */}
-				<div className="p-3 max-[425px]:p-2  rounded-lg">
+				<div className="p-4 max-[425px]:p-2 rounded-lg">
 					<div className="mb-3">
 						<EditBlock slug={slug} authorId={data.author.id} />
 						<ArticleInfo author={data.author} createdAt={data.createdAt} />

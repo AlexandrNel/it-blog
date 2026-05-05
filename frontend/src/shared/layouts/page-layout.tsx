@@ -24,7 +24,7 @@ export const PageLayout = async ({
 				className,
 			)}
 		>
-			<main className={cn("main-layout__section pt-2", { "pt-0": withoutPaddingTop })}>
+			<main className={cn("main-layout__section py-2", { "pt-0": withoutPaddingTop })}>
 				{children}
 			</main>
 			{!!sidebar && <aside className={"main-layout__aside"}>{sidebar}</aside>}

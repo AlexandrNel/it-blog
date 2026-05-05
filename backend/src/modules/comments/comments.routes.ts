@@ -6,9 +6,9 @@ import { CommentService } from './comments.service.js'
 const router = express.Router()
 const controller = new CommentController(new CommentService())
 
-router.get('/comments/post/:postId', controller.getByPostId)
+router.get('/comments/post/:slug', controller.getCommentTreeByPostSlug)
 router.get('/comments/user/:userId', controller.getByUserId)
-router.post('/comments/post/:postId', authMiddleware, controller.createForPost)
+router.post('/comments/post/:slug', authMiddleware, controller.createForPost)
 router.post(
   '/comments/:commentId/reply',
   authMiddleware,

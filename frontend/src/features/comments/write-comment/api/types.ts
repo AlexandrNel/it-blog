@@ -1,8 +1,8 @@
 export type SendPostCommentRequest = {
-  text: string;
-  postId: string;
+	text: string;
+	slug: string;
 };
 export type SendCommentAnswer = {
-  text: string;
-  commentId: string;
+	text: string;
+	commentId: string;
 };

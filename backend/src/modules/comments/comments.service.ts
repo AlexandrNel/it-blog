@@ -28,13 +28,13 @@ const postInclude = {
 }
 
 export class CommentService {
-  async getByPostId(postId: string) {
+  async getCommentTreeByPostSlug(slug: string) {
     const comments = await prisma.comment.findMany({
-      where: { postId },
+      where: { post: {slug} },
       orderBy: { createdAt: 'desc' },
       include: commentsInclude,
     })
-
+    
     return buildCollapsedTree(comments)
   }
   async getBySlug(slug: string) {
@@ -70,12 +70,12 @@ export class CommentService {
     return comments.map(this.toResponse)
   }
 
-  async createForPost(postId: string, authorId: string, content: string) {
-    const post = await prisma.post.findUnique({ where: { id: postId } })
+  async createForPost(slug: string, authorId: string, content: string) {
+    const post = await prisma.post.findUnique({ where: { slug} })
     if (!post) throw ApiError.NotFoundError('Статья не найдена')
 
     const comment = await prisma.comment.create({
-      data: { content, postId, authorId },
+      data: { content, postId: post.id, authorId },
       include: commentsInclude,
     })
 

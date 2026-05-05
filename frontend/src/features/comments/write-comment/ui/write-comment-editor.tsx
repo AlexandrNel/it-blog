@@ -57,7 +57,7 @@ export const WriteCommentEditor = ({
 			return;
 		}
 		const text = JSON.stringify(refJson.current);
-		const payload = { text, commentId: entityId, postId: entityId };
+		const payload = { text, commentId: entityId, slug: entityId };
 		mutation.mutate(payload, { onSuccess: handleOnSuccess, onError: handleError });
 	};
 
