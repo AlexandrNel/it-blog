@@ -4,8 +4,8 @@ import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Loading } from "@/shared/ui/loading";
-import { useArticleStatistic } from "../model/useArticleStatistic";
-import { voteConfig } from "../model/voteConfig";
+import { useArticleStatistic } from "../model/use-article-statistic";
+import { voteConfig } from "../model/vote-config";
 
 interface Props extends BaseProps {
 	postId: string;

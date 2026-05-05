@@ -7,5 +7,4 @@ export const metadata = {
 		canonical: "/",
 	},
 };
-
 export default FeedPage;

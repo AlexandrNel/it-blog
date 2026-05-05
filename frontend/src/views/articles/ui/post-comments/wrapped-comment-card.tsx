@@ -8,7 +8,7 @@ import { Row } from "@/shared/ui/layout";
 import { Button } from "@/shared/ui/button";
 import { Activity, memo, type PropsWithChildren } from "react";
 import { DeleteCommentButton } from "@/features/comments/delete-comment";
-import { useCommentLifecycle } from "../model/useCommentLifecycle";
+import { useCommentLifecycle } from "../../model/use-comment-lifecycle";
 import { EditComment } from "@/features/comments/edit-comment";
 import { useAuthStore } from "@/entities/auth";
 

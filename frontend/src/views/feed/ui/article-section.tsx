@@ -1,4 +1,4 @@
-import { getAllPosts, PostCard } from "@/entities/article";
+import { PostCard } from "@/entities/article";
 import { Pagination } from "./Pagination";
 import { EditBlock } from "@/features/article/article-menu";
 import { Card } from "@/shared/ui/card";
@@ -6,6 +6,7 @@ import { Column } from "@/shared/ui/layout";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { Newspaper } from "lucide-react";
+import { getAllPosts } from "@/entities/article/index.server";
 
 export async function ArticleSection({
 	searchParams,

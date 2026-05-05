@@ -1,4 +1,4 @@
-import { ViewTransition, type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ProfileVisibility } from "./profile-visibility";

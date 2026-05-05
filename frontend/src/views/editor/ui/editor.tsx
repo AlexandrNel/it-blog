@@ -1,4 +1,4 @@
-import { getPostById } from "@/entities/article";
+import { getPostById } from "@/entities/article/index.server";
 import { ArticleCreate } from "@/features/article/article-create";
 import { notFound } from "next/navigation";
 

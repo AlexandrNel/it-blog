@@ -1,7 +1,6 @@
 "use client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getStatistic } from "../api/get-statistic";
-import { sendDislike, sendLike } from "../api/vote";
+import { PostAPI } from "@/entities/article";
 import { toast } from "sonner";
 import type { Statistic } from "@/entities/article";
 
@@ -9,10 +8,10 @@ export const useArticleStatistic = (postId: string) => {
 	const queryClient = useQueryClient();
 	const { data, isFetching } = useQuery<Statistic>({
 		queryKey: [`post:${postId}:statistic`],
-		queryFn: () => getStatistic(postId),
+		queryFn: () => PostAPI.getStatistic(postId),
 	});
 	const vote = (action: "like" | "dislike") =>
-		action === "like" ? sendLike(postId) : sendDislike(postId);
+		action === "like" ? PostAPI.sendLike(postId) : PostAPI.sendDislike(postId);
 	const mutation = useMutation({
 		mutationFn: vote,
 		onSuccess: () => {

@@ -2,21 +2,20 @@ import type { Metadata } from "next";
 import type React from "react";
 import { Roboto } from "next/font/google";
 import "./styles/global.css";
-import { Header } from "@/widgets/Header";
+import { Header } from "@/widgets/header";
 import { Toaster } from "@/shared/ui/sonner";
 import { GettingUser } from "@/entities/auth";
 import { QueryProvider } from "./providers/query-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { ENV } from "@/shared/config/env";
 
 const roboto = Roboto({
 	subsets: ["latin", "cyrillic"],
 	weight: ["400", "500", "600", "700"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
-
 export const metadata: Metadata = {
-	metadataBase: new URL(siteUrl),
+	metadataBase: new URL(ENV.SITE_URL),
 	title: {
 		default: "IT Blog",
 		template: "%s | IT Blog",
@@ -43,11 +42,14 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "IT Blog",
 		description: "IT Blog про разработку, практики и инженерные заметки.",
+		images: ["/img/logo-dark.png"],
 	},
 	icons: {
-		// TODO: положи свой favicon в `frontend/public/favicon.ico`.
-		icon: "/favicon.ico",
+		icon: [{ url: "/favicon.ico" }, { url: "/img/logo-dark.png", type: "image/png" }],
+		apple: [{ url: "/img/logo-white.png", type: "image/png" }],
+		shortcut: ["/favicon.ico"],
 	},
+	manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

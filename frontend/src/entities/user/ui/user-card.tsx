@@ -3,7 +3,6 @@ import type { BaseProps } from "@/shared/types/components";
 import { Fragment, type PropsWithChildren } from "react";
 import { formatUsername } from "../model/user.formatters";
 import Link from "next/link";
-import { Row } from "@/shared/ui/layout";
 import { formatDate } from "@/shared/lib/utils/date/format-date";
 import type { Author } from "@/entities/author";
 import type { Post } from "@/entities/article";

@@ -21,7 +21,7 @@ export function EditBlock({ className, postId, authorId }: Props) {
 	const user = useAuthStore((state) => state.user);
 	if (user?.id !== authorId) return null;
 	return (
-		<div className={cn(className, `flex gap-2 rounded absolute z-10 right-0 w-min`)}>
+		<div className={cn(className, `flex gap-2 rounded absolute z-10 top-0 right-0 w-min`)}>
 			<DropdownMenu modal={false}>
 				<DropdownMenuTrigger asChild>
 					<Button variant={"ghost"} size={"icon-sm"}>

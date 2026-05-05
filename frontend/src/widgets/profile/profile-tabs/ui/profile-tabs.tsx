@@ -3,6 +3,7 @@ import { Card } from "@/shared/ui/card";
 import { Row } from "@/shared/ui/layout";
 import { TabItem } from "./profile-tab-item";
 import { Suspense } from "react";
+import { ProfileTabsSkeleton } from "./profile-tabs-skeleton";
 
 type LinkItem = {
 	label: string;
@@ -48,7 +49,7 @@ export async function _Tabs({ userId }: Props) {
 
 export const Tabs = (props: Props) => {
 	return (
-		<Suspense>
+		<Suspense fallback={<ProfileTabsSkeleton />}>
 			<_Tabs {...props} />
 		</Suspense>
 	);

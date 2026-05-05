@@ -1,6 +1,8 @@
 import { serverFetch, serverSafeFetch } from "@/shared/api/server";
 import type { PostDto, PostWithStatisticDto, ResponsePaginationDto } from "./types";
 import { cache } from "react";
+import { cacheLife, cacheTag } from "next/cache";
+import { CACHE_TAGS } from "@/shared/config/cache-keys";
 
 export const getAllPosts = cache(async (sortBy: string = "new", page = 1, limit = 10) => {
 	const res = await serverSafeFetch<ResponsePaginationDto<PostWithStatisticDto[]>>(
@@ -10,7 +12,9 @@ export const getAllPosts = cache(async (sortBy: string = "new", page = 1, limit 
 });
 
 export const getPostBySlug = cache(async (slug: string) => {
-	console.log("get post");
+	"use cache";
+	cacheLife("max");
+	cacheTag(CACHE_TAGS.post(slug));
 
 	const res = await serverSafeFetch<PostDto>(`/posts/${slug}`);
 	return res.data;

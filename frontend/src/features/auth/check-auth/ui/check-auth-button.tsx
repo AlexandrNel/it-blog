@@ -13,13 +13,18 @@ export const CheckAuthButton = ({ children }: Props) => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
 
-	const handleClick = useCallback((e: PointerEvent) => {
-		if (!user) {
-			e.preventDefault();
-			e.stopPropagation();
-			setIsOpen(true);
-		}
-	}, []);
+	const handleClick = useCallback(
+		(e: PointerEvent) => {
+			console.log("click");
+
+			if (!user) {
+				e.preventDefault();
+				e.stopPropagation();
+				setIsOpen(true);
+			}
+		},
+		[user],
+	);
 
 	const onSuccessAuth = () => {
 		setIsOpen(false);
@@ -35,7 +40,7 @@ export const CheckAuthButton = ({ children }: Props) => {
 		return () => {
 			el.removeEventListener("click", handleClick);
 		};
-	}, []);
+	}, [user]);
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>

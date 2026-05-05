@@ -2,8 +2,6 @@ import { getComments } from "@/entities/comment/api/server";
 import { WriteCommentEditor } from "@/features/comments/write-comment";
 import { PostWithQuery } from "./post-comments-with-query";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { getPostBySlug } from "@/entities/article";
-import { notFound } from "next/navigation";
 import { ScrollToComment } from "./scroll-to-comment";
 import { Suspense } from "react";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -13,23 +11,18 @@ async function _PostComments({ params }: Pick<PageProps<"/articles/[id]">, "para
 	const queryClient = new QueryClient();
 
 	const id = (await params).id;
-	const post = await getPostBySlug(id);
-
-	if (!post) {
-		return notFound();
-	}
 
 	await queryClient.prefetchQuery({
 		queryKey: ["comments"],
-		queryFn: () => getComments(post.id),
+		queryFn: () => getComments(id),
 	});
 
 	return (
 		<section id="comments" className="card">
 			<h3 className="mb-4">Комментарии</h3>
-			<WriteCommentEditor entityType="post" entityId={post.id} />
+			<WriteCommentEditor entityType="post" entityId={id} />
 			<HydrationBoundary state={dehydrate(queryClient)}>
-				<PostWithQuery postId={post.id} />
+				<PostWithQuery postId={id} />
 			</HydrationBoundary>
 			<ScrollToComment />
 		</section>
