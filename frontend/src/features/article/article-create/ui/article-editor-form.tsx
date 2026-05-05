@@ -9,7 +9,6 @@ import {
 	InputGroupText,
 	InputGroupTextarea,
 } from "@/shared/ui/input-group";
-import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { useEditorStore } from "../model/use-editor-store";
 import { useQueries } from "@tanstack/react-query";
@@ -27,7 +26,7 @@ import {
 	ComboboxList,
 } from "@/shared/ui/combobox";
 
-export function ArticleEditorForm({ className }: BaseProps) {
+export function ArticleEditorForm() {
 	const setData = useEditorStore((state) => state.setData);
 
 	const [categoriesData, tagsData] = useQueries({

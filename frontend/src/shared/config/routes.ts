@@ -21,7 +21,7 @@ export const ARTICLE = (slug: string) => `/articles/${slug}`;
 
 export const TAG = (tagKey: string) => `/tags/${tagKey}`;
 
-export const EDITOR_POST = (postId: string) => `${EDITOR}/${postId}`;
+export const EDITOR_POST = (slug: string) => `${EDITOR}/${slug}`;
 
 export const API_POST_REVALIDATE = (postId: string) => `/api/posts/${postId}/revalidate`;
 

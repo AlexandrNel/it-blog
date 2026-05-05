@@ -12,12 +12,13 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { ROUTES } from "@/shared/config/routes";
 
 interface Props extends BaseProps {
-	postId: string;
+	slug: string;
 	authorId: string;
 }
-export function EditBlock({ className, postId, authorId }: Props) {
+export function EditBlock({ className, slug, authorId }: Props) {
 	const user = useAuthStore((state) => state.user);
 	if (user?.id !== authorId) return null;
 	return (
@@ -31,7 +32,10 @@ export function EditBlock({ className, postId, authorId }: Props) {
 				<DropdownMenuContent align="end">
 					<DropdownMenuGroup>
 						<DropdownMenuItem asChild className="p-0">
-							<Link href={`/editor/${postId}`} className=" cursor-pointer flex px-2 py-1 gap-2">
+							<Link
+								href={ROUTES.editor.post(slug)}
+								className=" cursor-pointer flex px-2 py-1 gap-2"
+							>
 								<Pencil size={20} color="#858585" strokeWidth={2} />
 								Редактировать
 							</Link>

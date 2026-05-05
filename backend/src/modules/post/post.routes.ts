@@ -17,7 +17,7 @@ router.get('/posts/id/:id', controller.getById)
 router.get('/posts/:slug', controller.getBySlug)
 router.get('/posts/tag/:tag', controller.getSomeByTag)
 router.get('/posts/:id/statistic', withUserMiddleware, controller.getStatistic)
-router.get('/posts/:id/can-edit', authMiddleware, controller.checkIsAuthor)
+router.get('/posts/:id/can-edit', authMiddleware, controller.checkIsAuthor) // удалить
 
 router.post('/posts', authMiddleware, controller.createPost)
 router.delete('/posts/:id', authMiddleware, controller.deletePost)

@@ -10,7 +10,7 @@ import { ArticleDeleteButton } from "./article-delete-button";
 import { useSubmitArticle } from "../lib/use-submit-article";
 
 export function ArticleSettingsFooter() {
-	const { id } = useParams();
+	const { slug } = useParams<{ slug: string }>();
 	const form = useFormContext<FormSchemaType>();
 	const setData = useEditorStore((state) => state.setData);
 
@@ -30,9 +30,9 @@ export function ArticleSettingsFooter() {
 				Назад
 			</Button>
 			<div className="flex gap-2">
-				<ArticleDeleteButton id={typeof id === "string" ? id : undefined} />
+				<ArticleDeleteButton id={typeof slug === "string" ? slug : undefined} />
 				<Button variant="outline" type="button" disabled={isSubmitting} onClick={handlePublish}>
-					{id ? "Сохранить" : "Опубликовать"}
+					{slug ? "Сохранить" : "Опубликовать"}
 				</Button>
 			</div>
 		</div>

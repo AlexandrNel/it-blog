@@ -8,9 +8,9 @@ import Link from "next/link";
 import { Newspaper } from "lucide-react";
 import { getAllPosts } from "@/entities/article/index.server";
 
-export async function ArticleSection({
+export async function PostSection({
 	searchParams,
-}: Pick<PageProps<"/articles/[id]">, "searchParams">) {
+}: Pick<PageProps<"/articles/[slug]">, "searchParams">) {
 	const param = Number((await searchParams).page);
 	const sort = (await searchParams).sort;
 	const page = Number.isFinite(param) ? param : undefined;
@@ -23,7 +23,7 @@ export async function ArticleSection({
 				) : (
 					posts.data.map((p) => (
 						<li key={p.id} className="mb-2">
-							<PostCard header={<EditBlock postId={p.id} authorId={p.author.id} />} post={p} />
+							<PostCard header={<EditBlock slug={p.slug} authorId={p.author.id} />} post={p} />
 						</li>
 					))
 				)}
