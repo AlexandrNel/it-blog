@@ -20,7 +20,7 @@ export function ProfileMenu() {
 	return (
 		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger className="rounded-full cursor-pointer">
-				<UserAvatar avatarUrl={user.avatar} name={user.displayName} />
+				<UserAvatar avatarUrl={user.avatar} name={user.displayName || user.username} />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="p-3" side="bottom" align="end">
 				<DropdownMenuGroup>
