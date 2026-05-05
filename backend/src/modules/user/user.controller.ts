@@ -1,7 +1,6 @@
 import type { Request, Response } from 'express'
 import { asyncHandler } from '@/shared/helpers/asyncHandler.js'
 import { ApiError } from '@/shared/lib/api-error.js'
-import z from 'zod'
 import { UserService } from '@/modules/user/user.service.js'
 import { ProfileService } from '@/modules/profile/profile.service.js'
 import { getUser } from '@/middlewares/auth.middleware.js'
@@ -17,11 +16,8 @@ export const getMe = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export const generateUsername = asyncHandler(
-  async (req: Request, res: Response) => {
-    const email = req.query.email as string
-    const result = await z.safeParseAsync(z.email(), email)
-    const extracted = result.success ? result.data.split('@')?.[0] : undefined
-    const username = await userSerice.generateUniqueUsername(extracted)
+  async (_req: Request, res: Response) => {
+    const username = await userSerice.generateUniqueUsername()
     res.status(200).json({ username })
   }
 )

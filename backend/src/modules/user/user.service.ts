@@ -70,10 +70,10 @@ export class UserService {
     })
   }
 
-  async generateUniqueUsername(email?: string | null): Promise<string> {
+  async generateUniqueUsername(): Promise<string> {
     const MAX_ATTEMPTS = 5
     for (let i = 0; i < MAX_ATTEMPTS; i++) {
-      const username = await this.buildUsername(email, { onlyEmail: i === 0 })
+      const username = await this.buildUsername()
       const exists = await this.usernameIsAvailable(undefined, {
         username,
       })
@@ -93,15 +93,10 @@ export class UserService {
     }
   )
 
-  private async buildUsername(
-    email?: string | null,
-    options?: { onlyEmail?: boolean }
-  ): Promise<string> {
-    const leftEmailPart = email?.split('@')?.[0]
-    if (options?.onlyEmail && leftEmailPart) return leftEmailPart
-    const number = NumberDictionary.generate({ length: 3 })
+  private async buildUsername(): Promise<string> {
+    const number = NumberDictionary.generate({ length: 4})
     const randomName = uniqueNamesGenerator({
-      dictionaries: leftEmailPart ? [[leftEmailPart], number] : [names, number],
+      dictionaries: [names, number],
       style: 'capital',
       separator: '',
     })
