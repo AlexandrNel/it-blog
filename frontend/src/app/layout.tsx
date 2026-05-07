@@ -15,7 +15,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-	metadataBase: new URL(ENV.SITE_URL),
+	metadataBase: ENV.SITE_URL,
 	title: {
 		default: "IT Blog",
 		template: "%s | IT Blog",
@@ -42,10 +42,8 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "IT Blog",
 		description: "IT Blog про разработку, практики и инженерные заметки.",
-		images: ["/img/logo-dark.png"],
 	},
 	icons: {
-		icon: [{ url: "/favicon.ico" }, { url: "/img/logo-dark.png", type: "image/png" }],
 		apple: [{ url: "/img/logo-white.png", type: "image/png" }],
 		shortcut: ["/favicon.ico"],
 	},

@@ -15,8 +15,6 @@ export const CheckAuthButton = ({ children }: Props) => {
 
 	const handleClick = useCallback(
 		(e: PointerEvent) => {
-			console.log("click");
-
 			if (!user) {
 				e.preventDefault();
 				e.stopPropagation();

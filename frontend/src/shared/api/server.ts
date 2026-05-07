@@ -1,8 +1,9 @@
-import { ENV } from "../config/env";
 import { ApiError, isApiError, type BackendError } from "../lib/api/api-error";
 
+const API_URL = process.env.API_URL
+
 export const serverFetch = async <T>(endpoint: string, init?: RequestInit) => {
-	const url = `${ENV.API_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
+	const url = `${API_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
 	const res = await fetch(url, init);
 	const contentType = res.headers.get("content-type");
 	let data: unknown;

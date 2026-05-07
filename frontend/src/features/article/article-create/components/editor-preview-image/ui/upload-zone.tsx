@@ -37,8 +37,6 @@ export const UploadZone = ({ onUpload }: Props) => {
 		e.preventDefault();
 		const element = e.target as HTMLElement;
 		element.dataset.active = "true";
-		console.log(e.dataTransfer.files);
-
 		if (!e.dataTransfer.files?.[0]?.type.startsWith("image/")) return;
 	};
 	const onDragLeave = (e: DragEvent<HTMLLabelElement>) => {

@@ -16,9 +16,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
 		try {
 			const user = await getUser();
 			set({ user });
-		} catch (error) {
-			console.log(error);
-		}
+		} catch {}
 	},
 	logout: async () => {
 		if (confirm("Вы уверены, что хотите выйти?")) {
@@ -26,9 +24,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
 				await AuthAPI.logout();
 				set({ user: null });
 				window.location.reload();
-			} catch (error) {
-				console.log(error);
-			}
+			} catch {}
 		}
 	},
 	setUser: (user: User | null) => set({ user }),

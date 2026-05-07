@@ -52,10 +52,6 @@ instance.interceptors.response.use(
 		};
 
 		if (GLOBAL_ERRORS[status]) {
-			console.log(GLOBAL_ERRORS[status]);
-			console.log(GLOBAL_ERRORS);
-			console.log(status);
-
 			toast.error(GLOBAL_ERRORS[status]);
 		}
 

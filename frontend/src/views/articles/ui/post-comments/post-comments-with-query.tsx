@@ -5,7 +5,6 @@ import { WrappedCommentCard } from "./wrapped-comment-card";
 
 export function PostWithQuery({ slug }: { slug: string }) {
 	const { data, isLoading } = usePostComments(slug);
-	console.log(data);
 
 	return (
 		<ul>

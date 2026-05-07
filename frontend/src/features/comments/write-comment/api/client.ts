@@ -4,8 +4,6 @@ import type { Comment } from "@/entities/comment";
 
 export class WriteCommentAPI extends BaseAPI {
 	static sendPostComment(data: SendPostCommentRequest): Promise<Comment> {
-		console.log(data);
-
 		return BaseAPI.post(`/comments/post/${data.slug}`, {
 			content: data.text,
 		});
