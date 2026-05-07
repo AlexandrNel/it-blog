@@ -20,7 +20,7 @@ export class AuthService {
 
   async register(data: RegisterDataType) {
     const { email, password } = data
-    const username = await this.userSerive.generateUniqueUsername(email)
+    const username = await this.userSerive.generateUniqueUsername()
     const salt = await bcrypt.genSalt(10)
     const passwordHash = await bcrypt.hash(password, salt)
 

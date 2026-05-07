@@ -20,7 +20,6 @@ export function FetchPosts() {
 		enabled: !!q?.trim(),
 		retry: false,
 	});
-	console.log(isSuccess);
 
 	const notFound = isSuccess && !data?.pages?.[0].posts.length;
 

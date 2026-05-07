@@ -1,6 +1,6 @@
 import { PostListSkeleton } from "@/entities/article";
 import { Suspense } from "react";
-import { ArticleSection } from "./article-section";
+import { PostSection } from "./post-section";
 import { PageLayout } from "@/shared/layouts/page-layout";
 import { FeedSidebar } from "./feed-sidebar";
 import { SortToolbar, SortToolbarSkeleton } from "@/features/article/article-sort";
@@ -12,7 +12,7 @@ export default async function Page({ searchParams }: Pick<PageProps<"/">, "searc
 				<SortToolbar className="mb-2" />
 			</Suspense>
 			<Suspense fallback={<PostListSkeleton />}>
-				<ArticleSection searchParams={searchParams} />
+				<PostSection searchParams={searchParams} />
 			</Suspense>
 		</PageLayout>
 	);

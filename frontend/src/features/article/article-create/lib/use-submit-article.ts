@@ -1,29 +1,29 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import { toast } from "sonner";
 
-import { Post, PostAPI } from "@/entities/article";
+import { type Post, useCreatePost, useUpdatePost } from "@/entities/article";
 import { queryTags } from "@/entities/tag/api/query";
 import { isApiError } from "@/shared/lib/api/api-error";
 import { useEditorStore } from "../model/use-editor-store";
 import type { FormSchemaType } from "../model/schema";
 import { uploadImage } from "@/shared/api/uploadImage";
+import { ROUTES } from "@/shared/config/routes";
 
 export function useSubmitArticle() {
-	const { id } = useParams();
 	const router = useRouter();
-
-	const [isSubmitting, setIsSubmitting] = useState(false);
-
 	const { data: tagData = [] } = useQuery(queryTags());
+	const update = useUpdatePost();
+	const create = useCreatePost();
 
-	const { content, previewContent, previewImage, file, setData } = useEditorStore(
+	const { content, previewContent, previewImage, file, id, slug, setData } = useEditorStore(
 		useShallow((state) => ({
 			setData: state.setData,
+			slug: state.post?.slug,
+			id: state.post?.id,
 			file: state.file,
 			content: state.content,
 			previewContent: state.previewContent,
@@ -32,15 +32,14 @@ export function useSubmitArticle() {
 	);
 
 	const tagsMap = Object.fromEntries(tagData.map((tag) => [tag.name, tag.id]));
-	const hasId = typeof id === "string";
 
-	const clearFile = () => {
-		setData({ file: null });
-	};
+	const hasId = typeof id === "string" && typeof slug === "string";
 
 	const submit = async (data: FormSchemaType) => {
 		const { category, tags, ...rest } = data;
+
 		let newImage: Post["previewImage"] | null = null;
+
 		if (file) {
 			try {
 				const formData = new FormData();
@@ -49,9 +48,9 @@ export function useSubmitArticle() {
 				newImage = { url: res.url, position: previewImage?.position ?? { x: 0.5, y: 0.5 } };
 			} catch {
 				newImage = null;
+				toast.error("Не удалось загрузить изображение");
 			}
 		}
-		console.log(newImage, previewImage);
 
 		const fetchData = {
 			...rest,
@@ -61,29 +60,37 @@ export function useSubmitArticle() {
 			previewContent: JSON.stringify(previewContent),
 			previewImage: newImage ?? previewImage,
 		};
-		// return console.log(fetchData);
 
-		setIsSubmitting(true);
-
-		try {
-			if (hasId) {
-				await PostAPI.updatePost(fetchData, id);
-				await fetch(`/api/posts/${id}/revalidate`, { method: "POST" });
-				toast.success("Статья обновлена");
-			} else {
-				const post = await PostAPI.createPost(fetchData);
-				toast.success("Статья создана");
-				router.push(`/articles/${post.slug}`);
-			}
-			clearFile();
-		} catch (error) {
-			if (isApiError(error)) {
-				toast.error(error.message);
-			}
-		} finally {
-			setIsSubmitting(false);
+		if (hasId) {
+			update.mutate(
+				{ data: fetchData, id, slug },
+				{
+					onSuccess: (data) => {
+						toast.success("Статья обновлена");
+						setData({ post: data });
+						window.history.replaceState(null, "", `/editor/${data.slug}`);
+					},
+					onError: (err) => {
+						if (isApiError(err)) {
+							toast.error(err.message);
+						}
+					},
+				},
+			);
+		} else {
+			create.mutate(fetchData, {
+				onSuccess: (data) => {
+					toast.success("Статья создана");
+					router.push(ROUTES.article(data.slug));
+				},
+				onError: (err) => {
+					if (isApiError(err)) {
+						toast.error(err.message);
+					}
+				},
+			});
 		}
 	};
 
-	return { isSubmitting, submit };
+	return { isSubmitting: update.isPending || create.isPending, submit };
 }

@@ -6,13 +6,17 @@ import { ApiError } from '@/shared/lib/api-error.js'
 import { asyncHandler } from '@/shared/helpers/asyncHandler.js'
 import { UserService } from '../user/user.service.js'
 import { ProfileService } from '../profile/profile.service.js'
+import { config } from '@/config/index.js'
 
-const cookieOptions: CookieOptions = {
-  httpOnly: true,
-  secure: false, // must be true in prodaction!
+const baseCookieOptions: CookieOptions = {
+  httpOnly: config.isProduction,
+  secure: config.isProduction,
   sameSite: 'lax',
   path: '/',
-  domain: 'localhost',
+}
+
+const cookieOptions: CookieOptions = {
+  ...baseCookieOptions,
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
 }
 
@@ -31,8 +35,8 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   res.json(user)
 })
 export const logout = asyncHandler(async (req: Request, res: Response) => {
-  res.clearCookie('access_token')
-  res.clearCookie('refresh_token')
+  res.clearCookie('access_token', baseCookieOptions)
+  res.clearCookie('refresh_token', baseCookieOptions)
   res.status(200).json()
 })
 export const resfreshToken = asyncHandler(
@@ -41,8 +45,8 @@ export const resfreshToken = asyncHandler(
     if (!refresh) throw ApiError.ForbiddenError()
     const jwt = refreshToken(refresh)
     if (!jwt) {
-      res.clearCookie('refresh_token')
-      res.clearCookie('access_token')
+      res.clearCookie('refresh_token', baseCookieOptions)
+      res.clearCookie('access_token', baseCookieOptions)
       throw ApiError.UnauthorizedError()
     }
     res.cookie('access_token', jwt, cookieOptions)

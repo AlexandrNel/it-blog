@@ -3,14 +3,10 @@ import { Card } from "@/shared/ui/card";
 import { GitHubIcon } from "@/shared/ui/icons";
 import { Column, Row } from "@/shared/ui/layout";
 import { Globe, Mail, Send } from "lucide-react";
-import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 export async function ProfileInfo({ userId }: { userId: string }) {
-	"use cache";
-	cacheLife("days");
-	cacheTag("profile", userId);
 	const { contacts } = await getProfileById(userId);
 	return (
 		<Card>

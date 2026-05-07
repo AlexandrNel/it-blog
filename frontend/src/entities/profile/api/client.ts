@@ -4,6 +4,7 @@ import type {
 	ProfileConnectionKind,
 	ProfileConnectionsPage,
 	ProfileConnectionsSummary,
+	ProfileStatistic,
 } from "../model/profile";
 
 export class ProfileAPI extends BaseAPI {
@@ -23,5 +24,9 @@ export class ProfileAPI extends BaseAPI {
 
 	static getConnectionsSummary(userId: string): Promise<ProfileConnectionsSummary> {
 		return BaseAPI.get(`/profile/${userId}/connections/summary`);
+	}
+
+	static getStatistic(userId: string): Promise<ProfileStatistic> {
+		return BaseAPI.get(`/profile/${userId}/statistic`);
 	}
 }

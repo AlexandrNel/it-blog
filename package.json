@@ -7,7 +7,12 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod:start": "docker compose -f compose.infra.yml -f compose.app.yml up -d",
+    "prod:build": "docker compose -f compose.infra.yml  -f compose.app.yml build" ,
+    "dev:start": "docker compose -f compose.dev.yml -p it_blog-dev up -d",
+    "down": "docker compose -f compose.infra.yml -f compose.app.yml down",
+    "logs": "docker compose -f compose.infra.yml -f compose.app.yml logs -f",
+    "clean": "docker compose -f compose.infra.yml -f compose.app.yml down -v"
   },
   "devDependencies": {
     "tsup": "^8.5.1"

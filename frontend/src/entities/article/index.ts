@@ -6,8 +6,21 @@ export { ArticleTime } from "./ui/ArticleTime";
 export { ArticleStatistic } from "./ui/ArticleStatistic";
 export { PostListSkeleton } from "./ui/PostListSkeleton";
 export { PostCardSkeleton } from "./ui/PostCardSkeleton";
-export { getTagForCache } from "./model/getTagForCache";
 export { PostAPI } from "./api/client";
-export { useCreatePost, usePostById, usePostsByUser, useUpdatePost, useDeletePost } from "./model/post-queries";
-export { getPostBySlug, getAllPosts, getPostsByTag, getPostById, getPostByUserId } from "./api";
-export type { Comment, Post, PostWithStatistic, Statistic, SortParams, FilterParams, DateParams } from "./model/post";
+export {
+	useCreatePost,
+	usePostById,
+	usePostsByUser,
+	useUpdatePost,
+	useDeletePost,
+} from "./model/post-queries";
+
+export type {
+	Comment,
+	Post,
+	PostWithStatistic,
+	Statistic,
+	SortParams,
+	FilterParams,
+	DateParams,
+} from "./model/post";

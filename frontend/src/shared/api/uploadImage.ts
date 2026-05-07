@@ -7,9 +7,7 @@ export const uploadImage = async (
 ) => {
 	const res = await api.post<{ url: string; path: string }>("/photos/upload", formData, {
 		signal: signal,
-		onUploadProgress: (progressEvent) => {
-			console.log(progressEvent);
-		},
+		onUploadProgress: (progressEvent) => {},
 	});
 	return res.data;
 };

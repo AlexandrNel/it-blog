@@ -1,44 +1,28 @@
 import { getProfileStatisticById } from "@/entities/profile/index.server";
-import { Card } from "@/shared/ui/card";
-import { Column, Grid } from "@/shared/ui/layout";
-import { cacheLife, cacheTag } from "next/cache";
 import { Suspense } from "react";
 import { ProfileHeroStatsSkeleton } from "./profile-hero-stats-skeleton";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { PrefetchedHeroStats } from "./prefetched-profile-hero-stats";
+import { QUERY_KEYS } from "@/shared/config/cache-keys";
 
 type Props = {
 	userId: string;
 };
 
 export async function _ProfileHeroStats({ userId }: Props) {
-	"use cache";
-	cacheLife("minutes");
-	cacheTag("profile", userId, "statistic");
-	const stats = await getProfileStatisticById(userId);
-	const unpublished = stats?.unpublishedPosts;
-	const unpublishedText = Number(unpublished) > 0 ? `+${unpublished} (на модерации)` : "";
+	const queryClient = new QueryClient();
+
+	await queryClient.prefetchQuery({
+		queryKey: QUERY_KEYS.profile,
+		queryFn: () => getProfileStatisticById(userId),
+	});
 
 	return (
-		<Card>
-			<Grid>
-				<StatChip text={`${unpublished ?? 0}`} subText={unpublishedText} label="статей" />
-				<StatChip text={`${stats?.subscribers ?? 0}`} label="подписчиков" />
-				<StatChip text={`${stats?.viewers ?? 0}`} label="просмотров" />
-			</Grid>
-		</Card>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<PrefetchedHeroStats userId={userId} />
+		</HydrationBoundary>
 	);
 }
-
-const StatChip = ({ text, subText, label }: { text: string; subText?: string; label: string }) => {
-	return (
-		<Column className="p-4 rounded-lg bg-muted">
-			<p className="text-xl font-bold relative flex gap-1 items-center">
-				{text}
-				{subText && <span className="text-xs font-normal  left-3">{subText}</span>}
-			</p>
-			<span className="text-base text-muted-foreground">{label}</span>
-		</Column>
-	);
-};
 
 export const ProfileHeroStats = (props: Props) => {
 	return (

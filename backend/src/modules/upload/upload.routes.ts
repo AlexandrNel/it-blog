@@ -65,7 +65,7 @@ router.post(
 
       res.json({
         path: imagePath,
-        url: new URL(imagePath, config.appUrl).toString(),
+        url: new URL(imagePath, config.publicUrl).toString(),
       })
     } catch (error) {
       next(error)

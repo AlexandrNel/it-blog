@@ -8,22 +8,23 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
-  username     String        @unique
-  avatar       String        @default("")
-  displayName  String?       @map("display_name")
-  pendingEmail String?       @unique @map("pending_email")
-  password     String        @map("password_hash")
-  role         Role          @default(USER)
-  isBlocked    Boolean       @default(false) @map("is_blocked")
-  createdAt    DateTime      @default(now()) @map("created_at")
-  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at")
-  commentVotes CommentVote[]
-  postVotes    PostVote[]
-  comments     Comment[]
-  posts        Post[]
-  profile      Profile?
+  id              String        @id @default(uuid())
+  email           String        @unique
+  username        String        @unique
+  avatar          String        @default("")
+  displayName     String?       @map("display_name")
+  emailVerifiedAt DateTime?     @map("email_verified_at")
+  pendingEmail    String?       @unique @map("pending_email")
+  password        String        @map("password_hash")
+  role            Role          @default(USER)
+  isBlocked       Boolean       @default(false) @map("is_blocked")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @default(now()) @updatedAt @map("updated_at")
+  commentVotes    CommentVote[]
+  postVotes       PostVote[]
+  comments        Comment[]
+  posts           Post[]
+  profile         Profile?
 
   followers             Follow[]       @relation("UserFollowers")
   following             Follow[]       @relation("UserFollowing")

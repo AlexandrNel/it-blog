@@ -1,6 +1,6 @@
 "use client";
 import axios, { type InternalAxiosRequestConfig, type AxiosError, type AxiosResponse } from "axios";
-import { API_URL } from "../config/env";
+import { ENV } from "../config/env";
 import { ApiError } from "../lib/api";
 import type { ApiErrorType } from "../lib/api/api-error";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ interface AxiosErrorWithRetry extends AxiosError {
 
 const instance = axios.create({
 	withCredentials: true,
-	baseURL: API_URL,
+	baseURL: ENV.API_URL,
 	headers: {
 		"Content-Type": "Application/json",
 	},
@@ -52,10 +52,6 @@ instance.interceptors.response.use(
 		};
 
 		if (GLOBAL_ERRORS[status]) {
-			console.log(GLOBAL_ERRORS[status]);
-			console.log(GLOBAL_ERRORS);
-			console.log(status);
-
 			toast.error(GLOBAL_ERRORS[status]);
 		}
 

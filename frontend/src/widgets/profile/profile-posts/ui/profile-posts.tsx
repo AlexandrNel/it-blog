@@ -1,15 +1,14 @@
-import { getPostByUserId, PostCard } from "@/entities/article";
-import { cacheLife } from "next/cache";
+import { PostCard } from "@/entities/article";
+import { getPostByUserId } from "@/entities/article/index.server";
+import { EditBlock } from "@/features/article/article-menu";
 
 export async function ProfilePosts({ userId }: { userId: string }) {
-	"use cache";
-	cacheLife({ stale: 30, revalidate: 10, expire: 60 });
 	const posts = await getPostByUserId(userId);
 
 	return (
 		<>
 			{posts?.map((p) => (
-				<PostCard key={p.id} post={p} />
+				<PostCard key={p.id} post={p} header={<EditBlock authorId={p.author.id} slug={p.slug} />} />
 			))}
 		</>
 	);

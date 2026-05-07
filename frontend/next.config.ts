@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
     images: { remotePatterns: [{ "hostname": "example.com" }, {hostname: "localhost"}] },
     logging: {
         browserToTerminal: true,
-    }
+    },
+    output: 'standalone'
 }
 
 export default nextConfig

@@ -17,7 +17,6 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 
 export const NicknameField = ({
 	value = "",
-	email = "",
 	onErrorCheck,
 	onSuccessCheck,
 	onSuccessGenerate,
@@ -39,7 +38,6 @@ export const NicknameField = ({
 		onChange?.(e);
 	};
 	const generate = useGenerateNickname({
-		email,
 		onSuccess: onSuccessGenerate,
 	});
 

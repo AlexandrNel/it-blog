@@ -1,5 +1,6 @@
-import { API_URL } from "../config/env";
 import { ApiError, isApiError, type BackendError } from "../lib/api/api-error";
+
+const API_URL = process.env.API_URL
 
 export const serverFetch = async <T>(endpoint: string, init?: RequestInit) => {
 	const url = `${API_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;

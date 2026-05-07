@@ -7,14 +7,15 @@ import {
   followRouter,
   postRouter,
   profileRouter,
+  seoRouter,
   tagRouter,
   uploadRouter,
   userRouter,
 } from './modules/index.js'
 import cookieParser from 'cookie-parser'
 import { errorMiddleware } from './middlewares/error.middleware.js'
+import { config } from './config/index.js'
 
-const PORT = process.env.PORT || 3000
 const app = express()
 
 app.set('trust proxy', true)
@@ -23,7 +24,7 @@ app.use(
   express.json(),
   cookieParser(),
   cors({
-    origin: 'http://localhost:3000',
+    origin: config.corsOrigin,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -36,19 +37,19 @@ app.use(
   postRouter,
   commentsRouter,
   profileRouter,
+  seoRouter,
   tagRouter,
   categoryRouter,
   userRouter,
   followRouter,
-  uploadRouter,
+  uploadRouter
 )
-
 
 app.use(errorMiddleware)
 
 export function initServer() {
-  const server = app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`)
+  const server = app.listen(config.port, () => {
+    console.log(`Server is running at http://localhost:${config.port}`)
   })
   return server
 }

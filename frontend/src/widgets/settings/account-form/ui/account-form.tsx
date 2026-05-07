@@ -40,7 +40,7 @@ export function AccountForm() {
 	);
 	const onErrorCheck = (error: unknown) => {
 		if (isApiError(error) && error.status === 400) {
-			setError("username", { type: "server", message: error.message });
+			applyApiFieldErrors(error, setError);
 		}
 	};
 	const isFething = isSubmitting || isLoading;
