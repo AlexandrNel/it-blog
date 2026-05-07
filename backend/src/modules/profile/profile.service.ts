@@ -10,6 +10,7 @@ import {
 } from './profile.dto.js'
 import { toAuthor } from '../user/index.js'
 import type { Prisma } from '../../../generated/prisma/client.js'
+import { isIdOrUsername } from '@/shared/helpers/username-or-id.js'
 
 const profileSelect: Pick<
   Prisma.ProfileSelect,
@@ -30,13 +31,9 @@ const profileConnectionUserSelect = {
 } as const
 
 export class ProfileService {
-  private isIdOrUsername(id: string): 'id' | 'username' {
-    const isUsername = id.match(/^[a-zA-Z0-9]{6,25}$/gim)
-    return isUsername ? 'username' : 'id'
-  }
 
   private async getUserByIdOrUsername(value: string) {
-    const type = this.isIdOrUsername(value)
+    const type = isIdOrUsername(value)
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
       select: { id: true },
@@ -46,7 +43,7 @@ export class ProfileService {
   }
 
   async getByUserIdOrUsername(value: string) {
-    const type = this.isIdOrUsername(value)
+    const type = isIdOrUsername(value)
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
       include: { profile: { select: profileSelect } },
@@ -66,13 +63,14 @@ export class ProfileService {
     await prisma.user.update({ where: { id: userId }, data: { displayName } })
     return await prisma.profile.update({
       where: { userId: userId },
-      data: profile,
+      data: profile
     })
   }
 
   async getStatisticById(value: string) {
     return prisma.$transaction(async (tx) => {
-      const type = this.isIdOrUsername(value)
+      const type = isIdOrUsername(value)
+      
       const profile = await tx.user
         .findUnique({
           where: type === 'id' ? { id: value } : { username: value },
@@ -112,7 +110,7 @@ export class ProfileService {
     value: string
   ): Promise<ProfileConnectionsSummaryDto> {
     const user = await this.getUserByIdOrUsername(value)
-
+    
     const [followers, following] = await prisma.$transaction([
       prisma.follow.count({ where: { followingId: user.id } }),
       prisma.follow.count({ where: { followerId: user.id } }),
@@ -177,7 +175,9 @@ export class ProfileService {
   }
 
   async getMetaById(value: string, viewerUserId?: string) {
-    const type = this.isIdOrUsername(value)
+    const type = isIdOrUsername(value)
+      console.log("type", type, "username", value);
+
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
       include: { profile: true, followers: true },

@@ -3,8 +3,8 @@ import z from 'zod'
 export const UsernameSchema = z.object({
   username: z
     .string()
-    .min(6, 'Минимум 6 симолов')
-    .max(25, 'Максимум 25 символов')
+    .min(4, 'Минимум 4 симолов')
+    .max(20, 'Максимум 20 символов')
     .regex(/^[a-zA-Z0-9]+$/, {
       error: 'В никнейме должны быть буквы и цифры без пробелов',
     }),

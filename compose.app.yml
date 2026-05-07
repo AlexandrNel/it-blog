@@ -1,0 +1,67 @@
+services:
+
+
+  backend: 
+    container_name: backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3005
+      PUBLIC_URL: ${PUBLIC_URL:-https://${DOMAIN}}
+      CORS_ORIGIN: ${NEXT_PUBLIC_SITE_URL:-https://${DOMAIN}}
+      JWT_SECRET: ${JWT_SECRET}
+      REFRESH_SECRET: ${REFRESH_SECRET}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    expose:
+      - "3005"
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy 
+      redis:
+        condition: service_healthy
+    volumes:
+      - backend_uploads:/app/uploads
+    command: sh -c "npx prisma migrate deploy && node dist/server.js"
+    networks:
+      - backend
+      - caddy
+
+  frontend:
+    container_name: frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://${DOMAIN}}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://${DOMAIN}/api}
+        API_URL: http://backend:3005/api
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      API_URL: http://backend:3005/api
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://${DOMAIN}}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://${DOMAIN}/api}
+    expose:
+      - "3000"
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - backend
+      - caddy
+
+networks:
+  backend:
+  caddy:
+
+volumes:
+  caddy_data:
+  caddy_config:
+  backend_uploads:

@@ -1,9 +1,13 @@
+import { env } from '@/config/env.js'
 import { Redis } from 'ioredis'
 let redis: Redis | null = null
 
 export const initRedis = () => {
   if (!redis) {
-    redis = new Redis()
+    redis = new Redis({
+      host: env.REDIS_HOST,
+      port: env.REDIS_PORT
+    })
       .on('ready', () => {
         console.log('Redis ready')
       })

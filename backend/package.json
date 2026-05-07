@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsup src/server.ts --format esm --clean",
     "dev": "tsx watch src/server.ts",
+    "db:init": "npx tsx seed.ts",
     "db:deploy": "npx prisma migrate deploy && npx prisma generate",
     "start": "node dist/server.js ",
     "studio": "npx prisma studio",

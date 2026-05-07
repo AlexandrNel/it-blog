@@ -95,6 +95,7 @@ export class UserService {
 
   private async buildUsername(): Promise<string> {
     const number = NumberDictionary.generate({ length: 4})
+
     const randomName = uniqueNamesGenerator({
       dictionaries: [names, number],
       style: 'capital',
