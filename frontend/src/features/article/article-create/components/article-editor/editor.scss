@@ -1,0 +1,39 @@
+body {
+  --tt-toolbar-height: 44px;
+  --tt-content-padding: 1rem 3rem 30vh;
+}
+
+body {
+  color: var(--foreground);
+}
+
+.tiptap.ProseMirror {
+  font-family: "DM Sans", sans-serif;
+}
+
+.editor-wrapper {
+  margin-top: 8px;
+}
+
+.editor-content {
+  // max-width: 648px;
+  border-radius: 10px;
+
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.editor-content .tiptap.ProseMirror.editor {
+  flex: 1;
+  padding: var(--tt-content-padding);
+}
+
+@media screen and (max-width: 480px) {
+  .editor-content .tiptap.ProseMirror.editor {
+    --tt-content-padding: 1rem 1.5rem 30vh;
+  }
+}

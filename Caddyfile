@@ -1,0 +1,6 @@
+{$DOMAIN} {
+    @api path /api /api/*
+    reverse_proxy @api backend:3005
+
+    reverse_proxy frontend:3000
+}
