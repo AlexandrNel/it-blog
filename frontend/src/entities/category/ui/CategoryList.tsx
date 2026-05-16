@@ -1,0 +1,14 @@
+import type { BaseProps } from "@/shared/types/components";
+import type { Category } from "../model/category";
+import { CategoryItem } from "./CategoryUI";
+import { cn } from "@/shared/lib/utils";
+
+export function CategoryList({ className, list }: BaseProps & { list: Category[] }) {
+	return (
+		<ul className={cn(className)}>
+			{list.map((c) => (
+				<CategoryItem category={c} key={c.id} />
+			))}
+		</ul>
+	);
+}

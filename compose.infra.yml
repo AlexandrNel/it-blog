@@ -1,0 +1,87 @@
+services:
+
+  caddy:
+    container_name: caddy
+    image: caddy:alpine
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    environment:
+      DOMAIN: ${DOMAIN}
+      API_DOMAIN: ${API_DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    networks:
+      - caddy
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    expose:
+      - "6379"
+    restart: unless-stopped
+    healthcheck:
+     test: ["CMD", "redis-cli", "ping"]
+     interval: 10s
+     timeout: 5s
+     retries: 5
+    volumes:
+     - redis_data:/data
+    networks:
+      - backend
+
+  postgres: 
+    container_name: postgres
+    image: postgres:15-alpine
+    restart: always
+    environment: 
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    expose:
+      - "5432"
+    healthcheck: 
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s 
+      timeout: 2s 
+      retries: 20 
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data 
+    command: postgres -c listen_addresses='*' 
+    logging: 
+      options: 
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD
+    depends_on:
+      - postgres
+    networks:
+      - backend
+networks:
+  backend:
+  caddy:
+
+volumes:
+  postgres_data:
+  redis_data:
+  caddy_config:
+  caddy_data:
+
+  
