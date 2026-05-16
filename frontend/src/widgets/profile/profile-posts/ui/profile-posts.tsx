@@ -7,7 +7,7 @@ export async function ProfilePosts({ userId }: { userId: string }) {
 	const posts = await getPostByUserId(userId);
 
 	return (
-		<section className="relative">
+		<section>
 			<h2 className="sr-only">Статьи </h2>
 			{!posts?.length ? (
 				<EmptyCard />

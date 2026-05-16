@@ -17,6 +17,7 @@ export async function PostSection({
 	const posts = await getAllPosts(sort as string, page);
 	return (
 		<section>
+			<h1 className="sr-only">Лента статей</h1>
 			<ul>
 				{!posts || !posts.data.length ? (
 					<ArticleSectionFallback />
@@ -40,7 +41,7 @@ function ArticleSectionFallback() {
 				<Column align={"center"} justify={"center"} className="rounded-xl size-16 bg-muted">
 					<Newspaper />
 				</Column>
-				<h1 className="text-xl font-bold">В ленте пока нет статей</h1>
+				<p className="text-xl font-bold">В ленте пока нет статей</p>
 				<p className="text text-muted-foreground md:px-10">
 					Здесь будут появляться материалы от авторов и по тегам, на которые вы подписаны. Начните
 					читать интересные публикации или поделитесь своим опытом!

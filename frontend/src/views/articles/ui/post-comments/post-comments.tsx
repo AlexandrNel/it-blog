@@ -40,7 +40,7 @@ export const PostComments = ({ params }: Pick<PageProps<"/articles/[slug]">, "pa
 const PostCommentsSkeleton = () => {
 	return (
 		<Card>
-			<h3 className="mb-4">Комментарии</h3>
+			<h2 className="mb-4">Комментарии</h2>
 			<Skeleton className="w-full h-20 rounded-lg my-2" />
 			<Skeleton className="w-full h-20 rounded-lg my-2" />
 			<Skeleton className="w-full h-20 rounded-lg my-2" />
