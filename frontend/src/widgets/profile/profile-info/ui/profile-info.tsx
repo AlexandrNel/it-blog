@@ -1,71 +1,72 @@
 import { getProfileById } from "@/entities/profile/index.server";
 import { Card } from "@/shared/ui/card";
 import { GitHubIcon } from "@/shared/ui/icons";
-import { Column, Row } from "@/shared/ui/layout";
+import { Column } from "@/shared/ui/layout";
 import { Globe, Mail, Send } from "lucide-react";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
+import { mapProfileData, type ProfileItem } from "../model/map-profile-data";
+
+const renderMap = {
+	email: (value: string) => (
+		<PublicLink key={value} label={value} link={`mailto:${value}`} icon={<Mail size={16} />} />
+	),
+
+	site: (value: string) => (
+		<PublicLink key={value} link={value} label={value} icon={<Globe size={16} />} />
+	),
+
+	github: (value: string) => (
+		<SocialLink key={value} label="GitHub" link={value} icon={<GitHubIcon />} />
+	),
+
+	telegram: (value: string) => (
+		<SocialLink key={value} label="Telegram" link={value} icon={<Send size={16} />} />
+	),
+} satisfies Record<ProfileItem["type"], (value: string) => JSX.Element>;
 
 export async function ProfileInfo({ userId }: { userId: string }) {
 	const { contacts } = await getProfileById(userId);
+	const data = mapProfileData({ contacts });
+	return <ProfileInfoView data={data.contacts} />;
+}
+
+function ProfileInfoView({ data }: { data: ProfileItem[] }) {
 	return (
 		<Card>
-			<Column gap={"lg"}>
+			<h2 className="max-lg:text-base mb-1">О профиле</h2>
+			{data.length ? (
 				<Column gap={"sm"}>
-					<h2>О профиле</h2>
-					<p className="text-muted-foreground max-lg:text-sm leading-tight">
+					<p className="text-muted-foreground  max-md:text-sm leading-tight mb-1.5">
 						Краткая информация и публичные ссылки автора
 					</p>
+					{data.map((item) => renderMap[item.type](item.value))}
 				</Column>
-				{contacts && (
-					<Column gap={"sm"}>
-						{contacts?.site && (
-							<Row>
-								<Globe size={16} />
-								<Link target="_blank" href={contacts.site}>
-									{contacts.site}
-								</Link>
-							</Row>
-						)}
-						{contacts?.email && (
-							<Row>
-								<Mail size={16} />
-								<span>{contacts.email}</span>
-							</Row>
-						)}
-					</Column>
-				)}
-
-				{contacts?.links && (
-					<Row className="flex-wrap">
-						{contacts?.links?.github && (
-							<ProfileLinkItem link={contacts.links.github} label="GitGub" icon={<GitHubIcon />} />
-						)}
-						{contacts?.links?.telegram && (
-							<ProfileLinkItem
-								link={contacts.links.telegram}
-								label="Telegram"
-								icon={<Send size={16} />}
-							/>
-						)}
-					</Row>
-				)}
-			</Column>
+			) : (
+				<p>Профиль не настроен</p>
+			)}
 		</Card>
 	);
 }
 
-function ProfileLinkItem({ label, icon, link }: { link: string; label: string; icon?: ReactNode }) {
+function PublicLink({ link, icon, label }: { link: string; label: string; icon?: ReactNode }) {
+	return (
+		<Link target="_blank" href={link} className="flex items-center gap-2">
+			{icon}
+			{label}
+		</Link>
+	);
+}
+
+function SocialLink({ label, icon, link }: { link: string; label: string; icon?: ReactNode }) {
 	return (
 		<Link
 			target="_blank"
-			className="bg-secondary py-1 px-2 rounded-full transition-all text-muted-foreground [&_svg]:text-muted-foreground hover:text-foreground hover:[&_svg]:text-foreground"
+			className="bg-secondary py-1 px-2 rounded-full transition-all text-muted-foreground [&_svg]:text-muted-foreground hover:text-foreground hover:[&_svg]:text-foreground flex items-center gap-2"
 			href={link}
 		>
-			<Row>
-				{icon}
-				{label}
-			</Row>
+			{icon}
+			{label}
 		</Link>
 	);
 }

@@ -1,6 +1,6 @@
 import type { Author } from "@/entities/author";
 
-export type ProfileContacts = {
+export type ProfileContact = {
 	email?: string;
 	site?: string;
 	links?: {
@@ -32,7 +32,7 @@ export type ProfileMetaInfo =
 
 export type Profile = {
 	author: Author;
-	contacts: ProfileContacts | null;
+	contacts: ProfileContact | null;
 	bio: string;
 };
 

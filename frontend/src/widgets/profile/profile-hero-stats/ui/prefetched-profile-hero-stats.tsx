@@ -1,5 +1,4 @@
 "use client";
-import { Card } from "@/shared/ui/card";
 import { Column, Grid } from "@/shared/ui/layout";
 import { useProfileStatistic } from "../model/use-profile-statistic";
 
@@ -11,13 +10,13 @@ export const PrefetchedHeroStats = ({ userId }: Props) => {
 	const unpublished = data?.unpublishedPosts;
 	const unpublishedText = Number(unpublished) > 0 ? `+${unpublished} (на модерации)` : "";
 	return (
-		<Card>
+		<section className="card pt-0 rounded-t-none relative max-md:-mx-(--container-padding) max-md:rounded-none max-lg:hidden">
 			<Grid>
 				<StatChip text={`${unpublished ?? 0}`} subText={unpublishedText} label="статей" />
 				<StatChip text={`${data?.subscribers ?? 0}`} label="подписчиков" />
 				<StatChip text={`${data?.viewers ?? 0}`} label="просмотров" />
 			</Grid>
-		</Card>
+		</section>
 	);
 };
 

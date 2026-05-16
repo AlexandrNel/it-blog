@@ -10,8 +10,8 @@ async function PopularTagsFetch() {
 		<div className="bg-card rounded-lg p-3">
 			<h2 className="text-lg font-bold mb-3">Популярные теги</h2>
 			{!list.length ? (
-				<Column align={"center"} className="md:text-center md:px-4">
-					<h3 className="font-medium">Тегов пока нет</h3>
+				<Column align={"center"} gap={"sm"} className="md:text-center md:px-4">
+					<p className="font-medium">Тегов пока нет</p>
 					<p className="text-sm text-muted-foreground">
 						Первые темы и обсуждения появятся вместе с новыми публикациями авторов.
 					</p>

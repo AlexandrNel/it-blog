@@ -8,9 +8,9 @@ type Props = {
 export const ProfileUserCard = ({ user }: Props) => {
 	const { username, displayName } = user;
 	return (
-		<div>
-			<h2>{displayName || username}</h2>
-			<span className="text-muted-foreground text-sm">{formatUsername(username)}</span>
-		</div>
+		<>
+			<span className="font-bold text-xl block mb-1">{displayName || username}</span>
+			<h1 className="text-muted-foreground text-sm font-normal">{formatUsername(username)}</h1>
+		</>
 	);
 };

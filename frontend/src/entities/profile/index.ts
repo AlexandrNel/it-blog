@@ -1,6 +1,6 @@
 export type {
 	Profile,
-	ProfileContacts,
+	ProfileContact,
 	ProfileStatistic,
 	ProfileMetaInfo,
 	ProfileConnectionKind,

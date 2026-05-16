@@ -29,7 +29,7 @@ export async function _Tabs({ userId }: Props) {
 		PROFILE: "",
 	};
 	return (
-		<Card className="max-md:-mx-(--container-padding) max-md:rounded-none max-md:mb-2">
+		<Card className="max-md:-mx-(--container-padding) max-lg:rounded-t-none max-md:rounded-none max-md:mb-2">
 			<Row className="flex-nowrap overflow-auto">
 				{Object.entries(LINKS).map(([key, value]) => {
 					const label = `${value.label} ${statsMap[key as LinkKey]}`;

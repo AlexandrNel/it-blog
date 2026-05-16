@@ -16,13 +16,13 @@ type Props = { userId: string; isOwner: boolean };
 
 export async function _ProfileHero({ userId, isOwner }: Props) {
 	return (
-		<div>
+		<section>
 			<ProfileCover className="max-md:-mx-(--container-padding) max-md:rounded-none " />
-			<Card className="relative max-md:-mx-(--container-padding) rounded-t-none max-md:rounded-none  max-md:border-b">
+			<div className="card relative max-md:-mx-(--container-padding) rounded-none max-md:rounded-none max-lg:border-b">
 				<HeroInner data={{ userId, isOwner }} />
 				<ProfileConnectionsActions className="md:mt-2 mt-1" userId={userId} />
-			</Card>
-		</div>
+			</div>
+		</section>
 	);
 }
 

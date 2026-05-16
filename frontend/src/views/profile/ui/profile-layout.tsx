@@ -40,13 +40,10 @@ export default async function ProfilePage({
 			sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null} // это Suspense компонент (возращает обертку) | делалет cache запрос getProfile для дудпликации
 		>
 			<ProfileVisibility meta={meta}>
-				<Column className="max-md:gap-0">
-					<ProfileHero userId={param.id} isOwner={meta.isOwner} />
-
-					{!isMobile && <ProfileStats userId={param.id} />}
-
+				<ProfileHero userId={param.id} isOwner={meta.isOwner} />
+				{!isMobile && <ProfileStats userId={param.id} />}
+				<Column className="max-md:gap-0 lg:mt-2">
 					<ProfileTabs userId={param.id} />
-
 					{children}
 				</Column>
 			</ProfileVisibility>
