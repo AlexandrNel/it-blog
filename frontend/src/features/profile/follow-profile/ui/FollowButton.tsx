@@ -4,9 +4,9 @@ import { Button } from "@/shared/ui/button";
 import { useFollowStatus, useUpdateFollowStatus } from "../model/follow-profile-queries";
 import { Spinner } from "@/shared/ui/spinner";
 
-export const FollowButton = ({ userId }: { userId: string }) => {
+export const FollowButton = ({ userId, username }: { userId: string, username: string }) => {
 	const { data, isLoading } = useFollowStatus(userId);
-	const { mutate, isPending } = useUpdateFollowStatus();
+	const { mutate, isPending } = useUpdateFollowStatus(username);
 	const loading = isLoading || isPending;
 
 	return (

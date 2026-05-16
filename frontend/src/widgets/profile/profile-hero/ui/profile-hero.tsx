@@ -46,7 +46,7 @@ const HeroInner = async ({ data: { userId, isOwner } }: { data: Props }) => {
 					</Button>
 				) : (
 					<CheckAuthButton>
-						<FollowButton userId={author.id} />
+						<FollowButton userId={author.id} username={author.username} />
 					</CheckAuthButton>
 				)}
 			</Row>

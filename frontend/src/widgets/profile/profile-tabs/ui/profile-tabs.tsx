@@ -1,4 +1,4 @@
-import { getProfileStatisticById } from "@/entities/profile/index.server";
+import { getProfileStatisticByUserId } from "@/entities/profile/index.server";
 import { Card } from "@/shared/ui/card";
 import { Row } from "@/shared/ui/layout";
 import { TabItem } from "./profile-tab-item";
@@ -22,7 +22,7 @@ const LINKS: Record<LinkKey, LinkItem> = {
 type Props = { userId: string };
 
 export async function _Tabs({ userId }: Props) {
-	const stats = await getProfileStatisticById(userId);
+	const stats = await getProfileStatisticByUserId(userId);
 	const statsMap: Record<LinkKey, string> = {
 		POSTS: stats?.publishedPosts.toString() ?? "",
 		COMMENTS: stats?.comments.toString() ?? "",

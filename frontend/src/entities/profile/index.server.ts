@@ -1,5 +1,5 @@
 export {
 	getProfileById,
-	getProfileStatisticById,
+	getProfileStatisticByUserId,
 	getProfileMetaById,
 } from "./api/server";

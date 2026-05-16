@@ -4,7 +4,11 @@ import dynamic from "next/dynamic";
 import { ProfileVisibility } from "./profile-visibility";
 import { ProfileHero } from "@/widgets/profile/profile-hero";
 import { ProfileTabs } from "@/widgets/profile/profile-tabs";
-import { getProfileMetaById } from "@/entities/profile/index.server";
+import {
+	getProfileById,
+	getProfileMetaById,
+	getProfileStatisticByUserId,
+} from "@/entities/profile/index.server";
 import { Column } from "@/shared/ui/layout";
 import { PageLayout } from "@/shared/layouts/page-layout";
 import { isMobileRequest } from "@/shared/lib/utils/server/is-mobile-request";
@@ -20,7 +24,12 @@ export default async function ProfilePage({
 	children,
 }: PropsWithChildren<LayoutProps<"/profile/[id]">>) {
 	const param = await params;
-	const [meta, isMobile] = await Promise.all([getProfileMetaById(param.id), isMobileRequest()]);
+	const [meta, isMobile] = await Promise.all([
+		getProfileMetaById(param.id),
+		isMobileRequest(),
+		getProfileById(param.id),
+		getProfileStatisticByUserId(param.id),
+	]);
 
 	if (!meta) return notFound();
 	const isHide = meta.isBlocked || !meta.isPublic || !isMobile;
@@ -28,13 +37,16 @@ export default async function ProfilePage({
 		<PageLayout
 			withoutPaddingTop
 			className="md:mt-2"
-			sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}
+			sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null} // это Suspense компонент (возращает обертку) | делалет cache запрос getProfile для дудпликации
 		>
 			<ProfileVisibility meta={meta}>
 				<Column className="max-md:gap-0">
 					<ProfileHero userId={param.id} isOwner={meta.isOwner} />
+
 					{!isMobile && <ProfileStats userId={param.id} />}
+
 					<ProfileTabs userId={param.id} />
+
 					{children}
 				</Column>
 			</ProfileVisibility>

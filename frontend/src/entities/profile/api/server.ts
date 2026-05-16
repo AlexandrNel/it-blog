@@ -23,7 +23,7 @@ export const getProfileMetaById = cache(async (userId: string): Promise<ProfileM
 	});
 	return res.data;
 });
-export const getProfileStatisticById = cache(
+export const getProfileStatisticByUserId = cache(
 	async (userId: string): Promise<ProfileStatistic | null> => {
 		const res = await serverSafeFetch<ProfileStatistic>(`/profile/${userId}/statistic`);
 		return res.data;

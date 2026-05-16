@@ -18,7 +18,7 @@ import type {
 	ProfileConnectionKind,
 	ProfileConnectionUser,
 } from "@/entities/profile/model/profile";
-import { useProfileConnections } from "@/entities/profile/model/profile-queries";
+import { useProfileConnections } from "@/entities/profile/";
 import { modalCopy } from "../lib/constants";
 
 export function ProfileConnectionsDialog({

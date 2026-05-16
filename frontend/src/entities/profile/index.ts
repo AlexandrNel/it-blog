@@ -11,5 +11,4 @@ export type {
 export {
 	useProfileConnections,
 	useProfileConnectionsSummary,
-	profileKeys,
 } from "./model/profile-queries";

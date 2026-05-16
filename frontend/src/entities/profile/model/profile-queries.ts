@@ -8,10 +8,8 @@ import type {
 	ProfileConnectionsPage,
 	ProfileConnectionsSummary,
 } from "./profile";
+import { QUERY_KEYS } from "@/shared/config/cache-keys";
 
-export const profileKeys = {
-	summary: ["profile", "connections", "summary"],
-};
 
 export const useProfileConnections = ({
 	userId,
@@ -23,7 +21,7 @@ export const useProfileConnections = ({
 	enabled: boolean;
 }) => {
 	return useInfiniteQuery<ProfileConnectionsPage>({
-		queryKey: ["profile", "connections", userId, type],
+		queryKey: QUERY_KEYS.profile.summary(userId, type),
 		queryFn: ({ pageParam }) =>
 			ProfileAPI.getConnections({
 				userId,
@@ -40,7 +38,7 @@ export const useProfileConnections = ({
 
 export const useProfileConnectionsSummary = (userId: string) => {
 	return useQuery<ProfileConnectionsSummary>({
-		queryKey: ["profile", "connections", "summary", userId],
+		queryKey: QUERY_KEYS.profile.summaryConnections(userId),
 		queryFn: () => ProfileAPI.getConnectionsSummary(userId),
 		staleTime: 30_000,
 		retry: false,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useProfileConnectionsSummary } from "@/entities/profile/model/profile-queries";
+import { useProfileConnectionsSummary } from "@/entities/profile";
 import { Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { ProfileConnectionsDialog } from "./profile-connections-dialog";

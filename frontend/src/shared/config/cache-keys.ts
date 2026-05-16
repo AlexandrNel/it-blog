@@ -8,7 +8,12 @@ export const CACHE_TAGS = {
 } as const;
 
 // --- Ключи React Query ---
-
 export const QUERY_KEYS = {
-	profile: ["profile"],
+	profile: {
+		profile: (userId: string) => [`profile-${userId}`],
+		statistic: (userId: string) => [`profile-${userId}-statistic`],
+		summary: (userId: string, type: string) => [`profile-${userId}-${type}-connections`],
+		summaryConnections: (userId: string) => [`profile-${userId}-summary-connections`],
+	},
 } as const;
+
