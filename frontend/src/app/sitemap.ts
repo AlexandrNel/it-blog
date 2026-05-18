@@ -1,11 +1,7 @@
-import { getSitemapData } from "@/shared/api/get-sitemap-data";
+// import { getSitemapData } from "@/shared/api/get-sitemap-data";
 import { CACHE_TAGS } from "@/shared/config/cache-keys";
 import { ENV } from "@/shared/config/env";
-<<<<<<< HEAD
-import { ROUTES } from "@/shared/config/routes";
-=======
 // import { ROUTES } from "@/shared/config/routes";
->>>>>>> dev
 import type { MetadataRoute } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 

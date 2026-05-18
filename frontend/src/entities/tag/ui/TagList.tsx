@@ -10,7 +10,7 @@ interface Props {
 
 export function TagList({ className, list }: Props) {
 	return (
-		<ul className={cn(className, "flex flex-wrap gap-2 relative z-10")}>
+		<ul className={cn(className, "flex flex-wrap gap-x-1 relative z-10")}>
 			{list.map((tag) => (
 				<li key={tag.key}>
 					<Link href={`/tags/${tag.key}`}>
