@@ -1,5 +1,4 @@
 services:
-
   caddy:
     container_name: caddy
     image: caddy:alpine
@@ -7,7 +6,8 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
-      DOMAIN: ${DOMAIN:-localhost}
+      DOMAIN: ${DOMAIN}
+      API_DOMAIN: ${API_DOMAIN}
     ports:
       - "80:80"
       - "443:443"
@@ -26,35 +26,35 @@ services:
       - "6379"
     restart: unless-stopped
     healthcheck:
-     test: ["CMD", "redis-cli", "ping"]
-     interval: 10s
-     timeout: 5s
-     retries: 5
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-     - redis_data:/data
+      - redis_data:/data
     networks:
       - backend
 
-  postgres: 
+  postgres:
     container_name: postgres
     image: postgres:15-alpine
     restart: always
-    environment: 
+    environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     expose:
       - "5432"
-    healthcheck: 
-      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
-      interval: 5s 
-      timeout: 2s 
-      retries: 20 
-    volumes: 
-      - postgres_data:/var/lib/postgresql/data 
-    command: postgres -c listen_addresses='*' 
-    logging: 
-      options: 
+    healthcheck:
+      test: ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c listen_addresses='*'
+    logging:
+      options:
         max-size: "10m"
         max-file: "3"
     networks:
@@ -82,5 +82,3 @@ volumes:
   redis_data:
   caddy_config:
   caddy_data:
-
-  
