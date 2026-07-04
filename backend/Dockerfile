@@ -1,35 +1,40 @@
-FROM node:24-alpine AS dependencies
+
+FROM node:24-alpine AS base
+
+RUN corepack enable 
 
 WORKDIR /app
 
-RUN npm install -g pnpm
+FROM base AS fetch
 
-COPY .npmrc ./
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-FROM node:24-alpine AS builder
+ENV CI=true
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm fetch
 
-WORKDIR /app
+FROM fetch AS builder
+COPY package.json ./
 
-RUN npm install -g pnpm
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install -w --frozen-lockfile --offline
 
-COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 
-ENV NODE_ENV=production
 
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/dummy"
 RUN pnpm prisma generate
 RUN pnpm build
-RUN pnpm prune --prod
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm prune --prod --ignore-scripts
 
 FROM node:24-alpine AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=3005
+ENV PORT=${PORT:-1010}
 
 RUN addgroup -S nodejs && adduser -S backend -G nodejs
 RUN mkdir -p uploads && chown backend:nodejs uploads
@@ -43,6 +48,6 @@ COPY --from=builder --chown=backend:nodejs /app/prisma.config.ts ./prisma.config
 
 USER backend
 
-EXPOSE 3005
+EXPOSE $PORT
 
 CMD ["node", "dist/server.js"]

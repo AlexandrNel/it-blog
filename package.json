@@ -7,12 +7,13 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "prod:start": "docker compose -f compose.infra.yml -f compose.app.yml up -d",
-    "prod:build": "docker compose -f compose.infra.yml  -f compose.app.yml build" ,
-    "dev:start": "docker compose -f compose.dev.yml -p it_blog-dev up -d",
-    "down": "docker compose -f compose.infra.yml -f compose.app.yml down",
-    "logs": "docker compose -f compose.infra.yml -f compose.app.yml logs -f",
-    "clean": "docker compose -f compose.infra.yml -f compose.app.yml down -v"
+    "dev": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev up -d --build",
+    "dev:down": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev down -v --remove-orphans",
+    "dev:logs": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev logs -f",
+    "dev:seed": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev exec backend pnpm db:init",
+    "prod": "docker compose --env-file .env.prod -f compose.yml --profile prod up -d --build",
+    "prod:down": "docker compose --env-file .env.prod -f compose.yml --profile prod down -v --remove-orphans",
+    "prod:logs": "docker compose --env-file .env.prod -f compose.yml --profile prod logs -f"
   },
   "devDependencies": {
     "tsup": "^8.5.1"

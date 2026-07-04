@@ -1,3 +1,6 @@
+{
+    email {$EMAIL}
+}
 {$DOMAIN} {
     reverse_proxy frontend:3000
 }
