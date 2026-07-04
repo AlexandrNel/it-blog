@@ -1,7 +1,7 @@
 import { prisma } from '@/shared/lib/prisma.js'
 import type { UserService } from '../user/user.service.js'
 import { ApiError } from '@/shared/lib/api-error.js'
-import { PrismaClientKnownRequestError } from '../../../generated/prisma/internal/prismaNamespace.js'
+import { PrismaClientKnownRequestError } from '@/generated/prisma/internal/prismaNamespace.js'
 // TODO: убрать отсюда импорт prismaNamespace
 export class FollowService {
   constructor(private userService: UserService) {}

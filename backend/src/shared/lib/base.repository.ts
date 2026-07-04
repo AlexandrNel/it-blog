@@ -1,4 +1,4 @@
-import type { Prisma } from '../../../generated/prisma/client.js'
+import type { Prisma } from '@/generated/prisma/client.js'
 import { prisma } from '@/shared/lib/prisma.js'
 
 export type DbClient = typeof prisma | Prisma.TransactionClient

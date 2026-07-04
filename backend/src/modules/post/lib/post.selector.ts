@@ -1,4 +1,4 @@
-import type { Prisma } from '../../../../generated/prisma/client.js'
+import type { Prisma } from '@/generated/prisma/client.js'
 
 export const authorInclude: { select: Prisma.UserSelect } = {
   select: {

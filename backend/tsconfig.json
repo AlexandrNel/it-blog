@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "rootDir": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/generated/*": ["./generated/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

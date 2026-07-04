@@ -1,4 +1,4 @@
-import type { Post } from '../../../..//generated/prisma/client.js'
+import type { Post } from '@/generated/prisma/client.js'
 import type { Author } from '@/modules/user/user.types.js'
 
 export type PostTag = { id: string; name: string; key: string }

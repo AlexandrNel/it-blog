@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { config } from '@/config/index.js'
-import type { User } from '../../../../generated/prisma/client.js'
+import type { User } from '@/generated/prisma/client.js'
 
 export type SessionEntity = {
   id: string

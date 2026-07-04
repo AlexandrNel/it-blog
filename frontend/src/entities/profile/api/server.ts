@@ -10,7 +10,6 @@ export const getProfileById = cache(async (userId: string): Promise<Profile> => 
 	"use cache";
 	cacheLife("days");
 	cacheTag(CACHE_TAGS.profile(userId));
-
 	const res = await serverSafeFetch<Profile>(`/profile/${userId}`);
 	if (!res.data) return notFound();
 	return res.data;

@@ -1,6 +1,6 @@
 // seed.ts
 import { Role } from './generated/prisma/client';
-import {prisma} from './src/shared/lib/prisma'
+import { prisma } from './src/shared/lib/prisma'
 import * as bcrypt from 'bcrypt';
 
 
