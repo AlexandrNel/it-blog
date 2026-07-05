@@ -3,6 +3,6 @@
 import { useView } from "../model/useView";
 
 export function ArticleView({ id }: { id: string }) {
-	useView(id);
-	return null;
+  useView(id);
+  return null;
 }

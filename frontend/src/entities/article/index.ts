@@ -8,19 +8,19 @@ export { PostListSkeleton } from "./ui/PostListSkeleton";
 export { PostCardSkeleton } from "./ui/PostCardSkeleton";
 export { PostAPI } from "./api/client";
 export {
-	useCreatePost,
-	usePostById,
-	usePostsByUser,
-	useUpdatePost,
-	useDeletePost,
+  useCreatePost,
+  usePostById,
+  usePostsByUser,
+  useUpdatePost,
+  useDeletePost,
 } from "./model/post-queries";
 
 export type {
-	Comment,
-	Post,
-	PostWithStatistic,
-	Statistic,
-	SortParams,
-	FilterParams,
-	DateParams,
+  Comment,
+  Post,
+  PostWithStatistic,
+  Statistic,
+  SortParams,
+  FilterParams,
+  DateParams,
 } from "./model/post";

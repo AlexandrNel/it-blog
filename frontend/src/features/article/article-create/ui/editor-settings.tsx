@@ -8,16 +8,16 @@ import { useEditorSettingsForm } from "../lib/use-editor-settings-form";
 import { ArticleEditorForm } from "./article-editor-form";
 
 export function EditorSettingsPage() {
-	const form = useEditorSettingsForm();
+  const form = useEditorSettingsForm();
 
-	return (
-		<Container>
-			<FormProvider {...form}>
-				<div className={"bg-card rounded-lg p-4 mt-2"}>
-					<ArticleEditorForm />
-					<ArticleSettingsFooter />
-				</div>
-			</FormProvider>
-		</Container>
-	);
+  return (
+    <Container>
+      <FormProvider {...form}>
+        <div className={"bg-card rounded-lg p-4 mt-2"}>
+          <ArticleEditorForm />
+          <ArticleSettingsFooter />
+        </div>
+      </FormProvider>
+    </Container>
+  );
 }

@@ -30,34 +30,34 @@ export const HOME_PAGE = (page: number) => (page <= 1 ? HOME : `${HOME}?page=${p
 // --- Сводный объект ---
 
 export const ROUTES = {
-	home: HOME,
-	search: SEARCH,
-	profile: {
-		root: PROFILE,
-		user: PROFILE_USER,
-		about: PROFILE_USER_ABOUT,
-		comments: PROFILE_USER_COMMENTS,
-	},
-	article: ARTICLE,
-	tag: TAG,
-	auth: {
-		login: LOGIN,
-		register: REGISTER,
-	},
-	editor: {
-		root: EDITOR,
-		post: EDITOR_POST,
-	},
-	settings: {
-		root: SETTINGS,
-		account: SETTINGS_ACCOUNT,
-		notifications: SETTINGS_NOTIFICATIONS,
-		security: SETTINGS_SECURITY,
-	},
-	api: {
-		postRevalidate: API_POST_REVALIDATE,
-	},
-	feed: {
-		page: HOME_PAGE,
-	},
+  home: HOME,
+  search: SEARCH,
+  profile: {
+    root: PROFILE,
+    user: PROFILE_USER,
+    about: PROFILE_USER_ABOUT,
+    comments: PROFILE_USER_COMMENTS,
+  },
+  article: ARTICLE,
+  tag: TAG,
+  auth: {
+    login: LOGIN,
+    register: REGISTER,
+  },
+  editor: {
+    root: EDITOR,
+    post: EDITOR_POST,
+  },
+  settings: {
+    root: SETTINGS,
+    account: SETTINGS_ACCOUNT,
+    notifications: SETTINGS_NOTIFICATIONS,
+    security: SETTINGS_SECURITY,
+  },
+  api: {
+    postRevalidate: API_POST_REVALIDATE,
+  },
+  feed: {
+    page: HOME_PAGE,
+  },
 } as const;

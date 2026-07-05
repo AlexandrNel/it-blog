@@ -1,9 +1,8 @@
-/** biome-ignore-all lint/correctness/noInvalidPositionAtImportRule: <explanation> */
+@import "../../shared/ui/tiptap-editor/components/_keyframe-animations.scss";
+@import "../../shared/ui/tiptap-editor/components/_variables.scss";
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
-@import "../../shared/ui/tiptap-editor/components/_keyframe-animations.scss";
-@import "../../shared/ui/tiptap-editor/components/_variables.scss";
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

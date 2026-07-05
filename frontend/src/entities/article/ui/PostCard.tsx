@@ -1,11 +1,11 @@
-import type { PostWithStatistic } from "../model/post";
+import { type PostWithStatistic } from "../model/post";
 import { cn } from "@/shared/lib/utils";
 import { ArticleInfo } from "./ArticleInfo";
 import { ArticlePreview } from "./ArticlePreview";
 import { TagList } from "@/entities/tag/@x/article";
 import Link from "next/link";
 import { ArticleStatistic } from "./ArticleStatistic";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Button } from "@/shared/ui/button";
 import { Separator } from "@/shared/ui/separator";
 

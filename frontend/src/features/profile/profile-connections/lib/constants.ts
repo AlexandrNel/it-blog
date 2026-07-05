@@ -1,17 +1,17 @@
-import type { ProfileConnectionKind } from "@/entities/profile";
+import { type ProfileConnectionKind } from "@/entities/profile";
 
 export const modalCopy: Record<
-	ProfileConnectionKind,
-	{ title: string; empty: string; description: string }
+  ProfileConnectionKind,
+  { title: string; empty: string; description: string }
 > = {
-	followers: {
-		title: "Подписчики",
-		empty: "Нет подписчиков",
-		description: "Люди, которые подписаны на этот профиль.",
-	},
-	following: {
-		title: "Подписки",
-		empty: "Нет подписок",
-		description: "Профили, на которые подписан этот пользователь.",
-	},
+  followers: {
+    title: "Подписчики",
+    empty: "Нет подписчиков",
+    description: "Люди, которые подписаны на этот профиль.",
+  },
+  following: {
+    title: "Подписки",
+    empty: "Нет подписок",
+    description: "Профили, на которые подписан этот пользователь.",
+  },
 };

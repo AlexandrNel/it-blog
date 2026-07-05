@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import Link from "next/link";
 import { Tag } from "./Tag";
-import type { Tag as TypeTag } from "../model/tag";
+import { type Tag as TypeTag } from "../model/tag";
 
 interface Props {
   className?: string;

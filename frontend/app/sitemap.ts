@@ -2,7 +2,7 @@
 import { CACHE_TAGS } from "@/shared/config/cache-keys";
 import { ENV } from "@/shared/config/env";
 // import { ROUTES } from "@/shared/config/routes";
-import type { MetadataRoute } from "next";
+import { type MetadataRoute } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 
 const staticRoutes = ["/"] as const;

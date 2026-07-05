@@ -1,6 +1,6 @@
 import { PageLayout } from "@/shared/layouts/page-layout";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren) {
-	return <PageLayout>{children}</PageLayout>;
+  return <PageLayout>{children}</PageLayout>;
 }

@@ -2,7 +2,7 @@ import { Toaster } from "@/shared/ui/sonner";
 import { GettingUser } from "@/entities/auth";
 import { QueryProvider } from "@/app/providers/query-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (

@@ -7,14 +7,14 @@ import { ProfileHeroStatsSkeleton } from "@/widgets/profile/profile-hero-stats";
 import { ProfileTabsSkeleton } from "@/widgets/profile/profile-tabs/";
 
 export default function ProfileLoadingPage() {
-	return (
-		<PageLayout sidebar={<ProfileInfoSkeleton className="max-lg:hidden" />}>
-			<Column>
-				<ProfileHeroSkeleton />
-				<ProfileHeroStatsSkeleton className="max-lg:hidden" />
-				<ProfileTabsSkeleton />
-				<ProfilePostsSkeleton />
-			</Column>
-		</PageLayout>
-	);
+  return (
+    <PageLayout sidebar={<ProfileInfoSkeleton className="max-lg:hidden" />}>
+      <Column>
+        <ProfileHeroSkeleton />
+        <ProfileHeroStatsSkeleton className="max-lg:hidden" />
+        <ProfileTabsSkeleton />
+        <ProfilePostsSkeleton />
+      </Column>
+    </PageLayout>
+  );
 }

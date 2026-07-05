@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { SettingsAPI } from "../api/client";
 
 export const SETTINGS_KEY = {
-	all: ["settings"],
+  all: ["settings"],
 };
 
 export const useSettings = () => {
-	return useQuery({
-		queryKey: SETTINGS_KEY.all,
-		queryFn: SettingsAPI.getSettings,
-		retry: false,
-		staleTime: 1000 * 60 * 10000,
-	});
+  return useQuery({
+    queryKey: SETTINGS_KEY.all,
+    queryFn: SettingsAPI.getSettings,
+    retry: false,
+    staleTime: 1000 * 60 * 10000,
+  });
 };

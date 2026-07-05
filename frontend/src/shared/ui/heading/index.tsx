@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import type { ComponentPropsWithoutRef, ElementType } from "react";
+import { type ComponentPropsWithoutRef, type ElementType } from "react";
 
 const headingVariants = cva("font-bold", {
   variants: {
@@ -39,10 +39,7 @@ export const Heading = <T extends ElementType = "h1">({
   const Tag = (as ?? `h${level}`) as ElementType;
 
   return (
-    <Tag
-      className={headingVariants({ size: size ?? level, className })}
-      {...props}
-    >
+    <Tag className={headingVariants({ size: size ?? level, className })} {...props}>
       {children}
     </Tag>
   );

@@ -21,65 +21,65 @@ import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
 import "@/shared/ui/tiptap-editor/components/tiptap-node/blockquote-node/blockquote-node.scss";
 
 type Props = {
-	content?: string;
-	onChange?: (obj: Content, text: string) => void;
-	onMount?: (e: Editor) => void;
+  content?: string;
+  onChange?: (obj: Content, text: string) => void;
+  onMount?: (e: Editor) => void;
 };
 
 export const CommentEditor = memo(
-	({ children, content = "", onChange, onMount }: PropsWithChildren<Props>) => {
-		const parsedContent = content ? safeParseJson<Content>(content) : "";
-		const editor = useEditor({
-			content: parsedContent,
-			onMount: (e) => {
-				onMount?.(e.editor);
-			},
-			onUpdate: (e) => {
-				onChange?.(e.editor.getJSON(), e.editor.getText());
-			},
-			immediatelyRender: false,
-			editorProps: {
-				attributes: { class: "p-2 " },
-			},
-			extensions: [
-				Placeholder.configure({
-					placeholder: "Комментарий...",
-				}),
-				UndoRedo,
-				Focus,
-				Dropcursor,
-				Blockquote,
-				Bold,
-				CodeBlock,
-				Document,
-				Text,
-				Italic,
-				Link,
-				Strike,
-				Underline,
-				ListItem,
-				OrderedList.configure({
-					HTMLAttributes: { class: "comment-list" },
-				}),
-				BulletList.configure({
-					HTMLAttributes: { class: "comment-list" },
-				}),
-				Paragraph.configure({
-					HTMLAttributes: { class: "comment-paragraph" },
-				}),
-			],
-		});
-		return (
-			<div
-				className={cn(
-					"bg-background relative cursor-text rounded-lg transition-all border border-transparent shadow-primary/20",
-					"hover:shadow-[0_0_0_3px] hover:bg-card  hover:border-primary/50",
-					"focus-within:shadow-[0_0_0_3px] focus-within:bg-card  focus-within:border-primary/50",
-				)}
-			>
-				<EditorContent className="min-h-10 prose" editor={editor} />
-				{children}
-			</div>
-		);
-	},
+  ({ children, content = "", onChange, onMount }: PropsWithChildren<Props>) => {
+    const parsedContent = content ? safeParseJson<Content>(content) : "";
+    const editor = useEditor({
+      content: parsedContent,
+      onMount: (e) => {
+        onMount?.(e.editor);
+      },
+      onUpdate: (e) => {
+        onChange?.(e.editor.getJSON(), e.editor.getText());
+      },
+      immediatelyRender: false,
+      editorProps: {
+        attributes: { class: "p-2 " },
+      },
+      extensions: [
+        Placeholder.configure({
+          placeholder: "Комментарий...",
+        }),
+        UndoRedo,
+        Focus,
+        Dropcursor,
+        Blockquote,
+        Bold,
+        CodeBlock,
+        Document,
+        Text,
+        Italic,
+        Link,
+        Strike,
+        Underline,
+        ListItem,
+        OrderedList.configure({
+          HTMLAttributes: { class: "comment-list" },
+        }),
+        BulletList.configure({
+          HTMLAttributes: { class: "comment-list" },
+        }),
+        Paragraph.configure({
+          HTMLAttributes: { class: "comment-paragraph" },
+        }),
+      ],
+    });
+    return (
+      <div
+        className={cn(
+          "bg-background relative cursor-text rounded-lg transition-all border border-transparent shadow-primary/20",
+          "hover:shadow-[0_0_0_3px] hover:bg-card  hover:border-primary/50",
+          "focus-within:shadow-[0_0_0_3px] focus-within:bg-card  focus-within:border-primary/50",
+        )}
+      >
+        <EditorContent className="min-h-10 prose" editor={editor} />
+        {children}
+      </div>
+    );
+  },
 );

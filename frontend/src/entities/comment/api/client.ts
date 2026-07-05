@@ -1,8 +1,8 @@
 import { BaseAPI } from "@/shared/api/base-api";
-import type { Comment } from "../model/comment";
+import { type Comment } from "../model/comment";
 
 export class CommentAPI extends BaseAPI {
-	static getPostCommentsByPostSlug(slug: string): Promise<Comment[]> {
-		return BaseAPI.get<Comment[]>(`/comments/post/${slug}`);
-	}
+  static getPostCommentsByPostSlug(slug: string): Promise<Comment[]> {
+    return BaseAPI.get<Comment[]>(`/comments/post/${slug}`);
+  }
 }

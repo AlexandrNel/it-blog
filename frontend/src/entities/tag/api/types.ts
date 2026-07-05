@@ -1,5 +1,5 @@
 export type TagDto = {
-	id: string;
-	key: string;
-	name: string;
+  id: string;
+  key: string;
+  name: string;
 };

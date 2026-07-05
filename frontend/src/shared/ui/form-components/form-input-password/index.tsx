@@ -1,13 +1,8 @@
 "use client";
 import { EyeClosed, Eye, InfoIcon } from "lucide-react";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "../../input-group";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "../../input-group";
 import { TooltipContent, TooltipTrigger } from "../../tooltip";
-import type { InputHTMLAttributes } from "react";
+import { type InputHTMLAttributes } from "react";
 import { usePasswordToggle } from "@/shared/lib/hooks/use-password-toggle";
 import { Tooltip } from "../../tooltip";
 
@@ -35,12 +30,7 @@ export const FormInputPassword = ({ tooltip, ...props }: Props) => {
         <InputGroupAddon align={"inline-end"}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <InputGroupButton
-                className=""
-                variant="ghost"
-                aria-label="Info"
-                size="icon-xs"
-              >
+              <InputGroupButton className="" variant="ghost" aria-label="Info" size="icon-xs">
                 <InfoIcon />
               </InputGroupButton>
             </TooltipTrigger>

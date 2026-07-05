@@ -1,58 +1,85 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": false
-	},
-	"files": {
-		"ignoreUnknown": false,
-		"includes": ["src/**/*", "!**/src/shared/ui/editor/components"]
-	},
-	"formatter": {
-		"enabled": true,
-		"lineEnding": "lf",
-		"indentStyle": "tab",
-		"lineWidth": 80
-	},
-	"linter": {
-		"enabled": true,
-		"domains": {
-			"react": "recommended",
-			"next": "recommended"
-		},
-		"rules": {
-			"complexity": {
-				"noStaticOnlyClass": "off"
-			},
-			"suspicious": {
-				"noArrayIndexKey": "info"
-			},
-			"recommended": true
-		}
-	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double",
-			"lineWidth": 100
-		}
-	},
-	"css": {
-		"parser": {
-			"tailwindDirectives": true
-		}
-	},
-	"json": {
-		"formatter": {
-			"lineWidth": 100
-		}
-	},
-	"assist": {
-		"enabled": false,
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
-	}
+  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**/*",
+      "app/**/*",
+      "!**/src/shared/ui/tiptap-editor/components",
+      "!**/src/shared/ui/tiptap-editor/lib"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "lineEnding": "lf",
+    "indentStyle": "space",
+    "lineWidth": 80
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "react": "recommended",
+      "next": "recommended"
+    },
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noStaticOnlyClass": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "info"
+      },
+      "a11y": {
+        "useSemanticElements": "off",
+        "useKeyWithClickEvents": "off"
+      },
+      "style": {
+        "useImportType": {
+          "level": "warn",
+          "options": { "style": "inlineType" }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*skeleton*.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
+    }
+  ],
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "lineWidth": 100
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "lineWidth": 100
+    }
+  },
+  "assist": {
+    "enabled": false,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
 }

@@ -1,12 +1,12 @@
 "use client";
 import { Column } from "@/shared/ui/layout";
 import { cn } from "@/shared/lib/utils";
-import type { BaseProps } from "@/shared/types/components";
+import { type BaseProps } from "@/shared/types/components";
 import { useRef, type PropsWithChildren } from "react";
 import { Button } from "@/shared/ui/button";
 import { CommentEditor } from "@/entities/comment";
 import { Row } from "@/shared/ui/layout";
-import type { Content, Editor } from "@tiptap/core";
+import { type Content, type Editor } from "@tiptap/core";
 import { toast } from "sonner";
 import { useEditPostComment } from "../model/edit-comment-queries";
 

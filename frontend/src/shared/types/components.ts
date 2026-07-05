@@ -1,4 +1,4 @@
 export interface BaseProps {
-	className?: string;
+  className?: string;
 }
 export type BasePropsWithChildren = React.PropsWithChildren<BaseProps>;

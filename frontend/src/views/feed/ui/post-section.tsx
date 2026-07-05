@@ -9,47 +9,47 @@ import { Newspaper } from "lucide-react";
 import { getAllPosts } from "@/entities/article/index.server";
 
 export async function PostSection({
-	searchParams,
+  searchParams,
 }: Pick<PageProps<"/articles/[slug]">, "searchParams">) {
-	const param = Number((await searchParams).page);
-	const sort = (await searchParams).sort;
-	const page = Number.isFinite(param) ? param : undefined;
-	const posts = await getAllPosts(sort as string, page);
-	return (
-		<section>
-			<h1 className="sr-only">Лента статей</h1>
-			<ul>
-				{!posts || !posts.data.length ? (
-					<ArticleSectionFallback />
-				) : (
-					posts.data.map((p) => (
-						<li key={p.id} className="mb-2">
-							<PostCard header={<EditBlock slug={p.slug} authorId={p.author.id} />} post={p} />
-						</li>
-					))
-				)}
-			</ul>
-			{posts && <Pagination page={page} pages={posts.pages} />}
-		</section>
-	);
+  const param = Number((await searchParams).page);
+  const sort = (await searchParams).sort;
+  const page = Number.isFinite(param) ? param : undefined;
+  const posts = await getAllPosts(sort as string, page);
+  return (
+    <section>
+      <h1 className="sr-only">Лента статей</h1>
+      <ul>
+        {!posts || !posts.data.length ? (
+          <ArticleSectionFallback />
+        ) : (
+          posts.data.map((p) => (
+            <li key={p.id} className="mb-2">
+              <PostCard header={<EditBlock slug={p.slug} authorId={p.author.id} />} post={p} />
+            </li>
+          ))
+        )}
+      </ul>
+      {posts && <Pagination page={page} pages={posts.pages} />}
+    </section>
+  );
 }
 
 function ArticleSectionFallback() {
-	return (
-		<Card className="py-10">
-			<Column gap={"lg"} align={"center"} className="text-center">
-				<Column align={"center"} justify={"center"} className="rounded-xl size-16 bg-muted">
-					<Newspaper />
-				</Column>
-				<p className="text-xl font-bold">В ленте пока нет статей</p>
-				<p className="text text-muted-foreground md:px-10">
-					Здесь будут появляться материалы от авторов и по тегам, на которые вы подписаны. Начните
-					читать интересные публикации или поделитесь своим опытом!
-				</p>
-				<Button asChild>
-					<Link href={"/editor"}>Написать статью</Link>
-				</Button>
-			</Column>
-		</Card>
-	);
+  return (
+    <Card className="py-10">
+      <Column gap={"lg"} align={"center"} className="text-center">
+        <Column align={"center"} justify={"center"} className="rounded-xl size-16 bg-muted">
+          <Newspaper />
+        </Column>
+        <p className="text-xl font-bold">В ленте пока нет статей</p>
+        <p className="text text-muted-foreground md:px-10">
+          Здесь будут появляться материалы от авторов и по тегам, на которые вы подписаны. Начните
+          читать интересные публикации или поделитесь своим опытом!
+        </p>
+        <Button asChild>
+          <Link href={"/editor"}>Написать статью</Link>
+        </Button>
+      </Column>
+    </Card>
+  );
 }
