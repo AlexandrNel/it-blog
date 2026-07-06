@@ -1,4 +1,6 @@
 // --- Ключи кеша страниц (Next.js `cacheTag` / `revalidateTag`) ---
+// TODO: вынести в сущности, сделать билдер ключей
+// TODO: пересмотреть cache tags
 
 export const CACHE_TAGS = {
   sitemap: "sitemap",
@@ -8,6 +10,9 @@ export const CACHE_TAGS = {
 } as const;
 
 // --- Ключи React Query ---
+/**
+ * @deprecated Будет удалено
+ */
 export const QUERY_KEYS = {
   profile: {
     profile: (userId: string) => [`profile-${userId}`],

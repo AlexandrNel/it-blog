@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { ROUTES } from "@/shared/config/routes";
+import { routes } from "@/shared/config";
 
 interface Props extends BaseProps {
   slug: string;
@@ -33,7 +33,7 @@ export function EditBlock({ className, slug, authorId }: Props) {
           <DropdownMenuGroup>
             <DropdownMenuItem asChild className="p-0">
               <Link
-                href={ROUTES.editor.post(slug)}
+                href={routes.editor.post(slug)}
                 className=" cursor-pointer flex px-2 py-1 gap-2"
               >
                 <Pencil size={20} color="#858585" strokeWidth={2} />

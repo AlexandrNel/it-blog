@@ -1,4 +1,4 @@
-import { ENV } from "@/shared/config/env";
+import { env } from "@/shared/config";
 import { type MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/editor/", "/search", "/tags", "/settings/", "/login", "/register"],
       },
     ],
-    sitemap: `${ENV.SITE_URL}/sitemap.xml`,
-    host: ENV.SITE_URL,
+    sitemap: `${env.SITE_URL}/sitemap.xml`,
+    host: env.SITE_URL,
   };
 }

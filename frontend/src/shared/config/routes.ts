@@ -1,63 +1,31 @@
-// --- Статические роуты ---
+import { type Route } from "next";
 
-export const HOME = "/";
-export const SEARCH = "/search";
-export const PROFILE = "/profile";
-export const LOGIN = "/login";
-export const REGISTER = "/register";
-export const EDITOR = "/editor";
-export const SETTINGS = "/settings";
-export const SETTINGS_ACCOUNT = `${SETTINGS}/account`;
-export const SETTINGS_NOTIFICATIONS = `${SETTINGS}/notifications`;
-export const SETTINGS_SECURITY = `${SETTINGS}/security`;
-
-// --- Динамические роуты ---
-
-export const PROFILE_USER = (username: string) => `${PROFILE}/${username}`;
-export const PROFILE_USER_ABOUT = (username: string) => `${PROFILE_USER(username)}/about`;
-export const PROFILE_USER_COMMENTS = (username: string) => `${PROFILE_USER(username)}/comments`;
-
-export const ARTICLE = (slug: string) => `/articles/${slug}`;
-
-export const TAG = (tagKey: string) => `/tags/${tagKey}`;
-
-export const EDITOR_POST = (slug: string) => `${EDITOR}/${slug}`;
-
-export const API_POST_REVALIDATE = (postId: string) => `/api/posts/${postId}/revalidate`;
-
-export const HOME_PAGE = (page: number) => (page <= 1 ? HOME : `${HOME}?page=${page}`);
-
-// --- Сводный объект ---
-
-export const ROUTES = {
-  home: HOME,
-  search: SEARCH,
+export const routes = {
+  home: (): Route => "/",
+  search: (): Route => "/search",
   profile: {
-    root: PROFILE,
-    user: PROFILE_USER,
-    about: PROFILE_USER_ABOUT,
-    comments: PROFILE_USER_COMMENTS,
+    root: (): Route => "/profile",
+    user: (username: string): Route => `/profile/${username}` as Route,
+    about: (username: string): Route => `/profile/${username}/about` as Route,
+    comments: (username: string): Route => `/profile/${username}/comments` as Route,
   },
-  article: ARTICLE,
-  tag: TAG,
+  article: (slug: string): Route => `/articles/${slug}` as Route,
+  tag: (tag: string): Route => `/tags/${tag}` as Route,
   auth: {
-    login: LOGIN,
-    register: REGISTER,
+    login: (): Route => "/login",
+    register: (): Route => "/register",
   },
   editor: {
-    root: EDITOR,
-    post: EDITOR_POST,
+    root: (): Route => "/editor",
+    post: (slug: string): Route => `/editor/${slug}` as Route,
   },
   settings: {
-    root: SETTINGS,
-    account: SETTINGS_ACCOUNT,
-    notifications: SETTINGS_NOTIFICATIONS,
-    security: SETTINGS_SECURITY,
+    root: (): Route => "/settings",
+    account: (): Route => "/settings/notifications",
+    notifications: (): Route => "/settings/notifications",
+    security: (): Route => "/settings/security",
   },
   api: {
-    postRevalidate: API_POST_REVALIDATE,
-  },
-  feed: {
-    page: HOME_PAGE,
+    postRevalidate: (postId: string) => `/api/posts/${postId}/revalidate`,
   },
 } as const;

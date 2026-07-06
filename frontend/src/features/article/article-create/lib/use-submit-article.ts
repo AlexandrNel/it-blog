@@ -11,7 +11,7 @@ import { isApiError } from "@/shared/lib/api/api-error";
 import { useEditorStore } from "../model/use-editor-store";
 import { type FormSchemaType } from "../model/schema";
 import { uploadImage } from "@/shared/api/uploadImage";
-import { ROUTES } from "@/shared/config/routes";
+import { routes } from "@/shared/config";
 
 export function useSubmitArticle() {
   const router = useRouter();
@@ -81,7 +81,7 @@ export function useSubmitArticle() {
       create.mutate(fetchData, {
         onSuccess: (data) => {
           toast.success("Статья создана");
-          router.push(ROUTES.article(data.slug));
+          router.push(routes.article(data.slug));
         },
         onError: (err) => {
           if (isApiError(err)) {

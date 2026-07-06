@@ -5,7 +5,7 @@ import { Row } from "@/shared/ui/layout/";
 import { Button } from "@/shared/ui/button";
 import { ProfileConnectionsActions } from "@/features/profile/profile-connections";
 import { FollowButton } from "@/features/profile/follow-profile";
-import { CheckAuthButton } from "@/entities/auth";
+import { CheckAuthButton } from "@/features/auth/check-auth";
 import { Suspense } from "react";
 import { ProfileCover } from "./profile-cover";
 import { ProfileUserCard } from "./profile-user-card";

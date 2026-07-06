@@ -1,6 +1,6 @@
 "use client";
 import axios, { type InternalAxiosRequestConfig, type AxiosError, type AxiosResponse } from "axios";
-import { ENV } from "../config/env";
+import { env } from "../config/env";
 import { ApiError } from "../lib/api";
 import { type ApiErrorType } from "../lib/api/api-error";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ interface AxiosErrorWithRetry extends AxiosError {
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: ENV.API_URL,
+  baseURL: env.API_URL,
   headers: {
     "Content-Type": "Application/json",
   },

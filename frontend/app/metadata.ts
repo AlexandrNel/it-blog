@@ -1,8 +1,8 @@
-import { ENV } from "@/shared/config/env";
+import { env } from "@/shared/config";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: ENV.SITE_URL,
+  metadataBase: env.SITE_URL,
   title: {
     default: "IT Blog",
     template: "%s | IT Blog",

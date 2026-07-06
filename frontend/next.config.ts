@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
-import { ENV } from "@/shared/config/env";
-const apiHostname = new URL(ENV.API_URL).hostname;
+import { env } from "@/shared/config";
+
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  images: { remotePatterns: [{ hostname: apiHostname }] },
+  typedRoutes: true,
+  images: { remotePatterns: [{ hostname: new URL(env.API_URL).hostname }] },
   logging: {
     browserToTerminal: true,
   },

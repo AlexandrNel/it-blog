@@ -1,5 +1,5 @@
 import { getPostBySlug } from "@/entities/article/index.server";
-import { ROUTES } from "@/shared/config/routes";
+import { routes } from "@/shared/config/";
 import { PostPage } from "@/views/articles";
 import { type Metadata } from "next";
 
@@ -13,14 +13,14 @@ export async function generateMetadata(props: PageProps<"/articles/[slug]">): Pr
     description: post.desc,
     publisher: post.author.username,
     alternates: {
-      canonical: ROUTES.article(post.slug),
+      canonical: routes.article(post.slug),
     },
     openGraph: {
       images: post.previewImage?.url,
       type: "article",
       title: post.title,
       description: post.desc,
-      url: ROUTES.article(post.slug),
+      url: routes.article(post.slug),
       publishedTime: new Date(post.createdAt).toISOString(),
       authors: [post.author.username],
     },
