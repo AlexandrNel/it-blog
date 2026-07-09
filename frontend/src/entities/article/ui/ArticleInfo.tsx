@@ -1,5 +1,5 @@
 import { type BaseProps } from "@/shared/types/components";
-import { type Post } from "../model/post";
+import { type Post } from "../model/types";
 import { UserCard } from "@/entities/user";
 
 interface Props extends BaseProps, Pick<Post, "author" | "createdAt"> {}

@@ -1,6 +1,6 @@
 import { Button } from "@/shared/ui/button";
 import React from "react";
-import { useValidateMainEditor, MIN_LENGTH } from "../lib/use-validate-main-editor";
+import { useValidateMainEditor, MIN_LENGTH } from "../model/use-validate-main-editor";
 
 export const ButtonNext = React.memo(() => {
   const { disabled, onNext } = useValidateMainEditor();

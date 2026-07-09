@@ -1,5 +1,5 @@
 import { PostList } from "@/entities/article";
-import { getPostsByTag } from "@/entities/article/index.server";
+import { getPostsByTag } from "@/entities/article/server";
 import { Suspense } from "react";
 
 export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "params">) {

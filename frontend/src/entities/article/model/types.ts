@@ -40,11 +40,32 @@ export type Post = {
 export type SortParams = {
   sort: "newest" | "rating" | "relevance";
 };
+
 export type DateParams = {
   date: "all" | "day" | "week" | "month" | "year";
 };
+
 export type FilterParams = {
   title: "1" | null;
 };
 
 export type PostWithStatistic = Post & { statistic: Statistic };
+
+export type PostRequest = {
+  content: string;
+  previewContent: string;
+  previewImage: Post["previewImage"];
+  title: string;
+  desc: string;
+  tagIds: string[];
+  categoryId: string;
+};
+
+export type ResponsePaginationDto<T> = {
+  data: T;
+  pages: number;
+};
+
+export type PostDto = Post;
+
+export type PostWithStatisticDto = PostDto & { statistic: Statistic };

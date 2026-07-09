@@ -1,7 +1,7 @@
 import Editor from "./article-editor/editor";
 import { memo, type CSSProperties } from "react";
 import { useEditorStore } from "../model/use-editor-store";
-import { EditorPreviewImageWrapper } from "@/features/article/article-create/components/editor-preview-image";
+import { EditorPreviewImageWrapper } from "@/views/editor/components/editor-preview-image";
 import { cn } from "@/shared/lib/utils";
 import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import { type JSONContent } from "@tiptap/core";

@@ -1,7 +1,7 @@
 import { PostCard } from "@/entities/article";
 import { Pagination } from "./Pagination";
 import { EditBlock } from "@/features/article/article-menu";
-import { getAllPosts } from "@/entities/article/index.server";
+import { getAllPosts } from "@/entities/article/server";
 import { PostSectionFallback } from "./post-section-fallback";
 
 export async function PostSection({ searchParams }: Pick<PageProps<"/articles/[slug]">, "searchParams">) {

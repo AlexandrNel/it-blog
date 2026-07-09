@@ -1,5 +1,10 @@
+import "server-only";
 import { serverFetch, serverSafeFetch } from "@/shared/api/server";
-import { type PostDto, type PostWithStatisticDto, type ResponsePaginationDto } from "./types";
+import {
+  type ResponsePaginationDto,
+  type PostWithStatisticDto,
+  type PostDto,
+} from "../../model/types";
 import { cache } from "react";
 import { cacheLife, cacheTag } from "next/cache";
 import { CACHE_TAGS } from "@/shared/config/cache-keys";
@@ -19,14 +24,17 @@ export const getPostBySlug = cache(async (slug: string) => {
   const res = await serverSafeFetch<PostDto>(`/posts/${slug}`);
   return res.data;
 });
+
 export const getPostsByTag = async (tag: string) => {
   const res = await serverFetch<PostWithStatisticDto[]>(`/posts/tag/${tag}`);
   return res.data;
 };
+
 export const getPostById = async (id: string) => {
   const res = await serverSafeFetch<PostDto>(`/posts/id/${id}`);
   return res.data;
 };
+
 export const getPostByUserId = async (userId: string) => {
   const res = await serverSafeFetch<PostWithStatisticDto[]>(`/posts/user/${userId}`);
   return res.data;

@@ -1,4 +1,4 @@
-import { getPostBySlug } from "@/entities/article/index.server";
+import { getPostBySlug } from "@/entities/article/server";
 import { routes } from "@/shared/config/";
 import { PostPage } from "@/views/articles";
 import { type Metadata } from "next";

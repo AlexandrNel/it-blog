@@ -9,7 +9,8 @@ import { type Editor as EditorType, type JSONContent } from "@tiptap/core";
 import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import { type BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
-const Editor = dynamic(() => import("@/features/article/article-create/components/article-editor/editor"), {
+
+const Editor = dynamic(() => import("../components/article-editor/editor"), {
   ssr: false,
   loading: () => "Loading editor",
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditorStore } from "../model/use-editor-store";
+import { useEditorStore } from "./use-editor-store";
 
 export const MIN_LENGTH = 10;
 

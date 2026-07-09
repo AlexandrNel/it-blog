@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useEditorStore } from "../model/use-editor-store";
+import { useEditorStore } from "./use-editor-store";
 import z from "zod";
 
 export const MIN_LENGTH = 50;

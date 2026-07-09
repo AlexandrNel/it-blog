@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import { toast } from "sonner";
 
-import { type Post, useCreatePost, useUpdatePost } from "@/entities/article";
+import { type Post } from "@/entities/article";
 import { queryTags } from "@/entities/tag/api/query";
 import { isApiError } from "@/shared/api/api-error";
-import { useEditorStore } from "../model/use-editor-store";
-import { type FormSchemaType } from "../model/schema";
+import { useEditorStore } from "./use-editor-store";
+import { type FormSchemaType } from "./schema";
 import { uploadImage } from "@/shared/api/uploadImage";
 import { routes } from "@/shared/config";
+import { useCreatePost } from "../api/use-create-post";
+import { useUpdatePost } from "../api/use-update-post";
 
 export function useSubmitArticle() {
   const router = useRouter();
@@ -63,7 +65,7 @@ export function useSubmitArticle() {
 
     if (hasId) {
       update.mutate(
-        { data: fetchData, id, slug },
+        { body: fetchData, postId: id, postSlug: slug },
         {
           onSuccess: (data) => {
             toast.success("Статья обновлена");

@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { useShallow } from "zustand/shallow";
 import type * as z from "zod";
 
-import { useEditorStore } from "../model/use-editor-store";
-import { formSchema } from "../model/schema";
+import { useEditorStore } from "./use-editor-store";
+import { formSchema } from "./schema";
 
 export function useEditorSettingsForm() {
   const { title, desc, tags, category, previewLength } = useEditorStore(

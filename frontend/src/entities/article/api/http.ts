@@ -1,13 +1,12 @@
-import { type Post, type Statistic } from "@/entities/article";
-import { type PostRequest } from "./types";
+import { type Post, type Statistic, type PostRequest } from "../model/types";
 import { BaseAPI } from "@/shared/api/base-api";
 
 export class PostAPI extends BaseAPI {
   static createPost(data: PostRequest): Promise<Post> {
-    return BaseAPI.post<Post>("/posts", { data });
+    return BaseAPI.post<Post>("/posts", data);
   }
-  static updatePost(data: PostRequest, id: string): Promise<Post> {
-    return BaseAPI.patch<Post>(`/posts/${id}`, { data });
+  static updatePost(id: string, data: PostRequest): Promise<Post> {
+    return BaseAPI.patch<Post>(`/posts/${id}`, data);
   }
   static deletePost(id: string): Promise<Post> {
     return BaseAPI.delete<Post>(`/posts/${id}`);

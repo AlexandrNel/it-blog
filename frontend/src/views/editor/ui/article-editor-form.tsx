@@ -3,19 +3,14 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/shared/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/shared/ui/input-group";
 import { cn } from "@/shared/lib/utils";
 import { useEditorStore } from "../model/use-editor-store";
 import { useQueries } from "@tanstack/react-query";
 import { queryCategories } from "@/entities/category/api/query";
 import { queryTags } from "@/entities/tag/api/query";
 import { type FormSchemaType } from "../model/schema";
-import { ComboboxMultiple } from "@/features/article/article-create/components/combobox-multiple";
+import { ComboboxMultiple } from "@/views/editor/components/combobox-multiple";
 import { ArticlePreviewEditor } from "../components/article-preview-editor";
 import {
   Combobox,
@@ -82,9 +77,7 @@ export function ArticleEditorForm() {
                   aria-invalid={fieldState.invalid}
                 />
                 <InputGroupAddon align="block-end">
-                  <InputGroupText className="tabular-nums">
-                    {field.value.length}/100 символов
-                  </InputGroupText>
+                  <InputGroupText className="tabular-nums">{field.value.length}/100 символов</InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -155,9 +148,7 @@ export function ArticleEditorForm() {
           render={({ fieldState }) => {
             return (
               <div className="flex flex-col gap-3">
-                <FieldLabel className={cn({ "text-destructive": !!fieldState.error })}>
-                  Превью статьи
-                </FieldLabel>
+                <FieldLabel className={cn({ "text-destructive": !!fieldState.error })}>Превью статьи</FieldLabel>
                 <ArticlePreviewEditor error={fieldState.error?.message} />
                 {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
               </div>

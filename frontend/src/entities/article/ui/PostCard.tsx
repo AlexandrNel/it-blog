@@ -1,4 +1,4 @@
-import { type PostWithStatistic } from "../model/post";
+import { type PostWithStatistic } from "../model/types";
 import { cn } from "@/shared/lib/utils";
 import { ArticleInfo } from "./ArticleInfo";
 import { ArticlePreview } from "./ArticlePreview";

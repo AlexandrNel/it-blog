@@ -4,8 +4,8 @@ import { Activity, useEffect } from "react";
 
 import { type Post } from "@/entities/article/";
 import { useEditorStore } from "../model/use-editor-store";
-import { EditorSettingsPage } from "./editor-settings";
 import { EditoWritePage } from "./editor-write";
+import { EditorSettingsPage } from "./editor-settings";
 
 export function ArticleCreate({ post }: { post?: Post }) {
   const page = useEditorStore((state) => state.page);

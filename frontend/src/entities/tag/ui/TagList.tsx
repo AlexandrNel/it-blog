@@ -1,7 +1,10 @@
+"use client";
+
 import { cn } from "@/shared/lib/utils";
-import Link from "next/link";
 import { Tag } from "./Tag";
 import { type Tag as TypeTag } from "../model/tag";
+import { HoverPrefetchLink } from "@/shared/ui";
+import { type Route } from "next";
 
 interface Props {
   className?: string;
@@ -13,9 +16,9 @@ export function TagList({ className, list }: Props) {
     <ul className={cn(className, "flex flex-wrap gap-x-1 relative z-10")}>
       {list.map((tag) => (
         <li key={tag.key}>
-          <Link href={`/tags/${tag.key}`}>
+          <HoverPrefetchLink href={`/tags/${tag.key}` as Route}>
             <Tag value={tag.name} />
-          </Link>
+          </HoverPrefetchLink>
         </li>
       ))}
     </ul>

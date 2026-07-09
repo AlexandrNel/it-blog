@@ -1,18 +1,17 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 
 import { Button } from "@/shared/ui/button";
 import { useEditorStore } from "../model/use-editor-store";
 import { type FormSchemaType } from "../model/schema";
-import { ArticleDeleteButton } from "./article-delete-button";
-import { useSubmitArticle } from "../lib/use-submit-article";
+import { useSubmitArticle } from "../model/use-submit-article";
+import { DeletePostButton } from "@/features/article/article-delete";
 
 export function ArticleSettingsFooter() {
-  const { slug } = useParams<{ slug: string }>();
   const form = useFormContext<FormSchemaType>();
   const setData = useEditorStore((state) => state.setData);
+  const id = useEditorStore((state) => state.post?.id);
 
   const { isSubmitting, submit } = useSubmitArticle();
 
@@ -30,9 +29,9 @@ export function ArticleSettingsFooter() {
         Назад
       </Button>
       <div className="flex gap-2">
-        <ArticleDeleteButton id={typeof slug === "string" ? slug : undefined} />
+        {id && <DeletePostButton data={{ id }} />}
         <Button variant="outline" type="button" disabled={isSubmitting} onClick={handlePublish}>
-          {slug ? "Сохранить" : "Опубликовать"}
+          {id ? "Сохранить" : "Опубликовать"}
         </Button>
       </div>
     </div>

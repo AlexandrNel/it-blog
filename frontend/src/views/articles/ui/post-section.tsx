@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import { TagList } from "@/entities/tag";
 import { ArticleInfo, ArticlePreview } from "@/entities/article";
-import { getPostBySlug } from "@/entities/article/index.server";
+import { getPostBySlug } from "@/entities/article/server";
 import { ArticleStatistic } from "./articles-statistic";
 import { ArticleView } from "@/features/article/article-tracking";
 import { EditorContent } from "@/shared/ui/tiptap-editor";

@@ -1,5 +1,5 @@
 import { PostCard } from "@/entities/article";
-import { getPostByUserId } from "@/entities/article/index.server";
+import { getPostByUserId } from "@/entities/article/server";
 import { EditBlock } from "@/features/article/article-menu";
 import { EmptyCard } from "@/shared/ui/empty";
 
