@@ -1,25 +1,26 @@
-import { AuthAPI, useAuthStore } from "@/entities/auth";
-import { type LoginRequest } from "@/entities/auth/api/types";
-import { type User } from "@/entities/user";
-import { type ApiError } from "@/shared/lib/api";
+import { AuthAPI, type TAuth } from "@/entities/auth";
+import { userFabricKeys } from "@/entities/user";
+import { type ApiError } from "@/shared/api";
 import { type UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export type UseLoginOptions = Omit<UseMutationOptions<User, ApiError, LoginRequest>, "mutationFn">;
+export type UseLoginOptions = Omit<
+  UseMutationOptions<TAuth.LoginResponse, ApiError, TAuth.LoginRequest>,
+  "mutationFn"
+>;
 
 export const useLogin = ({ onSuccess, onError, ...rest }: UseLoginOptions = {}) => {
-  const { setUser } = useAuthStore();
-  return useMutation<User, ApiError, LoginRequest>({
+  return useMutation<TAuth.LoginResponse, ApiError, TAuth.LoginRequest>({
     mutationFn: AuthAPI.login,
-    onSuccess: (data, ...args) => {
-      onSuccess?.(data, ...args);
-      setUser(data);
-    },
     onError: (err, ...args) => {
       onError?.(err, ...args);
       if (err.rawResponse?.message) {
         toast.error(err.rawResponse?.message);
       }
+    },
+    onSuccess: (d, v, m, context) => {
+      onSuccess?.(d, v, m, context);
+      context.client.fetchQuery({ queryKey: userFabricKeys.me() });
     },
     ...rest,
   });

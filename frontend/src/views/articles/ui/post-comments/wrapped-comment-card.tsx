@@ -10,7 +10,7 @@ import { Activity, memo, type PropsWithChildren } from "react";
 import { DeleteCommentButton } from "@/features/comments/delete-comment";
 import { useCommentLifecycle } from "../../model/use-comment-lifecycle";
 import { EditComment } from "@/features/comments/edit-comment";
-import { useAuthStore } from "@/entities/auth";
+import { useUser } from "@/entities/user";
 
 type Props = {
   level?: number;
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export const WrappedCommentCard = memo(({ comment, level = 0 }: PropsWithChildren<Props>) => {
-  const user = useAuthStore((state) => state.user);
+  const { data: user } = useUser();
   const {
     isRepliesShowed,
     editorMode,
@@ -28,7 +28,9 @@ export const WrappedCommentCard = memo(({ comment, level = 0 }: PropsWithChildre
     hideEditor,
     commentLength,
   } = useCommentLifecycle(comment);
+
   const isCommentAuthor = comment.author.id === user?.id;
+
   return (
     <CommentCard comment={comment}>
       <Row>

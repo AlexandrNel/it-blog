@@ -1,4 +1,5 @@
-import { ProfilePosts, ProfilePostsSkeleton } from "@/widgets/profile/profile-posts";
+import { ProfilePosts } from "../posts/ui/profile-posts";
+import { ProfilePostsSkeleton } from "../posts/ui/profile-posts-skeleton";
 import { Suspense } from "react";
 
 export default async function ProfilePage({ params }: PageProps<"/profile/[id]">) {

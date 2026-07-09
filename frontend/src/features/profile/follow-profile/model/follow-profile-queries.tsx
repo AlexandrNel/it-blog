@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FollowApi } from "../api/follow-profile-api";
 import { type FollowStatusResponse, type FollowTypeRequest } from "../api/types";
-import { type ApiError } from "@/shared/lib/api";
+import { type ApiError } from "@/shared/api";
 import { toast } from "sonner";
 import { QUERY_KEYS } from "@/shared/config/cache-keys";
 

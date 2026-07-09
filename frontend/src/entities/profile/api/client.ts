@@ -19,7 +19,12 @@ export class ProfileAPI extends BaseAPI {
     page: number;
     limit?: number;
   }): Promise<ProfileConnectionsPage> {
-    return BaseAPI.get(`/profile/${userId}/connections/${type}?page=${page}&limit=${limit}`);
+    return BaseAPI.get(`/profile/${userId}/connections/${type}`, {
+      params: {
+        page,
+        limit,
+      },
+    });
   }
 
   static getConnectionsSummary(userId: string): Promise<ProfileConnectionsSummary> {

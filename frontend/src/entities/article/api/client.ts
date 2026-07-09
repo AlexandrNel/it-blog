@@ -3,11 +3,11 @@ import { type PostRequest } from "./types";
 import { BaseAPI } from "@/shared/api/base-api";
 
 export class PostAPI extends BaseAPI {
-  static createPost(postData: PostRequest): Promise<Post> {
-    return BaseAPI.post<Post>("/posts", postData);
+  static createPost(data: PostRequest): Promise<Post> {
+    return BaseAPI.post<Post>("/posts", { data });
   }
-  static updatePost(postData: PostRequest, id: string): Promise<Post> {
-    return BaseAPI.patch<Post>(`/posts/${id}`, postData);
+  static updatePost(data: PostRequest, id: string): Promise<Post> {
+    return BaseAPI.patch<Post>(`/posts/${id}`, { data });
   }
   static deletePost(id: string): Promise<Post> {
     return BaseAPI.delete<Post>(`/posts/${id}`);

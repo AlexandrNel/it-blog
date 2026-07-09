@@ -6,13 +6,13 @@ import { useEditorStore } from "../model/use-editor-store";
 import dynamic from "next/dynamic";
 import { Title } from "../components/title";
 import { type Editor as EditorType, type JSONContent } from "@tiptap/core";
-import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
+import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import { type BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
-const Editor = dynamic(
-  () => import("@/features/article/article-create/components/article-editor/editor"),
-  { ssr: false },
-);
+const Editor = dynamic(() => import("@/features/article/article-create/components/article-editor/editor"), {
+  ssr: false,
+  loading: () => "Loading editor",
+});
 
 interface Props extends BaseProps {
   content?: string;

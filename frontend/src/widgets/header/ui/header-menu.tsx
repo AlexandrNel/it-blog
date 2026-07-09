@@ -1,15 +1,16 @@
 "use client";
-import { useAuthStore } from "@/entities/auth";
+import Link from "next/link";
 import { LogIn, Search, SquarePen } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/shared/ui/button";
-import Link from "next/link";
 import { ProfileMenu } from "@/features/profile/profile-menu";
+import { useQuery } from "@tanstack/react-query";
+import { UserQueries } from "@/entities/user";
 
 const hiddenClassName = "md:block hidden";
 
 export function HeaderMenu() {
-  const user = useAuthStore((state) => state.user);
+  const { data: user } = useQuery(UserQueries.getMe());
   const pathname = usePathname();
   const [path] = pathname.split("/").filter(Boolean);
   const isEditPage = Boolean(path === "editor");

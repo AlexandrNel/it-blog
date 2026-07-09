@@ -4,6 +4,7 @@ import { cn } from "@/shared/lib/utils";
 import { Card } from "@/shared/ui/card";
 import { Column, Row } from "@/shared/ui/layout";
 import { Bell, Settings, ShieldCheck, User } from "lucide-react";
+import { type Route } from "next";
 import Link from "next/link";
 
 const BASE_SEGMENT = "settings";
@@ -37,7 +38,7 @@ export function SettingsSidebar() {
           return (
             <Link
               key={item.href}
-              href={item.href}
+              href={item.href as Route}
               className={cn("px-3 py-2 rounded-lg hover:bg-muted", {
                 "bg-muted": isActive,
               })}

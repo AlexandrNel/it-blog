@@ -1,6 +1,11 @@
-export { getUser } from "./api/get-me";
-export type { User } from "./model/user";
+export type * as TUser from "./model/types";
+export type * from "./model/types";
 export { UserCard } from "./ui/user-card";
 export { UserCardSkeleton } from "./ui/user-card-skeleton";
 export { UserAvatar } from "./ui/user-avatar";
 export { formatUsername } from "./model/user.formatters";
+export { userFabricKeys } from "./model/consts";
+export { UserAPI } from "./api/client";
+export { UserQueries } from "./api/queries";
+export { GettingUser } from "./ui/getting-user";
+export { useUser } from "./model/use-user";

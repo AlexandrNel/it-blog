@@ -1,6 +1,6 @@
 import { Toaster } from "@/shared/ui/sonner";
-import { GettingUser } from "@/entities/auth";
-import { QueryProvider } from "@/app/providers/query-provider";
+import { GettingUser } from "@/entities/user";
+import { QueryProvider } from "./query-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type PropsWithChildren } from "react";
 

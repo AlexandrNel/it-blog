@@ -1,4 +1,4 @@
-import { getFieldErrors } from "../api/get-field-errors";
+import { getFieldErrors } from "../../api/get-field-errors";
 
 export function applyApiFieldErrors<FormValues>(
   error: unknown,

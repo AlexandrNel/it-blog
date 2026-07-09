@@ -1,5 +1,7 @@
-import { CheckAuth } from "@/features/auth/check-auth/ui/check-auth";
+import { auth } from "@/entities/auth/server";
+import { PageLayout } from "@/shared/layouts/page-layout";
 import { type Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -11,8 +13,15 @@ export const metadata: Metadata = {
 
 export default async function Layout({ children }: React.PropsWithChildren) {
   return (
-    <Suspense fallback={null}>
-      <CheckAuth>{children}</CheckAuth>
+    <Suspense fallback={<PageLayout>Check auth...</PageLayout>}>
+      {(async () => {
+        const { isAuthenticated } = await auth();
+        if (!isAuthenticated) {
+          redirect("/login");
+        }
+
+        return children;
+      })()}
     </Suspense>
   );
 }

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { sendView } from "../api";
 import { differenceInMilliseconds } from "date-fns";
 import { isAxiosError } from "axios";
-import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
+import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 
 type View = {
   expiresAt: string;

@@ -1,12 +1,20 @@
 import { Button } from "@/shared/ui/button";
-import { useAuthStore } from "@/entities/auth";
+import { useLogout, type UseLogoutOptions } from "../api/use-logout";
+import type * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
-export const LogoutButton = () => {
-  const { logout } = useAuthStore();
-  const handleClick = () => {
+type LogoutButtonProps = React.ComponentProps<typeof Button> & { mutateOptions?: UseLogoutOptions };
+
+export const LogoutButton = ({ onClick, asChild, mutateOptions, ...props }: LogoutButtonProps) => {
+  const { mutate } = useLogout(mutateOptions);
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (window.confirm("Вы уверены, что хотите выйти?")) {
-      logout();
+      onClick?.(e);
+      mutate();
     }
   };
-  return <Button onClick={handleClick}>Выйти</Button>;
+
+  if (asChild) return <Slot onClick={handleClick} {...props} />;
+
+  return <Button onClick={handleClick} {...props} />;
 };

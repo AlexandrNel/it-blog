@@ -1,5 +1,5 @@
 import { type BaseProps } from "../types/components";
-import { ApiError } from "../lib/api/api-error";
+import { ApiError } from "../api/api-error";
 import { notFound } from "next/navigation";
 import { type JSX, type ReactNode } from "react";
 

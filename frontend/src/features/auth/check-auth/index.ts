@@ -1,2 +1,1 @@
-export { CheckAuthButton } from "./ui/check-auth-button";
-export { CheckAuth } from "./ui/check-auth";
+export { CheckAutWrapper } from "./ui/check-auth-wrapper";

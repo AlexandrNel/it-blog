@@ -1,7 +1,6 @@
-import type React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
-import { type BaseProps } from "@/shared/types/components";
+import { type BaseProps } from "@/shared/types";
 import { getInitials } from "../lib/get-initials";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 
 interface AvatarType extends BaseProps {
   name: string;
@@ -9,7 +8,7 @@ interface AvatarType extends BaseProps {
   content?: string;
 }
 
-export const UserAvatar: React.FC<AvatarType> = ({ name, avatarUrl, className }) => {
+export const UserAvatar = ({ name, avatarUrl, className }: AvatarType) => {
   const iniitals = getInitials(name);
   return (
     <Avatar size="default" className={`size-9 ${className}`}>

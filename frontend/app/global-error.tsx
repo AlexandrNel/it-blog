@@ -1,5 +1,5 @@
 "use client";
-import { isApiError } from "@/shared/lib/api/api-error";
+import { isApiError } from "@/shared/api/api-error";
 import { type ErrorProps } from "@/views/error";
 import { Container } from "@/shared/ui/container";
 import { Error500, UnknownError } from "@/views/error";

@@ -1,3 +1,16 @@
+export type LoginResponse = {
+  id: string;
+  email: string;
+  avatar?: string;
+  displayName: string;
+  username: string;
+  role: "USER" | "ADMIN" | "MODERATOR";
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type RegisterResponse = LoginResponse;
+
 export type LoginRequest = {
   login: string;
   password: string;

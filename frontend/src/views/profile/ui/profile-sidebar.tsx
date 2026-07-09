@@ -1,4 +1,4 @@
-import { ProfileInfo, ProfileInfoSkeleton } from "@/widgets/profile/profile-info";
+import { ProfileInfo, ProfileInfoSkeleton } from "./profile-info";
 import { Suspense } from "react";
 
 export const ProfileSidebar = async ({ userId }: { userId: string }) => {

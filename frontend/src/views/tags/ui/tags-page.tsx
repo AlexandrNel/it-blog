@@ -21,7 +21,5 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 
 async function FetchTagsPosts({ tag }: { tag: string }) {
   const articles = await getPostsByTag(tag);
-  return (
-    <PostList classNameWrapper="lg:grid lg:grid-cols-2 flex flex-col gap-1" postList={articles} />
-  );
+  return <PostList classNameWrapper="lg:grid lg:grid-cols-2 flex flex-col gap-1" postList={articles} />;
 }

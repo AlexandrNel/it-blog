@@ -2,8 +2,8 @@ import { type PropsWithChildren } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ProfileVisibility } from "./profile-visibility";
-import { ProfileHero } from "@/widgets/profile/profile-hero";
-import { ProfileTabs } from "@/widgets/profile/profile-tabs";
+import { ProfileHero } from "./profile-hero";
+import { ProfileTabs } from "./profile-tabs";
 import {
   getProfileById,
   getProfileMetaById,
@@ -16,7 +16,7 @@ import { isMobileRequest } from "@/shared/lib/utils/server/is-mobile-request";
 const ProfileSidebar = dynamic(() => import("./profile-sidebar").then((mod) => mod.ProfileSidebar));
 
 const ProfileStats = dynamic(() =>
-  import("@/widgets/profile/profile-hero-stats").then((mod) => mod.ProfileHeroStats),
+  import("@/views/profile/ui/profile-hero-stats").then((mod) => mod.ProfileHeroStats),
 );
 
 export default async function ProfilePage({
@@ -37,10 +37,10 @@ export default async function ProfilePage({
     <PageLayout
       withoutPaddingTop
       className="md:mt-2"
-      sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null} // это Suspense компонент (возращает обертку) | делалет cache запрос getProfile для дудпликации
+      sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}
     >
       <ProfileVisibility meta={meta}>
-        <ProfileHero userId={param.id} isOwner={meta.isOwner} />
+        <ProfileHero userId={param.id} />
         {!isMobile && <ProfileStats userId={param.id} />}
         <Column className="max-md:gap-0 lg:mt-2">
           <ProfileTabs userId={param.id} />

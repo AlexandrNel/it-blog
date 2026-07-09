@@ -1,4 +1,4 @@
-import { ApiError, isApiError, type BackendError } from "../lib/api/api-error";
+import { ApiError, isApiError, type BackendError } from "./api-error";
 
 const API_URL = process.env.API_URL;
 

@@ -1,28 +1,30 @@
-import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import Link from "next/link";
 import { Fragment, type PropsWithChildren } from "react";
 import { formatUsername } from "../model/user.formatters";
-import Link from "next/link";
-import { formatDate } from "@/shared/lib/utils/date/format-date";
-import { type Author } from "@/entities/author";
-import { type Post } from "@/entities/article";
 import { UserAvatar } from "./user-avatar";
+import { formatDate } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/utils";
+import { type BaseProps } from "@/shared/types";
+import { type Author } from "@/entities/user";
+import { type Post } from "@/entities/article";
+import { type Route } from "next";
 
-interface Props extends BaseProps {
+interface UserCardProps extends BaseProps {
   asLink?: boolean;
   data: {
     avatarUrl: Author["avatar"];
     fullName: Author["displayName"];
     username: Author["username"];
-    date: Post["createdAt"];
+    date?: Post["createdAt"];
   };
 }
 
-export const UserCard = ({ className, asLink = false, data }: PropsWithChildren<Props>) => {
+export function UserCard({ className, asLink = false, data }: PropsWithChildren<UserCardProps>) {
   const { date, fullName, username, avatarUrl } = data ?? {};
 
   const formattedDate = formatDate(date);
   const formattedUsername = formatUsername(username);
+
   return (
     <div className={cn("flex gap-2 items-center", className)}>
       <UserAvatar
@@ -34,7 +36,11 @@ export const UserCard = ({ className, asLink = false, data }: PropsWithChildren<
         {fullName ? (
           <Fragment>
             <div className="flex items-center gap-1.5">
-              <Wrapper asLink={asLink} href={`/profile/${username}`} className=" leading-tight">
+              <Wrapper
+                asLink={asLink}
+                href={`/profile/${username}` as Route}
+                className=" leading-tight"
+              >
                 <FullName name={fullName} />
               </Wrapper>
               {formattedDate && (
@@ -48,7 +54,7 @@ export const UserCard = ({ className, asLink = false, data }: PropsWithChildren<
           </Fragment>
         ) : (
           <Fragment>
-            <Wrapper asLink={asLink} href={`/profile/${username}`}>
+            <Wrapper asLink={asLink} href={`/profile/${username}` as Route}>
               <FullName name={formattedUsername} />
             </Wrapper>
             {formattedDate && <PostDate date={formattedDate} />}
@@ -57,7 +63,7 @@ export const UserCard = ({ className, asLink = false, data }: PropsWithChildren<
       </div>
     </div>
   );
-};
+}
 
 export const FullName = ({ name, className }: { name: string; className?: string }) => {
   return <span className={cn("md:text-[15px] text-[14px] font-medium", className)}>{name}</span>;
@@ -74,7 +80,7 @@ function Wrapper({
   asLink,
   children,
   className,
-}: PropsWithChildren<{ href: string; className?: string; asLink?: boolean }>) {
+}: PropsWithChildren<{ href: Route; className?: string; asLink?: boolean }>) {
   if (href && asLink) {
     return (
       <Link href={href} className={cn("hover:opacity-60", className)}>

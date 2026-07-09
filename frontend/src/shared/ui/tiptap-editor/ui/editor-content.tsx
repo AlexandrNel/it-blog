@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <explanation> */
 import { cn } from "@/shared/lib/utils";
-import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
+import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import { renderToHTMLString } from "@tiptap/static-renderer";
 import { type JSONContent } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";

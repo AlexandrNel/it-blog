@@ -1,4 +1,4 @@
-import { type Author } from "@/entities/author";
+import { type Author } from "@/entities/user";
 import { type Category } from "@/entities/category/@x/article";
 import { type TypeTag } from "@/entities/tag/@x/article";
 

@@ -1,6 +1,5 @@
 "use client";
 import { CommentButton } from "@/entities/comment/ui/comment-button";
-import { useAuthStore } from "@/entities/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteCommentAPI } from "../api/client";
 import { memo } from "react";
@@ -14,10 +13,11 @@ import {
 } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
 import { toast } from "sonner";
+import { useUser } from "@/entities/user";
 
 export const DeleteCommentButton = memo(
   ({ commentId, userId }: { commentId: string; userId: string }) => {
-    const user = useAuthStore((state) => state.user);
+    const { data: user } = useUser();
 
     const queryClient = useQueryClient();
     const { mutate } = useMutation({

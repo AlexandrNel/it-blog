@@ -1,8 +1,10 @@
-import { useAuthStore } from "@/entities/auth";
+"use client";
+import { UserQueries } from "@/entities/user";
+import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useCheckAuth() {
-  const { user } = useAuthStore();
+  const { data: user } = useQuery(UserQueries.getMe());
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 

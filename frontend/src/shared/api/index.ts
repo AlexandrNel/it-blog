@@ -5,3 +5,5 @@ export {
   type ApiErrorResponse,
   type BackendFormsError,
 } from "./api-error";
+
+export { api } from "./client";

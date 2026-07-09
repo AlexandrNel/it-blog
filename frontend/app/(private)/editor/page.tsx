@@ -9,6 +9,4 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
-  return <EditorPage />;
-}
+export default EditorPage;

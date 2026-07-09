@@ -1,4 +1,4 @@
-import { isApiError } from "@/shared/lib/api/api-error";
+import { isApiError } from "@/shared/api/api-error";
 import { Container } from "@/shared/ui/container";
 import { type ErrorProps } from "../types/error";
 import { Error500 } from "./Error500";

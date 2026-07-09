@@ -1,5 +1,4 @@
 "use client";
-import { useAuthStore } from "@/entities/auth";
 import { cn } from "@/shared/lib/utils";
 import { type BaseProps } from "@/shared/types/components";
 import { EllipsisVertical, Pencil } from "lucide-react";
@@ -13,13 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { routes } from "@/shared/config";
+import { useQuery } from "@tanstack/react-query";
+import { UserQueries } from "@/entities/user";
 
 interface Props extends BaseProps {
   slug: string;
   authorId: string;
 }
 export function EditBlock({ className, slug, authorId }: Props) {
-  const user = useAuthStore((state) => state.user);
+  const { data: user } = useQuery(UserQueries.getMe());
+
   if (user?.id !== authorId) return null;
   return (
     <div className={cn(className, `flex gap-2 rounded absolute z-10 top-0 right-0 w-min`)}>

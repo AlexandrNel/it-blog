@@ -8,7 +8,7 @@ import { cellAround, CellSelection } from "@tiptap/pm/tables";
 import { findParentNodeClosestToPos, type Editor, type NodeWithPos } from "@tiptap/react";
 import { uploadImage } from "@/shared/api/uploadImage";
 import { toast } from "sonner";
-import { ApiError } from "@/shared/lib/api/api-error";
+import { ApiError } from "@/shared/api/api-error";
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 

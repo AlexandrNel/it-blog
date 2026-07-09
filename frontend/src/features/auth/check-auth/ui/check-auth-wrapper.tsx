@@ -10,7 +10,7 @@ import { Stepper } from "@/shared/ui/stepper";
 
 type Props = {} & PropsWithChildren;
 
-export const CheckAuthButton = ({ children }: Props) => {
+export const CheckAutWrapper = ({ children }: Props) => {
   const { isOpen, setIsOpen, wrapperRef, onSuccessAuth } = useCheckAuth();
 
   return (

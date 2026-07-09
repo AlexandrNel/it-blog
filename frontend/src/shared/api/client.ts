@@ -1,8 +1,8 @@
 "use client";
 import axios, { type InternalAxiosRequestConfig, type AxiosError, type AxiosResponse } from "axios";
 import { env } from "../config/env";
-import { ApiError } from "../lib/api";
-import { type ApiErrorType } from "../lib/api/api-error";
+import { ApiError } from ".";
+import { type ApiErrorType } from "./api-error";
 import { toast } from "sonner";
 
 interface AxiosConfigWithRetry extends InternalAxiosRequestConfig {

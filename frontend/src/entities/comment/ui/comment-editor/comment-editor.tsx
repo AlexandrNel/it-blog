@@ -17,7 +17,7 @@ import { Paragraph } from "@tiptap/extension-paragraph";
 import { Strike } from "@tiptap/extension-strike";
 import { Underline } from "@tiptap/extension-underline";
 import { Text } from "@tiptap/extension-text";
-import { safeParseJson } from "@/shared/lib/utils/safeParseJson";
+import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import "@/shared/ui/tiptap-editor/components/tiptap-node/blockquote-node/blockquote-node.scss";
 
 type Props = {

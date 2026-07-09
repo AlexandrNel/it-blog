@@ -8,7 +8,6 @@ export async function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
 
   requestHeaders.set("x-is-mobile", isMobile ? "1" : "0");
-
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 

@@ -1,5 +1,5 @@
 import { type Post } from "@/entities/article";
-import { type Author } from "@/entities/author";
+import { type Author } from "@/entities/user";
 
 export type Comment = {
   id: string;

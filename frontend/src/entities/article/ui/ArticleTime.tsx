@@ -1,7 +1,7 @@
 "use client";
 import { type BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
-import { formatDate } from "@/shared/lib/utils/date/format-date";
+import { formatDate } from "@/shared/lib/utils/format-date/format-date";
 
 interface Props extends BaseProps {
   value: string;

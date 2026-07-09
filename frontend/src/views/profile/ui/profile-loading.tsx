@@ -1,10 +1,9 @@
 import { PageLayout } from "@/shared/layouts/page-layout";
 import { Column } from "@/shared/ui/layout";
-import { ProfileInfoSkeleton } from "@/widgets/profile/profile-info";
-import { ProfileHeroSkeleton } from "@/widgets/profile/profile-hero";
-import { ProfilePostsSkeleton } from "@/widgets/profile/profile-posts";
-import { ProfileHeroStatsSkeleton } from "@/widgets/profile/profile-hero-stats";
-import { ProfileTabsSkeleton } from "@/widgets/profile/profile-tabs/";
+import { ProfileInfoSkeleton } from "./profile-info";
+import { ProfileHeroSkeleton } from "./profile-hero";
+import { ProfileHeroStatsSkeleton } from "./profile-hero-stats";
+import { ProfileTabsSkeleton } from "./profile-tabs";
 
 export default function ProfileLoadingPage() {
   return (
@@ -13,7 +12,6 @@ export default function ProfileLoadingPage() {
         <ProfileHeroSkeleton />
         <ProfileHeroStatsSkeleton className="max-lg:hidden" />
         <ProfileTabsSkeleton />
-        <ProfilePostsSkeleton />
       </Column>
     </PageLayout>
   );

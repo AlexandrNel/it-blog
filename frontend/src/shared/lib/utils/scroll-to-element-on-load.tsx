@@ -21,7 +21,6 @@ export function scrollToElementOnLoad(elementId: string) {
 
   if (scrollToElement()) return;
 
-  // Наблюдаем за изменениями в DOM
   const observer = new MutationObserver(() => {
     if (scrollToElement()) {
       observer.disconnect();
@@ -33,6 +32,5 @@ export function scrollToElementOnLoad(elementId: string) {
     subtree: true,
   });
 
-  // Отключаем через 10 секунд, чтобы не висеть вечно
   setTimeout(() => observer.disconnect(), 10000);
 }

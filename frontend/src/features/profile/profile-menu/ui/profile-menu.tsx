@@ -1,7 +1,6 @@
 "use client";
 
-import { UserAvatar, UserCard } from "@/entities/user";
-import { useAuthStore } from "@/entities/auth";
+import { UserAvatar, UserCard, UserQueries } from "@/entities/user";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +11,18 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { LogOut, Settings2, UserRound } from "lucide-react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { LogoutButton } from "@/features/auth/logout";
+import { useState } from "react";
 
 export function ProfileMenu() {
-  const user = useAuthStore((state) => state.user);
-  const { logout } = useAuthStore();
+  const { data: user } = useQuery(UserQueries.getMe());
+  const [open, setOpen] = useState(false);
+
   if (!user) return null;
+
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger className="rounded-full cursor-pointer">
         <UserAvatar avatarUrl={user.avatar} name={user.displayName || user.username} />
       </DropdownMenuTrigger>
@@ -29,7 +33,6 @@ export function ProfileMenu() {
               avatarUrl: user.avatar,
               fullName: user.displayName,
               username: user.username,
-              date: "",
             }}
           />
         </DropdownMenuGroup>
@@ -51,10 +54,18 @@ export function ProfileMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={logout}>
-            <LogOut className="text-red-700" />
-            <span className="text-red-700">Выйти</span>
-          </DropdownMenuItem>
+          <LogoutButton
+            asChild
+            mutateOptions={{
+              onSuccess: () => {
+                setOpen(true);
+              },
+            }}
+          >
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()} variant="destructive">
+              <LogOut /> Выйти
+            </DropdownMenuItem>
+          </LogoutButton>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,29 +1,26 @@
-import { type ApiError } from "@/shared/lib/api";
-import { type User } from "@/entities/user";
+import { type ApiError } from "@/shared/api";
 import { toast } from "sonner";
-import { useAuthStore } from "@/entities/auth";
 import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
-import { AuthAPI } from "@/entities/auth";
-import { type RegisterRequest } from "@/entities/auth/api/types";
+import { AuthAPI, type TAuth } from "@/entities/auth";
+import { userFabricKeys } from "@/entities/user";
 
 export type UseRegisterOptions = Omit<
-  UseMutationOptions<User, ApiError, RegisterRequest>,
+  UseMutationOptions<TAuth.RegisterResponse, ApiError, TAuth.RegisterRequest>,
   "mutationFn"
 >;
 
-export const useRegister = ({ onError, onSuccess, ...rest }: UseRegisterOptions = {}) => {
-  const { setUser } = useAuthStore();
-  return useMutation<User, ApiError, RegisterRequest>({
+export const useRegister = ({ onError, onSettled, ...rest }: UseRegisterOptions = {}) => {
+  return useMutation<TAuth.RegisterResponse, ApiError, TAuth.RegisterRequest>({
     mutationFn: AuthAPI.register,
-    onSuccess: (data, ...args) => {
-      onSuccess?.(data, ...args);
-      setUser(data);
-    },
     onError: (err, ...args) => {
       onError?.(err, ...args);
       if (err.rawResponse?.message) {
         toast.error(err.rawResponse?.message);
       }
+    },
+    onSettled: (d, e, v, m, context) => {
+      onSettled?.(d, e, v, m, context);
+      context.client.invalidateQueries({ queryKey: userFabricKeys.me() });
     },
     ...rest,
   });

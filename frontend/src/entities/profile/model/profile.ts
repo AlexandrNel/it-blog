@@ -1,4 +1,4 @@
-import { type Author } from "@/entities/author";
+import { type Author } from "@/entities/user";
 
 export type ProfileContact = {
   email?: string;
