@@ -1,6 +1,6 @@
 export interface Like {
   id: string;
   userId: string;
-  entityType: "article" | "comment";
+  entityType: "post" | "comment";
   entityId: string;
 }

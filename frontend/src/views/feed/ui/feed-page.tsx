@@ -1,9 +1,9 @@
-import { PostListSkeleton } from "@/entities/article";
+import { PostListSkeleton } from "@/entities/post";
 import { Suspense } from "react";
 import { PostSection } from "./post-section";
 import { PageLayout } from "@/shared/layouts/page-layout";
 import { FeedSidebar } from "./feed-sidebar";
-import { SortToolbar, SortToolbarSkeleton } from "@/features/article/article-sort";
+import { SortToolbar, SortToolbarSkeleton } from "@/features/post/post-sort";
 
 export default async function Page({ searchParams }: Pick<PageProps<"/">, "searchParams">) {
   return (

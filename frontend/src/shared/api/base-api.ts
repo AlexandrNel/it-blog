@@ -1,6 +1,6 @@
 "use client";
 
-import { api } from "./client";
+import { api } from "./http";
 
 export class BaseAPI {
   protected static async get<T>(...parameters: Parameters<typeof api.get>) {

@@ -1,10 +1,10 @@
 import { type ApiError } from "@/shared/api";
-import { type TArticle, PostAPI } from "@/entities/article";
+import { type TPost, PostAPI } from "@/entities/post";
 import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 import { revalidatePost } from "@/shared/actions/revalidate-post";
 
 export type UseCreatePostOptions = Omit<
-  UseMutationOptions<TArticle.Post, ApiError, TArticle.PostRequest>,
+  UseMutationOptions<TPost.Post, ApiError, TPost.PostRequest>,
   "mutationFn"
 >;
 

@@ -5,7 +5,7 @@ export { UserCardSkeleton } from "./ui/user-card-skeleton";
 export { UserAvatar } from "./ui/user-avatar";
 export { formatUsername } from "./model/user.formatters";
 export { userFabricKeys } from "./model/consts";
-export { UserAPI } from "./api/client";
+export { UserAPI } from "./api/http";
 export { UserQueries } from "./api/queries";
 export { GettingUser } from "./ui/getting-user";
 export { useUser } from "./model/use-user";

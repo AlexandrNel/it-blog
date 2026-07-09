@@ -9,7 +9,7 @@ export const routes = {
     about: (username: string): Route => `/profile/${username}/about` as Route,
     comments: (username: string): Route => `/profile/${username}/comments` as Route,
   },
-  article: (slug: string): Route => `/articles/${slug}` as Route,
+  post: (slug: string): Route => `/posts/${slug}` as Route,
   tag: (tag: string): Route => `/tags/${tag}` as Route,
   auth: {
     login: (): Route => "/login",

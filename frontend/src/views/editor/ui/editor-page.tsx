@@ -1,14 +1,14 @@
-import { getPostBySlug } from "@/entities/article/server";
+import { getPostBySlug } from "@/entities/post/server";
 import { notFound } from "next/navigation";
-import { ArticleCreate } from "./article-create";
+import { PostCreate } from "./post-create";
 
 export default async function Page({ params }: PageProps<"/editor/[slug]">) {
   const slug = (await params)?.slug;
   if (!slug) {
-    return <ArticleCreate />;
+    return <PostCreate />;
   } else {
     const post = await getPostBySlug(slug);
     if (!post) return notFound();
-    return <ArticleCreate post={post} />;
+    return <PostCreate post={post} />;
   }
 }

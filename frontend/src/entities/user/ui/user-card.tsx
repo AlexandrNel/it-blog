@@ -6,7 +6,7 @@ import { formatDate } from "@/shared/lib/utils";
 import { cn } from "@/shared/lib/utils";
 import { type BaseProps } from "@/shared/types";
 import { type Author } from "@/entities/user";
-import { type Post } from "@/entities/article";
+import { type Post } from "@/entities/post";
 import { type Route } from "next";
 
 interface UserCardProps extends BaseProps {

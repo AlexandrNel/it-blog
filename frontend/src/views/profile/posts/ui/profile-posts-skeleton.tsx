@@ -1,4 +1,4 @@
-import { PostCardSkeleton } from "@/entities/article";
+import { PostCardSkeleton } from "@/entities/post";
 
 export function ProfilePostsSkeleton() {
   return <PostCardSkeleton />;

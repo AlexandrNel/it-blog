@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { ProfileAPI } from "../api/client";
+import { ProfileAPI } from "../api/http";
 import {
   type Profile,
   type ProfileConnectionKind,

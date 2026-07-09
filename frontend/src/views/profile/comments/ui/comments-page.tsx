@@ -11,7 +11,7 @@ export default async function CommentsPage({ params }: PageProps<"/profile/[id]"
   return comments?.map((c) => (
     <CommentCard className="card" key={c.id} comment={c}>
       <CommentButton asChild>
-        <Link href={`/articles/${c.post.slug}#${c.id}`}>Посмотреть</Link>
+        <Link href={`/posts/${c.post.slug}#${c.id}`}>Посмотреть</Link>
       </CommentButton>
     </CommentCard>
   ));

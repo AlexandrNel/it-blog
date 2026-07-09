@@ -6,4 +6,4 @@ export {
   type BackendFormsError,
 } from "./api-error";
 
-export { api } from "./client";
+export { api } from "./http";

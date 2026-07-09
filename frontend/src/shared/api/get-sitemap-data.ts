@@ -1,7 +1,7 @@
 import { serverSafeFetch } from "./server";
 
 type ResponseData = {
-  articles: {
+  posts: {
     slug: string;
     updatedAt: string;
   }[];
@@ -13,6 +13,6 @@ type ResponseData = {
 
 export const getSitemapData = async (): Promise<ResponseData> => {
   const res = await serverSafeFetch<ResponseData>("/seo/sitemap/");
-  if (!res.data) return { articles: [], profiles: [] };
+  if (!res.data) return { posts: [], profiles: [] };
   return res.data;
 };

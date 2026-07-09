@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { UserAPI } from "./client";
+import { UserAPI } from "./http";
 import { userFabricKeys } from "../model/consts";
 
 export class UserQueries {

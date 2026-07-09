@@ -1,5 +1,5 @@
-import { FilterToolbarModal } from "@/features/article/article-filter";
-import { SearchInput } from "@/features/article/article-search";
+import { FilterToolbarModal } from "@/features/post/post-filter";
+import { SearchInput } from "@/features/post/post-search";
 import { Card } from "@/shared/ui/card";
 import { Row } from "@/shared/ui/layout";
 import { FetchPosts } from "./search-posts";

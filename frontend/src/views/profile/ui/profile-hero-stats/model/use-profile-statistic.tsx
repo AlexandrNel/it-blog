@@ -1,4 +1,4 @@
-import { ProfileAPI } from "@/entities/profile/api/client";
+import { ProfileAPI } from "@/entities/profile/api/http";
 import { QUERY_KEYS } from "@/shared/config/cache-keys";
 import { useQuery } from "@tanstack/react-query";
 

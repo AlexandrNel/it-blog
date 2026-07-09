@@ -1,5 +1,5 @@
-import { PostList } from "@/entities/article";
-import { getPostsByTag } from "@/entities/article/server";
+import { PostList } from "@/entities/post";
+import { getPostsByTag } from "@/entities/post/server";
 import { Suspense } from "react";
 
 export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "params">) {
@@ -20,6 +20,6 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 }
 
 async function FetchTagsPosts({ tag }: { tag: string }) {
-  const articles = await getPostsByTag(tag);
-  return <PostList classNameWrapper="lg:grid lg:grid-cols-2 flex flex-col gap-1" postList={articles} />;
+  const posts = await getPostsByTag(tag);
+  return <PostList classNameWrapper="lg:grid lg:grid-cols-2 flex flex-col gap-1" postList={posts} />;
 }

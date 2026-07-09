@@ -10,7 +10,7 @@ import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import { type BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 
-const Editor = dynamic(() => import("../components/article-editor/editor"), {
+const Editor = dynamic(() => import("../components/post-editor/editor"), {
   ssr: false,
   loading: () => "Loading editor",
 });

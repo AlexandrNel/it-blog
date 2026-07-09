@@ -1,10 +1,10 @@
-import { PostCard } from "@/entities/article";
+import { PostCard } from "@/entities/post";
 import { Pagination } from "./Pagination";
-import { EditBlock } from "@/features/article/article-menu";
-import { getAllPosts } from "@/entities/article/server";
+import { EditBlock } from "@/features/post/post-menu";
+import { getAllPosts } from "@/entities/post/server";
 import { PostSectionFallback } from "./post-section-fallback";
 
-export async function PostSection({ searchParams }: Pick<PageProps<"/articles/[slug]">, "searchParams">) {
+export async function PostSection({ searchParams }: Pick<PageProps<"/posts/[slug]">, "searchParams">) {
   const param = Number((await searchParams).page);
   const sort = (await searchParams).sort;
   const page = Number.isFinite(param) ? param : undefined;

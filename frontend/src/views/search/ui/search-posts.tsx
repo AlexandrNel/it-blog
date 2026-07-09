@@ -1,8 +1,8 @@
 "use client";
 import { useQueryState } from "nuqs";
-import { PostCard } from "@/entities/article";
+import { PostCard } from "@/entities/post";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { SearchPosts } from "../api/client";
+import { SearchPosts } from "../api/http";
 import React from "react";
 import { Spinner } from "@/shared/ui/spinner";
 import { Card } from "@/shared/ui/card";

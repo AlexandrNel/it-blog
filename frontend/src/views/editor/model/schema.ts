@@ -1,4 +1,4 @@
-import { type Post } from "@/entities/article";
+import { type Post } from "@/entities/post";
 import * as z from "zod";
 
 export const formSchema = z.object({

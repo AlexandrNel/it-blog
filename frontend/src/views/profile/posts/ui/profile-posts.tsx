@@ -1,6 +1,6 @@
-import { PostCard } from "@/entities/article";
-import { getPostByUserId } from "@/entities/article/server";
-import { EditBlock } from "@/features/article/article-menu";
+import { PostCard } from "@/entities/post";
+import { getPostByUserId } from "@/entities/post/server";
+import { EditBlock } from "@/features/post/post-menu";
 import { EmptyCard } from "@/shared/ui/empty";
 
 export async function ProfilePosts({ userId }: { userId: string }) {

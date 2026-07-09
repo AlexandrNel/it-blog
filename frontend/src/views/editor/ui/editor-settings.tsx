@@ -3,9 +3,9 @@
 import { FormProvider } from "react-hook-form";
 
 import { Container } from "@/shared/ui/container";
-import { ArticleSettingsFooter } from "../components/article-settings-footer";
+import { PostSettingsFooter } from "../components/post-settings-footer";
 import { useEditorSettingsForm } from "../model/use-editor-settings-form";
-import { ArticleEditorForm } from "./article-editor-form";
+import { PostEditorForm } from "./post-editor-form";
 
 export function EditorSettingsPage() {
   const form = useEditorSettingsForm();
@@ -14,8 +14,8 @@ export function EditorSettingsPage() {
     <Container>
       <FormProvider {...form}>
         <div className={"bg-card rounded-lg p-4 mt-2"}>
-          <ArticleEditorForm />
-          <ArticleSettingsFooter />
+          <PostEditorForm />
+          <PostSettingsFooter />
         </div>
       </FormProvider>
     </Container>

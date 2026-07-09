@@ -1,4 +1,4 @@
-import { type Post } from "@/entities/article";
+import { type Post } from "@/entities/post";
 import { type Author } from "@/entities/user";
 
 export type Comment = {

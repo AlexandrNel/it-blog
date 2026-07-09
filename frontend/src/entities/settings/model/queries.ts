@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { SettingsAPI } from "../api/client";
+import { SettingsAPI } from "../api/http";
 
 export const SETTINGS_KEY = {
   all: ["settings"],
