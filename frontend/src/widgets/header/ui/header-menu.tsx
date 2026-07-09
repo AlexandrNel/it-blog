@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { ProfileMenu } from "@/features/profile/profile-menu";
 import { useQuery } from "@tanstack/react-query";
 import { UserQueries } from "@/entities/user";
+import { HoverPrefetchLink } from "@/shared/ui";
 
 const hiddenClassName = "md:block hidden";
 
@@ -30,10 +31,10 @@ export function HeaderMenu() {
         ) : (
           <>
             <Button asChild variant={"outline"}>
-              <Link href={"/editor"}>
+              <HoverPrefetchLink href={"/editor"}>
                 <SquarePen strokeWidth={1} />
                 <span className={hiddenClassName}>Написать статью</span>
-              </Link>
+              </HoverPrefetchLink>
             </Button>
             <ProfileMenu />
           </>

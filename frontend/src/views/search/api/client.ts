@@ -23,8 +23,8 @@ export class SearchPosts extends BaseAPI {
     if (title) params.set("title", title);
     params.set("page", String(page));
 
-    return BaseAPI.get<{ posts: PostWithStatistic[]; nextPage: number | null }>(
-      `/search/posts?${params.toString()}`,
-    );
+    return BaseAPI.get<{ posts: PostWithStatistic[]; nextPage: number | null }>(`/search/posts`, {
+      params,
+    });
   }
 }
