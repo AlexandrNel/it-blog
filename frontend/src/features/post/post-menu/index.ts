@@ -1,1 +1,1 @@
-export { EditBlock } from "./ui/EditBlock";
+export { EditMenuWrapper } from "./ui/EditMenuWrapper";

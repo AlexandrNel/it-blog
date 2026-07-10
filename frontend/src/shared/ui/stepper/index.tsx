@@ -1,3 +1,5 @@
+"use client";
+
 import { Activity, type ReactNode, useState } from "react";
 
 export type StepperItem<Step extends string> = {

@@ -1,6 +1,6 @@
 import { PostCard } from "@/entities/post";
 import { Pagination } from "./Pagination";
-import { EditBlock } from "@/features/post/post-menu";
+import { EditMenuWrapper } from "@/features/post/post-menu";
 import { getAllPosts } from "@/entities/post/server";
 import { PostSectionFallback } from "./post-section-fallback";
 
@@ -18,7 +18,9 @@ export async function PostSection({ searchParams }: Pick<PageProps<"/posts/[slug
         ) : (
           posts.data.map((p) => (
             <li key={p.id} className="mb-2">
-              <PostCard header={<EditBlock slug={p.slug} authorId={p.author.id} />} post={p} />
+              <EditMenuWrapper slug={p.slug} authorId={p.author.id}>
+                <PostCard post={p} />
+              </EditMenuWrapper>
             </li>
           ))
         )}

@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { Fragment, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import { formatUsername } from "../model/user.formatters";
 import { UserAvatar } from "./user-avatar";
-import { formatDate } from "@/shared/lib/utils";
-import { cn } from "@/shared/lib/utils";
+import { classNames, cn, formatDate } from "@/shared/lib/utils";
 import { type BaseProps } from "@/shared/types";
 import { type Author } from "@/entities/user";
 import { type Post } from "@/entities/post";
 import { type Route } from "next";
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/shared/ui";
+import { routes } from "@/shared/config";
 
 interface UserCardProps extends BaseProps {
   asLink?: boolean;
@@ -22,57 +23,76 @@ interface UserCardProps extends BaseProps {
 export function UserCard({ className, asLink = false, data }: PropsWithChildren<UserCardProps>) {
   const { date, fullName, username, avatarUrl } = data ?? {};
 
-  const formattedDate = formatDate(date);
+  const formattedDate = formatDate(date) ?? undefined;
   const formattedUsername = formatUsername(username);
 
+  const formattedData: UserCardProps["data"] = {
+    ...data,
+    date: formattedDate,
+    username: formattedUsername,
+  };
+
   return (
-    <div className={cn("flex gap-2 items-center", className)}>
-      <UserAvatar
-        className="md:size-11 size-10"
-        name={fullName || username}
-        avatarUrl={avatarUrl}
-      />
-      <div className="flex flex-col justify-between">
-        {fullName ? (
-          <Fragment>
-            <div className="flex items-center gap-1.5">
-              <Wrapper
-                asLink={asLink}
-                href={`/profile/${username}` as Route}
-                className=" leading-tight"
-              >
-                <FullName name={fullName} />
-              </Wrapper>
-              {formattedDate && (
-                <Fragment>
-                  <span className="text-[13px]  text-muted-foreground">·</span>
-                  <PostDate date={formattedDate} />
-                </Fragment>
-              )}
-            </div>
-            <UserName name={formattedUsername} />
-          </Fragment>
-        ) : (
-          <Fragment>
-            <Wrapper asLink={asLink} href={`/profile/${username}` as Route}>
-              <FullName name={formattedUsername} />
-            </Wrapper>
-            {formattedDate && <PostDate date={formattedDate} />}
-          </Fragment>
-        )}
-      </div>
-    </div>
+    <Item className={classNames("flex  gap-2 items-center p-0", {}, [className])}>
+      <ItemMedia>
+        <UserAvatar className="md:size-11 size-10" name={fullName || username} avatarUrl={avatarUrl} />
+      </ItemMedia>
+      <ItemContent className="flex flex-col justify-between">
+        <ItemTitle>
+          <Title href={routes.profile.user(username)} asLink={asLink} data={formattedData} />
+        </ItemTitle>
+        <ItemDescription>
+          <Description data={formattedData} />
+        </ItemDescription>
+      </ItemContent>
+    </Item>
   );
 }
 
-export const FullName = ({ name, className }: { name: string; className?: string }) => {
-  return <span className={cn("md:text-[15px] text-[14px] font-medium", className)}>{name}</span>;
+const Title = ({
+  asLink,
+  href,
+  data: { fullName, username, date },
+}: {
+  data: UserCardProps["data"];
+  href: string;
+  asLink: boolean;
+}) => {
+  return (
+    <>
+      {fullName ? (
+        <div className="flex items-center gap-1.5">
+          <Wrapper asLink={asLink} href={href as Route} className=" leading-tight">
+            <FullName name={fullName} />
+          </Wrapper>
+          {date && (
+            <>
+              <span className="text-[13px]">·</span>
+              <PostDate date={date} />
+            </>
+          )}
+        </div>
+      ) : (
+        <Wrapper asLink={asLink} href={href as Route}>
+          <FullName name={username} />
+        </Wrapper>
+      )}
+    </>
+  );
 };
-export const UserName = ({ name, className }: { name: string; className?: string }) => {
-  return <span className={cn("text-[13px] text-muted-foreground", className)}>{name}</span>;
+
+const Description = ({ data: { username, fullName, date } }: Pick<UserCardProps, "data">) => {
+  if (fullName) return <span className={"text-[13px] text-muted-foreground"}>{username}</span>;
+  if (date) return <PostDate date={date} />;
+  return null;
 };
-export const PostDate = ({ date, className }: { date: string; className?: string }) => {
-  return <span className={cn("md:text-[13px] text-xs", className)}>{date}</span>;
+
+const FullName = ({ name }: { name: string }) => {
+  return <span className={"md:text-[15px] text-[14px] font-medium"}>{name}</span>;
+};
+
+const PostDate = ({ date }: { date: string }) => {
+  return <span className={"md:text-[13px] text-xs font-normal text-muted-foreground"}>{date}</span>;
 };
 
 function Wrapper({
@@ -83,7 +103,7 @@ function Wrapper({
 }: PropsWithChildren<{ href: Route; className?: string; asLink?: boolean }>) {
   if (href && asLink) {
     return (
-      <Link href={href} className={cn("hover:opacity-60", className)}>
+      <Link href={href} className={classNames("hover:opacity-60", {}, [className])}>
         {children}
       </Link>
     );
