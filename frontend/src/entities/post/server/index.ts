@@ -1,3 +1,3 @@
 import "server-only";
 
-export { getAllPosts, getPostBySlug, getPostsByTag, getPostById, getPostByUserId } from "./api/http";
+export { getAllPosts, getPostBySlug, getPostsByTag, getPostById, getPostByUserId } from "./http";

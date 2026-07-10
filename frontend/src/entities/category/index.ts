@@ -1,4 +1,8 @@
-export { getAllCategories } from "./api/http";
+export { CategoryAPI } from "./api/http";
+export { CategoryQueries } from "./api/queries";
 export { CategoryItem } from "./ui/CategoryUI";
 export { CategoryList } from "./ui/CategoryList";
-export type { Category } from "./model/category";
+export { categoryFabricKeys } from "./model/consts";
+
+export type { CategoryListReponse } from "./model/types";
+export type * as TCategory from "./model/types";

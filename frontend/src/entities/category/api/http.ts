@@ -1,7 +1,8 @@
-import { api } from "@/shared/api/http";
-import { type CategoryDTO } from "./types";
+import { BaseAPI } from "@/shared/api/base-api";
+import { type CategoryListReponse } from "../model/types";
 
-export const getAllCategories = async () => {
-  const res = await api.get<CategoryDTO[]>("/categories");
-  return res.data;
-};
+export class CategoryAPI extends BaseAPI {
+  static getAll() {
+    return BaseAPI.get<CategoryListReponse>("/categories");
+  }
+}

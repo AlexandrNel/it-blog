@@ -1,7 +1,7 @@
 import { serverSafeFetch } from "@/shared/api/server";
 import { cache } from "react";
 import { cookies } from "next/headers";
-import type * as TAuth from "../../model/types";
+import type * as TAuth from "../model/types";
 
 export const auth = cache(async function auth(): Promise<TAuth.CheckAuthResponse> {
   const cookieRaw = (await cookies()).toString();

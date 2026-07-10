@@ -1,2 +1,1 @@
-export type { CategoryDTO } from "../api/types";
-export type { Category } from "../model/category";
+export type { Category, CategoryListReponse } from "../model/types";

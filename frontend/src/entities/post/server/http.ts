@@ -4,7 +4,7 @@ import {
   type ResponsePaginationDto,
   type PostWithStatisticDto,
   type PostDto,
-} from "../../model/types";
+} from "../model/types";
 import { cache } from "react";
 import { cacheLife, cacheTag } from "next/cache";
 import { CACHE_TAGS } from "@/shared/config/cache-keys";

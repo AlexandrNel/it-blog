@@ -1,3 +1,3 @@
 import "server-only";
 
-export { auth } from "./api/http";
+export { auth } from "./http";

@@ -3,3 +3,5 @@ export interface Category {
   key: string;
   value: string;
 }
+
+export type CategoryListReponse = Category[];

@@ -7,7 +7,7 @@ import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from 
 import { cn } from "@/shared/lib/utils";
 import { useEditorStore } from "../model/use-editor-store";
 import { useQueries } from "@tanstack/react-query";
-import { queryCategories } from "@/entities/category/api/query";
+import { CategoryQueries } from "@/entities/category";
 import { queryTags } from "@/entities/tag/api/query";
 import { type FormSchemaType } from "../model/schema";
 import { ComboboxMultiple } from "@/views/editor/components/combobox-multiple";
@@ -25,7 +25,7 @@ export function PostEditorForm() {
   const setData = useEditorStore((state) => state.setData);
 
   const [categoriesData, tagsData] = useQueries({
-    queries: [queryCategories(), queryTags()],
+    queries: [CategoryQueries.all(), queryTags()],
   });
   const { data: categoryData = [] } = categoriesData;
   const { data: tagData = [] } = tagsData;
