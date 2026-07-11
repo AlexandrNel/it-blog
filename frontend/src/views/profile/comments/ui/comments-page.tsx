@@ -1,5 +1,5 @@
 import { CommentButton, CommentCard } from "@/entities/comment";
-import { getCommentsByUser } from "@/entities/comment/api/server";
+import { getCommentsByUser } from "@/entities/comment/server";
 import { EmptyCard } from "@/shared/ui/empty";
 import Link from "next/link";
 

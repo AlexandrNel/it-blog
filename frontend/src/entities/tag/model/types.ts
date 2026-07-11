@@ -3,3 +3,5 @@ export type Tag = {
   key: string;
   name: string;
 };
+
+export type TagResponse = Tag;

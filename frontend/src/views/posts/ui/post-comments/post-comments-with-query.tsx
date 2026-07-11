@@ -1,16 +1,23 @@
 "use client";
-import { usePostComments } from "@/entities/comment";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { WrappedCommentCard } from "./wrapped-comment-card";
+import { useQuery } from "@tanstack/react-query";
+import { CommentQueries } from "@/entities/comment";
 
 export function PostWithQuery({ slug }: { slug: string }) {
-  const { data, isLoading } = usePostComments(slug);
+  const { data, isLoading } = useQuery(CommentQueries.byPost(slug));
 
   return (
     <ul>
-      {isLoading && <Skeleton className="w-full h-20 rounded-lg my-2" />}
+      {isLoading && (
+        <div className="flex flex-col gap-2">
+          {Array.from({ length: 2 }, (_v, i) => (
+            <Skeleton key={`comment-sk-${i}`} className="w-full h-20 rounded-lg" />
+          ))}
+        </div>
+      )}
       {data?.map((c) => (
-        <li className="mt-2 px-2" key={c.id}>
+        <li className="px-2" key={c.id}>
           <WrappedCommentCard comment={c} />
         </li>
       ))}

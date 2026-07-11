@@ -1,5 +1,5 @@
 "use client";
-import { CommentButton } from "@/entities/comment/ui/comment-button";
+import { CommentButton } from "@/entities/comment";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteCommentAPI } from "../api/http";
 import { memo } from "react";

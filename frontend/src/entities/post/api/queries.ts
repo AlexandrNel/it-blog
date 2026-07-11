@@ -3,14 +3,14 @@ import { PostAPI } from "./http";
 import { postFabricKeys } from "../model/consts";
 
 export class PostQueries {
-  static byId(id: string) {
+  static getPostById(userId: string) {
     return queryOptions({
-      queryFn: () => PostAPI.getPostById(id),
-      queryKey: postFabricKeys.detail(id),
+      queryFn: () => PostAPI.getPostById(userId),
+      queryKey: postFabricKeys.detail(userId),
     });
   }
 
-  static byUser(userId: string) {
+  static getPostsByUser(userId: string) {
     return queryOptions({
       queryFn: () => PostAPI.getPostsByUser(userId),
       queryKey: postFabricKeys.byUser(userId),

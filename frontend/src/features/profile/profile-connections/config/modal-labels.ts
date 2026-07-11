@@ -1,6 +1,6 @@
 import { type ProfileConnectionKind } from "@/entities/profile";
 
-export const modalCopy: Record<
+export const modalLables: Record<
   ProfileConnectionKind,
   { title: string; empty: string; description: string }
 > = {

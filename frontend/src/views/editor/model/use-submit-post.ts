@@ -6,7 +6,7 @@ import { useShallow } from "zustand/shallow";
 import { toast } from "sonner";
 
 import { type Post } from "@/entities/post";
-import { queryTags } from "@/entities/tag/api/query";
+import { TagQueries } from "@/entities/tag";
 import { isApiError } from "@/shared/api/api-error";
 import { useEditorStore } from "./use-editor-store";
 import { type FormSchemaType } from "./schema";
@@ -17,7 +17,7 @@ import { useUpdatePost } from "../api/use-update-post";
 
 export function useSubmitPost() {
   const router = useRouter();
-  const { data: tagData = [] } = useQuery(queryTags());
+  const { data: tagData = [] } = useQuery(TagQueries.all());
   const update = useUpdatePost();
   const create = useCreatePost();
 

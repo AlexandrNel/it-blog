@@ -1,5 +1,5 @@
-import { getProfileStatisticByUserId } from "@/entities/profile/index.server";
-import { Card } from "@/shared/ui/card";
+import { getProfileStatisticByUserId } from "@/entities/profile/server";
+import { Card, CardContent } from "@/shared/ui/card";
 import { Row } from "@/shared/ui/layout";
 import { TabItem } from "./profile-tab-item";
 import { Suspense } from "react";
@@ -30,19 +30,21 @@ export async function _Tabs({ userId }: Props) {
   };
   return (
     <Card className="max-md:-mx-(--container-padding) max-lg:rounded-t-none max-md:rounded-none max-md:mb-2">
-      <Row className="flex-nowrap overflow-auto">
-        {Object.entries(LINKS).map(([key, value]) => {
-          const label = `${value.label} ${statsMap[key as LinkKey]}`;
-          return (
-            <TabItem
-              className={value.isMobile ? "lg:hidden" : ""}
-              key={key}
-              text={label}
-              href={`/profile/${userId}${value.path}`}
-            />
-          );
-        })}
-      </Row>
+      <CardContent>
+        <Row className="flex-nowrap overflow-auto">
+          {Object.entries(LINKS).map(([key, value]) => {
+            const label = `${value.label} ${statsMap[key as LinkKey]}`;
+            return (
+              <TabItem
+                className={value.isMobile ? "lg:hidden" : ""}
+                key={key}
+                text={label}
+                href={`/profile/${userId}${value.path}`}
+              />
+            );
+          })}
+        </Row>
+      </CardContent>
     </Card>
   );
 }

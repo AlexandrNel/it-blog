@@ -17,6 +17,10 @@ export type {
   SortParams,
   FilterParams,
   DateParams,
+  PostListWithStatisticResponse,
+  PostRequest,
+  PostResponse,
+  PostWithStatisticResponse,
 } from "./model/types";
 
 export type * as TPost from "./model/types";

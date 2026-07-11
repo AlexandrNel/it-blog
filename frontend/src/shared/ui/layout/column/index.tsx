@@ -21,12 +21,6 @@ type ColumnVariants = VariantProps<typeof columnVariants>;
 
 interface ColumnProps extends BaseProps, ColumnVariants {}
 
-export const Column = ({
-  className,
-  children,
-  justify,
-  align,
-  gap,
-}: PropsWithChildren<ColumnProps>) => {
-  return <div className={cn(columnVariants({ justify, align, gap }), className)}>{children}</div>;
+export const Column = ({ className, children, justify, align, gap }: PropsWithChildren<ColumnProps>) => {
+  return <div className={cn(columnVariants({ justify, align, gap }), {}, [className])}>{children}</div>;
 };

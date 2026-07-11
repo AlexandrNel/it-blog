@@ -2,7 +2,7 @@
 
 import { cn } from "@/shared/lib/utils";
 import { Tag } from "./Tag";
-import { type Tag as TypeTag } from "../model/tag";
+import { type Tag as TypeTag } from "../model/types";
 import { HoverPrefetchLink } from "@/shared/ui";
 import { type Route } from "next";
 

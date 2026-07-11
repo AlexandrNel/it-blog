@@ -1,13 +1,15 @@
-import { Card } from "@/shared/ui/card";
+import { Card, CardContent } from "@/shared/ui/card";
 import { Row } from "@/shared/ui/layout";
 
 export const ProfileTabsSkeleton = () => {
   return (
     <Card>
-      <Row className="flex-nowrap overflow-auto">
-        <TabSkeleton />
-        <TabSkeleton className="w-37.5" />
-      </Row>
+      <CardContent>
+        <Row className="flex-nowrap overflow-auto">
+          <TabSkeleton />
+          <TabSkeleton className="w-37.5" />
+        </Row>
+      </CardContent>
     </Card>
   );
 };

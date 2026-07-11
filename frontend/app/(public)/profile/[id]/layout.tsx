@@ -1,4 +1,4 @@
-import { getProfileById } from "@/entities/profile/index.server";
+import { getProfileById } from "@/entities/profile/server";
 import { type Metadata } from "next";
 import { ProfileLayout } from "@/views/profile";
 

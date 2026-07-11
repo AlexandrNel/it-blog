@@ -1,6 +1,6 @@
-"server-only";
+import "server-only";
 import { serverSafeFetch } from "@/shared/api/server";
-import { type Tag } from "../model/tag";
+import { type Tag } from "../model/types";
 import { cookies } from "next/headers";
 
 export const getTagList = async (): Promise<Tag[]> => {

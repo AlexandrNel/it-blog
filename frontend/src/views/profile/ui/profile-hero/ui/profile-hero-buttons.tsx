@@ -3,6 +3,7 @@
 import { UserQueries } from "@/entities/user";
 import { CheckAutWrapper } from "@/features/auth/check-auth";
 import { FollowButton } from "@/features/profile/follow-profile";
+import { Skeleton } from "@/shared/ui";
 import { Button } from "@/shared/ui/button";
 import { Row } from "@/shared/ui/layout";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +18,12 @@ export function HeroButtons({ userId, username }: { userId: string; username: st
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted)
+    return (
+      <Row justify={"end"}>
+        <Skeleton className="h-10 w-[100px]" />
+      </Row>
+    );
   return (
     <Row justify={"end"}>
       {user?.id === userId ? (

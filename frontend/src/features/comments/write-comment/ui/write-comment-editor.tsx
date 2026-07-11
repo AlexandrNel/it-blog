@@ -1,6 +1,5 @@
 "use client";
 import { Column } from "@/shared/ui/layout";
-import { cn } from "@/shared/lib/utils";
 import { type BaseProps } from "@/shared/types/components";
 import { useRef, type PropsWithChildren } from "react";
 import { Button } from "@/shared/ui/button";
@@ -9,11 +8,18 @@ import { type Content, type Editor } from "@tiptap/core";
 import { useSendCommentAnswer, useSendPostComment } from "../model/queries";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
+import { Skeleton } from "@/shared/ui";
+import { classNames } from "@/shared/lib/utils";
+
 const CommentEditor = dynamic(
-  () =>
-    import("@/entities/comment/ui/comment-editor/comment-editor").then((mod) => mod.CommentEditor),
+  () => import("@/entities/comment/ui/comment-editor/comment-editor").then((mod) => mod.CommentEditor),
   {
     ssr: false,
+    loading: () => (
+      <Skeleton className="w-full h-[90px] rounded-lg p-2 flex items-end justify-start">
+        <Skeleton className="h-10 w-[107px] rounded-lg" />
+      </Skeleton>
+    ),
   },
 );
 
@@ -62,7 +68,7 @@ export const WriteCommentEditor = ({
   };
 
   return (
-    <Column className={cn("w-full", className)}>
+    <Column className={classNames("w-full", {}, [className])}>
       <CommentEditor
         onMount={(e) => {
           editor.current = e;

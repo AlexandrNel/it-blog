@@ -61,11 +61,12 @@ export type PostRequest = {
   categoryId: string;
 };
 
-export type ResponsePaginationDto<T> = {
-  data: T;
+export type ResponsePagination<T> = {
+  data: T[];
   pages: number;
 };
 
-export type PostDto = Post;
+export type PostResponse = Post;
 
-export type PostWithStatisticDto = PostDto & { statistic: Statistic };
+export type PostWithStatisticResponse = PostResponse & { statistic: Statistic };
+export type PostListWithStatisticResponse = PostWithStatisticResponse[];

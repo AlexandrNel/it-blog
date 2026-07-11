@@ -1,4 +1,4 @@
-import { getProfileStatisticByUserId } from "@/entities/profile/index.server";
+import { getProfileStatisticByUserId } from "@/entities/profile/server";
 import { Suspense } from "react";
 import { ProfileHeroStatsSkeleton } from "./profile-hero-stats-skeleton";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";

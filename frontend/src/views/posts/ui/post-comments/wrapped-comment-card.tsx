@@ -1,8 +1,8 @@
 "use client";
 import { type Comment } from "@/entities/comment";
 import { CommentCard } from "@/entities/comment";
-import { CommentBranch } from "@/entities/comment/";
-import { CommentButton } from "@/entities/comment/";
+import { CommentBranch } from "@/entities/comment";
+import { CommentButton } from "@/entities/comment";
 import { WriteCommentEditor } from "@/features/comments/write-comment";
 import { Row } from "@/shared/ui/layout";
 import { Button } from "@/shared/ui/button";

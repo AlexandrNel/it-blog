@@ -9,6 +9,11 @@ export type Comment = {
   parentId: string | null;
   replies: Comment[];
 };
+
 export type ProfileComment = Comment & {
   post: Pick<Post, "id" | "slug" | "title">;
 };
+
+export type CommentListResponse = Comment[];
+
+export type ProfileCommentListResponse = ProfileComment[];

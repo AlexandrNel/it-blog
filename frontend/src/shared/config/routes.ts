@@ -21,8 +21,7 @@ export const routes = {
   },
   settings: {
     root: (): Route => "/settings",
-    account: (): Route => "/settings/notifications",
-    notifications: (): Route => "/settings/notifications",
+    account: (): Route => "/settings/account",
     security: (): Route => "/settings/security",
   },
   api: {

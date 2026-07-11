@@ -10,8 +10,10 @@ export const usePostStatistic = (postId: string) => {
     queryKey: [`post:${postId}:statistic`],
     queryFn: () => PostAPI.getStatistic(postId),
   });
+
   const vote = (action: "like" | "dislike") =>
     action === "like" ? PostAPI.sendLike(postId) : PostAPI.sendDislike(postId);
+
   const mutation = useMutation({
     mutationFn: vote,
     onSuccess: () => {

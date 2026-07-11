@@ -1,4 +1,4 @@
-import { getProfileById } from "@/entities/profile/index.server";
+import { getProfileById } from "@/entities/profile/server";
 import { UserAvatar } from "@/entities/user";
 import { ProfileConnectionsActions } from "@/features/profile/profile-connections";
 import { ProfileCover } from "./profile-cover";

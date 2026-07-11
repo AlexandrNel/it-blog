@@ -1,6 +1,6 @@
 "use client";
 import { UserCard } from "@/entities/user";
-import { type Comment } from "../model/comment";
+import { type Comment } from "../model/types";
 import { type PropsWithChildren } from "react";
 import { type BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";

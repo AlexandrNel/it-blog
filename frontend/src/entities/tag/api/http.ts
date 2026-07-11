@@ -1,8 +1,8 @@
-import { api } from "@/shared/api/http";
-import { type Tag } from "../model/tag";
-import { type TagDto } from "./types";
+import { BaseAPI } from "@/shared/api/base-api";
+import { type Tag } from "../model/types";
 
-export const getTagListClient = async (): Promise<TagDto[]> => {
-  const res = await api<Tag[]>(`/tags`);
-  return res.data;
-};
+export class TagAPI extends BaseAPI {
+  static getAll(): Promise<Tag[]> {
+    return BaseAPI.get<Tag[]>("/tags");
+  }
+}

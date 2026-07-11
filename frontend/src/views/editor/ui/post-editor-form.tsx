@@ -8,7 +8,7 @@ import { cn } from "@/shared/lib/utils";
 import { useEditorStore } from "../model/use-editor-store";
 import { useQueries } from "@tanstack/react-query";
 import { CategoryQueries } from "@/entities/category";
-import { queryTags } from "@/entities/tag/api/query";
+import { TagQueries } from "@/entities/tag";
 import { type FormSchemaType } from "../model/schema";
 import { ComboboxMultiple } from "@/views/editor/components/combobox-multiple";
 import { PostPreviewEditor } from "../components/post-preview-editor";
@@ -25,7 +25,7 @@ export function PostEditorForm() {
   const setData = useEditorStore((state) => state.setData);
 
   const [categoriesData, tagsData] = useQueries({
-    queries: [CategoryQueries.all(), queryTags()],
+    queries: [CategoryQueries.all(), TagQueries.all()],
   });
   const { data: categoryData = [] } = categoriesData;
   const { data: tagData = [] } = tagsData;

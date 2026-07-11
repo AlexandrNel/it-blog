@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/shared/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/shared/ui/input-group";
 import { Search, X } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
@@ -25,11 +20,7 @@ export const SearchInput = () => {
       <InputGroupAddon>
         <Search />
       </InputGroupAddon>
-      <InputGroupInput
-        value={localValue}
-        onChange={(e) => setLocalValue(e.target.value)}
-        placeholder="Искать"
-      />
+      <InputGroupInput value={localValue} onChange={(e) => setLocalValue(e.target.value)} placeholder="Искать" />
       {localValue && (
         <InputGroupButton
           size={"sm"}

@@ -1,11 +1,10 @@
-"use client";
 import { BaseAPI } from "@/shared/api/base-api";
 import {
   type ProfileConnectionKind,
   type ProfileConnectionsPage,
   type ProfileConnectionsSummary,
   type ProfileStatistic,
-} from "../model/profile";
+} from "../model/types";
 
 export class ProfileAPI extends BaseAPI {
   static getConnections({
@@ -20,10 +19,7 @@ export class ProfileAPI extends BaseAPI {
     limit?: number;
   }): Promise<ProfileConnectionsPage> {
     return BaseAPI.get(`/profile/${userId}/connections/${type}`, {
-      params: {
-        page,
-        limit,
-      },
+      params: { page, limit },
     });
   }
 
