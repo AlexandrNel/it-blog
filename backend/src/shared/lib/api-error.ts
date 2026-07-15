@@ -2,13 +2,8 @@ export class ApiError extends Error {
   public readonly statusCode: number
   public readonly errors?: unknown[] | Record<string, unknown>
   public readonly code?: string
-  constructor(
-    message: string,
-    statusCode = 500,
-    errors: unknown[] | Record<string, unknown> = []
-  ) {
+  constructor(message: string, statusCode = 500) {
     super(message)
-    this.errors = errors
     this.statusCode = statusCode
   }
 
@@ -18,8 +13,8 @@ export class ApiError extends Error {
   static UnauthorizedError(message = 'Нет доступа') {
     return new ApiError(message, 401)
   }
-  static BadRequest(message = 'Неверные данные', errors = []) {
-    return new ApiError(message, 400, errors)
+  static BadRequest(message = 'Неверные данные') {
+    return new ApiError(message, 400)
   }
   static ForbiddenError(message = 'Доступ запрещен') {
     return new ApiError(message, 403)

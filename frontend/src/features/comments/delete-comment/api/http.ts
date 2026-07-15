@@ -1,4 +1,4 @@
-import { BaseAPI } from "@/shared/api/base-api";
+import { BaseAPI } from "@/shared/api/http";
 
 export class DeleteCommentAPI extends BaseAPI {
   static deleteComment(commentId: string) {

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 import { type Post } from "@/entities/post";
 import { TagQueries } from "@/entities/tag";
-import { isApiError } from "@/shared/api/api-error";
+import { isApiError } from "@/shared/api";
 import { useEditorStore } from "./use-editor-store";
 import { type FormSchemaType } from "./schema";
 import { uploadImage } from "@/shared/api/uploadImage";

@@ -1,4 +1,4 @@
-import { BaseAPI } from "@/shared/api/base-api";
+import { BaseAPI } from "@/shared/api/http";
 import { type SendCommentAnswer, type SendPostCommentRequest } from "./types";
 import { type Comment } from "@/entities/comment";
 

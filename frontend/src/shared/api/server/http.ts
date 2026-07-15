@@ -1,13 +1,13 @@
-import { GlobalError } from "./types";
-import { ApiError, isApiError } from "./validation";
+import { GlobalError } from "../types";
+import { ApiError } from "../validation";
 
 const API_URL = process.env.API_URL;
 
 export const serverFetch = async <T>(endpoint: string, init?: RequestInit) => {
   const url = `${API_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
+  let data: T;
   const res = await fetch(url, init);
   const contentType = res.headers.get("content-type");
-  let data: T;
   try {
     data = contentType?.includes("application/json") ? await res.json() : await res.text();
   } catch (error) {
@@ -31,10 +31,8 @@ export const serverSafeFetch = async <T>(endpoint: string, init?: RequestInit) =
   try {
     const res = await serverFetch(endpoint, init);
     return { data: res.data as T, error: null };
-  } catch (error) {
-    if (isApiError(error)) {
-      return { data: null, error: error.message };
-    }
-    return { data: null, error: (error as Error).message };
+  } catch (err) {
+    const error = err as ApiError;
+    return { data: error.rawResponse, error: error.message };
   }
 };

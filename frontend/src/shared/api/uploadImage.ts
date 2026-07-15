@@ -1,4 +1,4 @@
-import { api } from "@/shared/api/http";
+import { api } from "@/shared/api";
 
 export const uploadImage = async (
   formData: FormData,

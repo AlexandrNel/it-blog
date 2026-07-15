@@ -1,4 +1,4 @@
-import { type ApiError } from "@/shared/api/api-error";
+import { type ApiError } from "@/shared/api";
 
 export type ErrorProps = {
   error: Error & { digest?: string };

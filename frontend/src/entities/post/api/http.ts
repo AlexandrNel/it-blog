@@ -1,5 +1,5 @@
 import { type Post, type Statistic, type PostRequest } from "../model/types";
-import { BaseAPI } from "@/shared/api/base-api";
+import { BaseAPI } from "@/shared/api/http";
 
 export class PostAPI extends BaseAPI {
   static createPost(data: PostRequest): Promise<Post> {

@@ -8,7 +8,7 @@ import { cellAround, CellSelection } from "@tiptap/pm/tables";
 import { findParentNodeClosestToPos, type Editor, type NodeWithPos } from "@tiptap/react";
 import { uploadImage } from "@/shared/api/uploadImage";
 import { toast } from "sonner";
-import { ApiError } from "@/shared/api/api-error";
+import { ApiError } from "@/shared/api";
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -159,17 +159,12 @@ export function isValidPosition(pos: number | null | undefined): pos is number {
  * @param extensionNames - A single extension name or an array of names to check
  * @returns True if at least one of the extensions is available, false otherwise
  */
-export function isExtensionAvailable(
-  editor: Editor | null,
-  extensionNames: string | string[],
-): boolean {
+export function isExtensionAvailable(editor: Editor | null, extensionNames: string | string[]): boolean {
   if (!editor) return false;
 
   const names = Array.isArray(extensionNames) ? extensionNames : [extensionNames];
 
-  const found = names.some((name) =>
-    editor.extensionManager.extensions.some((ext) => ext.name === name),
-  );
+  const found = names.some((name) => editor.extensionManager.extensions.some((ext) => ext.name === name));
 
   if (!found) {
     console.warn(
@@ -393,18 +388,7 @@ const ATTR_WHITESPACE =
   /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g;
 
 export function isAllowedUri(uri: string | undefined, protocols?: ProtocolConfig) {
-  const allowedProtocols: string[] = [
-    "http",
-    "https",
-    "ftp",
-    "ftps",
-    "mailto",
-    "tel",
-    "callto",
-    "sms",
-    "cid",
-    "xmpp",
-  ];
+  const allowedProtocols: string[] = ["http", "https", "ftp", "ftps", "mailto", "tel", "callto", "sms", "cid", "xmpp"];
 
   if (protocols) {
     protocols.forEach((protocol) => {
@@ -467,8 +451,7 @@ export function updateNodesAttr<A extends string = string, V = unknown>(
     if (!currentNode) continue;
 
     const prevValue = (currentNode.attrs as Record<string, unknown>)[attrName] as V | undefined;
-    const resolvedNext =
-      typeof next === "function" ? (next as (p: V | undefined) => V | undefined)(prevValue) : next;
+    const resolvedNext = typeof next === "function" ? (next as (p: V | undefined) => V | undefined)(prevValue) : next;
 
     if (prevValue === resolvedNext) continue;
 
@@ -534,10 +517,7 @@ export function selectCurrentBlockContent(editor: Editor) {
  * @param allowedNodeTypes An array of node type names to look for (e.g., ["image", "table"])
  * @returns An array of objects containing the node and its position
  */
-export function getSelectedNodesOfType(
-  selection: Selection,
-  allowedNodeTypes: string[],
-): NodeWithPos[] {
+export function getSelectedNodesOfType(selection: Selection, allowedNodeTypes: string[]): NodeWithPos[] {
   const results: NodeWithPos[] = [];
   const allowed = new Set(allowedNodeTypes);
 

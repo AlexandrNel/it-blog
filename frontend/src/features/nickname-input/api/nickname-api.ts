@@ -1,4 +1,4 @@
-import { BaseAPI } from "@/shared/api/base-api";
+import { BaseAPI } from "@/shared/api/http";
 import { type CheckNicknameResponse, type GenerateNicknameResponse } from "./types";
 
 export class NicknameAPI extends BaseAPI {

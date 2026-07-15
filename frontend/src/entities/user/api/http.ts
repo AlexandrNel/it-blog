@@ -1,4 +1,4 @@
-import { BaseAPI } from "@/shared/api/base-api";
+import { BaseAPI } from "@/shared/api/http";
 import { type UserResponse } from "../model/types";
 
 export class UserAPI extends BaseAPI {

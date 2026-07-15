@@ -13,7 +13,7 @@ import { FormField } from "@/shared/ui/form-components";
 import { NicknameField } from "@/features/nickname-input";
 import { useSettings } from "@/entities/settings";
 import { Spinner } from "@/shared/ui/spinner";
-import { isApiError } from "@/shared/api/api-error";
+import { isApiError } from "@/shared/api";
 
 export function AccountForm() {
   const { data, isLoading } = useSettings();
@@ -54,8 +54,8 @@ export function AccountForm() {
           render={({ field }) => (
             <FormField id="username" error={errors.username} label="Никнейм">
               <FieldDescription>
-                Уникальное имя, которое будет использоваться для идентификации вашего аккаунта и
-                отображаться в вашем профиле
+                Уникальное имя, которое будет использоваться для идентификации вашего аккаунта и отображаться в вашем
+                профиле
               </FieldDescription>
               <NicknameField
                 {...field}
@@ -78,16 +78,8 @@ export function AccountForm() {
 
       <FieldGroup>
         <FormField id="email" label="Email">
-          {!data?.meta.emailVerified && (
-            <FieldError errors={[{ message: "Почта не подтверждена" }]} />
-          )}
-          <Input
-            disabled
-            id="email"
-            type="email"
-            placeholder="example@mail.com"
-            {...register("email")}
-          />
+          {!data?.meta.emailVerified && <FieldError errors={[{ message: "Почта не подтверждена" }]} />}
+          <Input disabled id="email" type="email" placeholder="example@mail.com" {...register("email")} />
         </FormField>
         <Field data-invalid={!!errors.email}></Field>
       </FieldGroup>

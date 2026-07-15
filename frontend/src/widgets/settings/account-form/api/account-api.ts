@@ -1,4 +1,4 @@
-import { BaseAPI } from "@/shared/api/base-api";
+import { BaseAPI } from "@/shared/api/http";
 
 export class AccountAPI extends BaseAPI {
   static updateNickname = async (value: string): Promise<void> => {
