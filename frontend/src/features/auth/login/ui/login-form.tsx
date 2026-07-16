@@ -17,7 +17,7 @@ type LoginrFormProps = BaseProps & {
 };
 
 export function LoginForm({ className, footer = null, mutateOptions }: LoginrFormProps) {
-  const { handleSubmit, form, isPending, error } = useLoginForm(mutateOptions);
+  const { handleSubmit, form, isPending } = useLoginForm(mutateOptions);
   const {
     formState: { errors },
     register,
@@ -31,13 +31,8 @@ export function LoginForm({ className, footer = null, mutateOptions }: LoginrFor
             <Input id="login" placeholder="Никнейм или почта" {...register("login")} />
           </FormField>
           <FormField error={errors.password} id="password" label="Пароль">
-            <FormInputPassword
-              id="password"
-              placeholder="Введите пароль"
-              {...register("password")}
-            />
+            <FormInputPassword id="password" placeholder="Введите пароль" {...register("password")} />
           </FormField>
-          {error?.message && <FieldError aria-invalid>{error?.message}</FieldError>}
         </FieldGroup>
         <Button disabled={isPending} className="w-full select-none mt-6" type="submit">
           Войти

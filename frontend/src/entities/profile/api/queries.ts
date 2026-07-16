@@ -6,21 +6,14 @@ import { profileFabricKeys } from "../model/consts";
 import { type Profile, type ProfileConnectionKind } from "../model/types";
 
 export class ProfileQueries {
-  static connections({
-    userId,
-    type,
-  }: {
-    userId: Profile["author"]["id"];
-    type: ProfileConnectionKind;
-  }) {
+  static connections({ userId, type }: { userId: Profile["author"]["id"]; type: ProfileConnectionKind }) {
     return infiniteQueryOptions({
       queryKey: profileFabricKeys.connections(userId, type),
-      queryFn: ({ pageParam }) =>
-        ProfileAPI.getConnections({ userId, type, page: Number(pageParam) }),
+      queryFn: ({ pageParam }) => ProfileAPI.getConnections({ userId, type, page: Number(pageParam) }),
       getNextPageParam: (lastPage: { nextPage: number | null }) => lastPage.nextPage ?? undefined,
       initialPageParam: 1,
       retry: false,
-      staleTime: 30_000,
+      staleTime: 60_000,
     });
   }
 
@@ -28,8 +21,25 @@ export class ProfileQueries {
     return queryOptions({
       queryKey: profileFabricKeys.connectionSummary(userId),
       queryFn: () => ProfileAPI.getConnectionsSummary(userId),
-      staleTime: 30_000,
+      staleTime: 60_000,
       retry: false,
     });
   }
+
+  static statistic(userId: string) {
+    return queryOptions({
+      queryKey: profileFabricKeys.statistic(userId),
+      queryFn: () => ProfileAPI.getStatistic(userId),
+      staleTime: 60_000,
+      retry: false,
+    });
+  }
+
+  static followStatus = (userId: string) => {
+    return queryOptions({
+      queryFn: () => ProfileAPI.getFollowStatus(userId),
+      queryKey: profileFabricKeys.followStatus(userId),
+      staleTime: 60_000,
+    });
+  };
 }

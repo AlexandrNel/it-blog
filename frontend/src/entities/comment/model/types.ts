@@ -17,3 +17,17 @@ export type ProfileComment = Comment & {
 export type CommentListResponse = Comment[];
 
 export type ProfileCommentListResponse = ProfileComment[];
+
+export type SendPostCommentRequest = {
+  text: string;
+  slug: string;
+};
+export type SendCommentAnswerRequest = {
+  text: string;
+  commentId: string;
+};
+export type EditCommentRequest = {
+  commentId: string;
+  text: string;
+};
+export type DeleteCommentRequest = string;

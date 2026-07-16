@@ -8,7 +8,8 @@ import { cellAround, CellSelection } from "@tiptap/pm/tables";
 import { findParentNodeClosestToPos, type Editor, type NodeWithPos } from "@tiptap/react";
 import { uploadImage } from "@/shared/api/uploadImage";
 import { toast } from "sonner";
-import { ApiError } from "@/shared/api";
+import { isAxiosError } from "axios";
+import { GlobalError } from "@/shared/api";
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -357,8 +358,8 @@ export const handleImageUpload = async (
     const data = await uploadImage(formData, onProgress, abortSignal);
     return data.url;
   } catch (error) {
-    if (error instanceof ApiError) {
-      toast(error.message);
+    if (isAxiosError<GlobalError>(error)) {
+      toast(error.response?.data.message);
     }
     return "";
   }

@@ -11,6 +11,8 @@ export type {
   ProfileConnectionUser,
   ProfileConnectionsPage,
   ProfileConnectionsSummary,
+  FollowStatusResponse,
+  FollowTypeRequest,
 } from "./model/types";
 
 export type * as TProfile from "./model/types";

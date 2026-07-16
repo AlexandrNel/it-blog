@@ -1,4 +1,4 @@
-import { PageLayout } from "@/shared/layouts/page-layout";
+import { PageLayout } from "@/shared/layouts/page-layout/page-layout";
 import { SettingsSidebar } from "@/widgets/settings/sidebar";
 import { type PropsWithChildren } from "react";
 

@@ -4,6 +4,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Search, X } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
+
 export const SearchInput = () => {
   const [search, setSearch] = useQueryState("q");
   const [localValue, setLocalValue] = useState(search || "");

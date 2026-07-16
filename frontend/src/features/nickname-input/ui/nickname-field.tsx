@@ -3,10 +3,12 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Row } from "@/shared/ui/layout";
 import { Dices } from "lucide-react";
-import { type ChangeEvent, useState, type InputHTMLAttributes } from "react";
-import { useCheckNickname, useGenerateNickname } from "../model/nickname-queries";
+import { type ChangeEvent, useState, type InputHTMLAttributes, useCallback } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { useGenerateNickname } from "../api/useGenerateNickname";
+import { UserQueries } from "@/entities/user";
+import { useQuery } from "@tanstack/react-query";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   onSuccessGenerate?: (data: { username: string }) => void;
@@ -23,20 +25,17 @@ export const NicknameField = ({
   onChange,
   ...props
 }: Props) => {
-  const debounced = useDebounce(String(value), 300);
+  // TODO: сделать позже
+
   const [hasInteracted, setHasInteracted] = useState(false);
+  const debounced = useDebounce(String(value), 300);
+  const { error } = useQuery({ ...UserQueries.checkNickname(debounced), enabled: hasInteracted, staleTime: 1000 });
 
-  const { error } = useCheckNickname({
-    enabled: hasInteracted,
-    username: debounced,
-    onError: onErrorCheck,
-    onSuccess: onSuccessCheck,
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (!hasInteracted) setHasInteracted(true);
     onChange?.(e);
-  };
+  }, []);
+
   const generate = useGenerateNickname({
     onSuccess: onSuccessGenerate,
   });

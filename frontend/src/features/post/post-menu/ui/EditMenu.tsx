@@ -14,7 +14,7 @@ import {
 import { routes } from "@/shared/config";
 import { useQuery } from "@tanstack/react-query";
 import { UserQueries } from "@/entities/user";
-import { type PropsWithChildren, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 interface Props extends BaseProps {
   slug: string;

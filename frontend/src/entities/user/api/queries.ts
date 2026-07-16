@@ -11,4 +11,13 @@ export class UserQueries {
       retry: 2,
     });
   }
+
+  static checkNickname(nickname?: string) {
+    return queryOptions({
+      queryFn: () => UserAPI.checkNickname(nickname),
+      staleTime: 1000,
+      queryKey: userFabricKeys.nickname(),
+      retry: false,
+    });
+  }
 }

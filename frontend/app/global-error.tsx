@@ -3,12 +3,13 @@ import { isApiError } from "@/shared/api";
 import { type ErrorProps } from "@/views/error";
 import { Container } from "@/shared/ui/container";
 import { Error500, UnknownError } from "@/views/error";
+import { isAxiosError } from "axios";
 
 export default function GlobalErrorPage({ error, reset }: ErrorProps) {
   return (
     <main className="min-h-screen flex">
       <Container className="flex items-center justify-center">
-        {isApiError(error) ? <Error500 reset={reset} error={error} /> : <UnknownError />}
+        {isAxiosError(error) ? <Error500 reset={reset} error={error} /> : <UnknownError />}
       </Container>
     </main>
   );

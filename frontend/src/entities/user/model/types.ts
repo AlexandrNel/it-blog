@@ -10,3 +10,6 @@ export type UserResponse = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type GenerateNicknameResponse = { username: string };
+export type CheckNicknameResponse = { isAvailable: boolean };

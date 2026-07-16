@@ -11,5 +11,8 @@ export type {
   ProfileComment,
   CommentListResponse,
   ProfileCommentListResponse,
+  SendPostCommentRequest,
+  SendCommentAnswerRequest,
+  EditCommentRequest,
 } from "./model/types";
 export type * as TComment from "./model/types";

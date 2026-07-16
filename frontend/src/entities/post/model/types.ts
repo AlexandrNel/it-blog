@@ -70,3 +70,5 @@ export type PostResponse = Post;
 
 export type PostWithStatisticResponse = PostResponse & { statistic: Statistic };
 export type PostListWithStatisticResponse = PostWithStatisticResponse[];
+
+export type SendViewResponse = { ttl: number };

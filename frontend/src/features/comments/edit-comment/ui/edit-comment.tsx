@@ -8,7 +8,7 @@ import { CommentEditor } from "@/entities/comment";
 import { Row } from "@/shared/ui/layout";
 import { type Content, type Editor } from "@tiptap/core";
 import { toast } from "sonner";
-import { useEditPostComment } from "../model/edit-comment-queries";
+import { useEditPostComment } from "../api/mutations";
 
 type Props = {
   content?: string;

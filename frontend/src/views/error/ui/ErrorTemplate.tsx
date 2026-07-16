@@ -17,7 +17,7 @@ export const ErrorTemplate = ({ title, code, text, header, children, footer }: P
       <div className=" leading-tight">
         <h1 className="text-6xl font-bold mb-5 relative w-max">
           {title}
-          <span className="absolute top-0 -right-5 text-xl text-gray-400 font-normal">{code}</span>
+          {code && <span className="absolute top-0 -right-5 text-xl text-gray-400 font-normal">{code}</span>}
         </h1>
         <div>
           {!Array.isArray(text) ? (

@@ -26,6 +26,11 @@ export class ApiParseError extends Error {
   }
 }
 
+/**
+ *
+ * @deprecated Используется неправильно.  ApiError - это ошибка для серверных действий и запросов. \
+ * Проверяйте axios ошибки при помощи isAxiosError.
+ */
 export const isApiError = (error: unknown) => {
   return error instanceof ApiError;
 };

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { sendView } from "../api";
 import { differenceInMilliseconds } from "date-fns";
 import { isAxiosError } from "axios";
 import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
+import { useSendView } from "../api/useSendView";
+import { TPost } from "@/entities/post";
 
 type View = {
   expiresAt: string;
@@ -13,6 +14,7 @@ type Views = Record<string, View>;
 
 export const useView = (id: string) => {
   const hasFetched = useRef(false);
+  const { mutate } = useSendView();
 
   useEffect(() => {
     if (hasFetched.current) return;
@@ -27,8 +29,8 @@ export const useView = (id: string) => {
     }
     if (diff < 0) {
       const date = new Date();
-      sendView(id)
-        .then((data) => {
+      mutate(id, {
+        onSuccess: (data) => {
           const seconds = data.ttl || 60 * 60 * 24;
           date.setSeconds(date.getSeconds() + seconds);
           const updatedViews = {
@@ -36,11 +38,13 @@ export const useView = (id: string) => {
             [id]: { expiresAt: date.toISOString() },
           };
           localStorage.setItem("views", JSON.stringify(updatedViews));
-        })
-        .catch((err) => {
-          if (isAxiosError(err)) {
-            const data = err.response?.data;
-            const seconds = data.ttl || 60 * 60 * 24;
+        },
+        onError: (error) => {
+          // TODO: сделать нормальный контракт или задокументировать
+
+          if (isAxiosError<TPost.SendViewResponse>(error)) {
+            const data = error.response?.data;
+            const seconds = data?.ttl || 60 * 60 * 24;
             date.setSeconds(date.getSeconds() + seconds);
           }
           const updatedViews = {
@@ -48,7 +52,8 @@ export const useView = (id: string) => {
             [id]: { expiresAt: date.toISOString() },
           };
           localStorage.setItem("views", JSON.stringify(updatedViews));
-        });
+        },
+      });
     }
   }, [id]);
   return null;

@@ -44,8 +44,8 @@ export class PostController {
   getBySlug = asyncHandler(async (req: Request, res: Response) => {
     const slug = requireParam(req, 'slug', 'Не указан slug')
     const a = await this.service.getBySlug(slug)
-    console.log(a);
-    
+    console.log(a)
+
     res.json(a)
   })
 

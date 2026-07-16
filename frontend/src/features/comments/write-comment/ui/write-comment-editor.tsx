@@ -5,7 +5,7 @@ import { useRef, type PropsWithChildren } from "react";
 import { Button } from "@/shared/ui/button";
 import { Row } from "@/shared/ui/layout";
 import { type Content, type Editor } from "@tiptap/core";
-import { useSendCommentAnswer, useSendPostComment } from "../model/queries";
+import { useSendCommentAnswer, useSendPostComment } from "../api/mutations";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/shared/ui";

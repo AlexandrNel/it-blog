@@ -1,27 +1,21 @@
 "use client";
 import { CommentButton } from "@/entities/comment";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DeleteCommentAPI } from "../api/http";
 import { memo } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
 import { toast } from "sonner";
 import { useUser } from "@/entities/user";
+import { useDeleteComment } from "../api/mutations";
 
 export const DeleteCommentButton = memo(({ commentId, userId }: { commentId: string; userId: string }) => {
   const { data: user } = useUser();
 
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: DeleteCommentAPI.deleteComment,
+  const { mutate } = useDeleteComment({
     onError: () => {
       toast.error("Не удалось удалить комментарий");
     },
     onSuccess: () => {
       toast.success("Комментарий удален");
-      queryClient.invalidateQueries({
-        queryKey: ["comments"],
-      });
     },
   });
   if (!user || user.id !== userId) return null;

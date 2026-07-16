@@ -1,5 +1,5 @@
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { ApiError } from "../validation/api-error";
+import { GlobalError } from "../types";
 
 declare module "axios" {
   export interface AxiosRequestConfig {
@@ -14,9 +14,8 @@ type AxiosConfigWithRetry = InternalAxiosRequestConfig & {
 export function refreshInterceptor(instance: AxiosInstance) {
   instance.interceptors.response.use(
     (res) => res,
-    async (error: AxiosError<ApiError>) => {
+    async (error: AxiosError<GlobalError>) => {
       const originalRequest = error.config as AxiosConfigWithRetry;
-
       if (error.response?.status === 401 && !originalRequest._isRetry && !error.response.config.skipAuthRefresh) {
         originalRequest._isRetry = true;
         try {

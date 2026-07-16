@@ -10,7 +10,7 @@ export function ProfileHeroSkeleton() {
         <CardContent>
           <Column>
             <div className="rounded-full bg-card p-1 absolute -top-7.5">
-              <Skeleton className="size-15 rounded-full " />
+              <Skeleton className="size-15 rounded-full" />
             </div>
             <Row justify={"end"}>
               <Skeleton className="w-[190px] h-9" />

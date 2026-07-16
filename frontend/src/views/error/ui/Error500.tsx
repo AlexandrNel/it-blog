@@ -2,6 +2,7 @@ import type React from "react";
 import { ErrorTemplate } from "./ErrorTemplate";
 import { type ApiErrorProps } from "@/views/error";
 import { SupportButton } from "./SupportButton";
+import { isAxiosError } from "axios";
 
 interface Props extends ApiErrorProps {
   className?: string;
@@ -10,7 +11,7 @@ interface Props extends ApiErrorProps {
 export const Error500: React.FC<Props> = ({ error }) => {
   return (
     <ErrorTemplate
-      code={error.status}
+      code={isAxiosError(error) ? error.code : undefined}
       title="Сервис недоступен"
       text={[
         "Сервис временно недоступен. Мы уже в курсе и исправляем ошибку.",

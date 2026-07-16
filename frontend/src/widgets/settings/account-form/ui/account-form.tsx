@@ -13,7 +13,7 @@ import { FormField } from "@/shared/ui/form-components";
 import { NicknameField } from "@/features/nickname-input";
 import { useSettings } from "@/entities/settings";
 import { Spinner } from "@/shared/ui/spinner";
-import { isApiError } from "@/shared/api";
+import { isAxiosError } from "axios";
 
 export function AccountForm() {
   const { data, isLoading } = useSettings();
@@ -39,7 +39,7 @@ export function AccountForm() {
     }),
   );
   const onErrorCheck = (error: unknown) => {
-    if (isApiError(error) && error.status === 400) {
+    if (isAxiosError(error)) {
       applyApiFieldErrors(error, setError);
     }
   };

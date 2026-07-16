@@ -1,4 +1,4 @@
-import { type Post, type Statistic, type PostRequest } from "../model/types";
+import { type Post, type Statistic, type PostRequest, SendViewResponse } from "../model/types";
 import { BaseAPI } from "@/shared/api/http";
 
 export class PostAPI extends BaseAPI {
@@ -26,5 +26,8 @@ export class PostAPI extends BaseAPI {
   }
   static sendDislike(postId: string) {
     return BaseAPI.post(`/posts/${postId}/dislike`);
+  }
+  static sendView(postId: string) {
+    return BaseAPI.post<SendViewResponse>(`/posts/${postId}/views`);
   }
 }

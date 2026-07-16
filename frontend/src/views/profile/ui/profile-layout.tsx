@@ -6,7 +6,7 @@ import { ProfileVisibility } from "./profile-visibility";
 import { ProfileHero } from "./profile-hero";
 import { ProfileTabs } from "./profile-tabs";
 import { Column } from "@/shared/ui/layout";
-import { PageLayout } from "@/shared/layouts/page-layout";
+import { PageLayout } from "@/shared/layouts/page-layout/page-layout";
 import { isMobileRequest } from "@/shared/lib/utils/server/is-mobile-request";
 
 const ProfileSidebar = dynamic(() => import("./profile-sidebar").then((mod) => mod.ProfileSidebar));
