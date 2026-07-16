@@ -17,7 +17,7 @@ export function PostWithQuery({ slug }: { slug: string }) {
         </div>
       )}
       {data?.map((c) => (
-        <li className="px-2" key={c.id}>
+        <li key={c.id}>
           <WrappedCommentCard comment={c} />
         </li>
       ))}

@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils";
+import { classNames } from "@/shared/lib/utils";
 import { type BasePropsWithChildren } from "@/shared/types/components";
 import type React from "react";
 import "./page-layout.scss";
@@ -18,16 +18,10 @@ export const PageLayout = async ({
 }: Props) => {
   return (
     <div
-      className={cn(
-        "main-layout container",
-        { "main-layout--only-page": withoutSidebarColumn },
-        className,
-      )}
+      className={classNames("main-layout container", { "main-layout--only-page": withoutSidebarColumn }, [className])}
     >
-      <main className={cn("main-layout__section py-2", { "pt-0": withoutPaddingTop })}>
-        {children}
-      </main>
-      {!!sidebar && <aside className={"main-layout__aside"}>{sidebar}</aside>}
+      <main className={classNames("main-layout__section py-2", { "pt-0": withoutPaddingTop })}>{children}</main>
+      <aside className={"main-layout__aside"}>{sidebar}</aside>
     </div>
   );
 };

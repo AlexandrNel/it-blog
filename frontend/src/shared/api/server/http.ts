@@ -33,6 +33,6 @@ export const serverSafeFetch = async <T>(endpoint: string, init?: RequestInit) =
     return { data: res.data as T, error: null };
   } catch (err) {
     const error = err as ApiError;
-    return { data: error.rawResponse, error: error.message };
+    return { data: null, error: error.message };
   }
 };

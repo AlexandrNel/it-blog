@@ -40,9 +40,7 @@ export const WrappedCommentCard = memo(({ comment, level = 0 }: PropsWithChildre
           </CommentButton>
         )}
         <CommentButton onClick={() => showRepliesAndEditor("write")}>Ответить</CommentButton>
-        {isCommentAuthor && (
-          <CommentButton onClick={() => showRepliesAndEditor("edit")}>Изменить</CommentButton>
-        )}
+        {isCommentAuthor && <CommentButton onClick={() => showRepliesAndEditor("edit")}>Изменить</CommentButton>}
         <DeleteCommentButton userId={comment.author.id} commentId={comment.id} />
       </Row>
 
@@ -68,39 +66,27 @@ type CommentEditorProps = Pick<Props, "comment"> & {
 
 // Компонент с редактором и кнопками
 
-const CommentEditor = memo(
-  ({ comment, isEditorShowed, length, editorMode, hideEditor }: CommentEditorProps) => {
-    if (!isEditorShowed) return null;
-    return (
-      <div className="flex">
-        <CommentBranch isLast={!length} />
-        {editorMode === "write" ? (
-          <WriteCommentEditor
-            entityId={comment.id}
-            entityType="comment"
-            className="pt-2 pb-1"
-            onSuccess={hideEditor}
-          >
-            <Button variant={"secondary"} onClick={hideEditor}>
-              Отмена
-            </Button>
-          </WriteCommentEditor>
-        ) : (
-          <EditComment
-            content={comment.content}
-            entityId={comment.id}
-            className="pt-2 pb-1"
-            onSuccess={hideEditor}
-          >
-            <Button variant={"secondary"} onClick={hideEditor}>
-              Отмена
-            </Button>
-          </EditComment>
-        )}
-      </div>
-    );
-  },
-);
+const CommentEditor = memo(({ comment, isEditorShowed, length, editorMode, hideEditor }: CommentEditorProps) => {
+  if (!isEditorShowed) return null;
+  return (
+    <div className="flex">
+      <CommentBranch isLast={!length} />
+      {editorMode === "write" ? (
+        <WriteCommentEditor entityId={comment.id} entityType="comment" className="pt-2 pb-1" onSuccess={hideEditor}>
+          <Button variant={"secondary"} onClick={hideEditor}>
+            Отмена
+          </Button>
+        </WriteCommentEditor>
+      ) : (
+        <EditComment content={comment.content} entityId={comment.id} className="pt-2 pb-1" onSuccess={hideEditor}>
+          <Button variant={"secondary"} onClick={hideEditor}>
+            Отмена
+          </Button>
+        </EditComment>
+      )}
+    </div>
+  );
+});
 
 type CommentRepliesProps = Required<Pick<Props, "comment" | "level">> & {
   isRepliesShowed: boolean;

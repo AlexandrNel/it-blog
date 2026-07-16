@@ -9,7 +9,7 @@ export default async function CommentsPage({ params }: PageProps<"/profile/[id]"
 
   if (!comments || comments.length === 0) return <EmptyCard />;
   return comments?.map((c) => (
-    <CommentCard className="card" key={c.id} comment={c}>
+    <CommentCard className="card p-4" key={c.id} comment={c}>
       <CommentButton asChild>
         <Link href={`/posts/${c.post.slug}#${c.id}`}>Посмотреть</Link>
       </CommentButton>

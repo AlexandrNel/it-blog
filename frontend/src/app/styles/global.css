@@ -119,29 +119,29 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-@utility prose {
-  --tw-prose-body: var(--color-black);
-  p {
-    @apply leading-tight my-1 text-foreground;
-  }
-
-  h1,
-  h2 {
-    @apply text-xl font-bold leading-tight;
-  }
-  h3 {
-    @apply text-lg font-bold leading-tight;
-  }
-  h4,
-  h5,
-  h6 {
-    @apply text-base font-bold leading-tight;
-  }
-}
-
 @layer utilities {
   .container {
     @apply max-w-(--container-width) px-(--container-padding) w-full mx-auto;
+  }
+  .prose {
+    --tw-prose-body: var(--color-black);
+    @apply max-w-full;
+    p {
+      @apply my-1 leading-tight  text-foreground;
+    }
+
+    h1,
+    h2 {
+      @apply text-xl font-bold leading-tight;
+    }
+    h3 {
+      @apply text-lg font-bold leading-tight;
+    }
+    h4,
+    h5,
+    h6 {
+      @apply text-base font-bold leading-tight;
+    }
   }
 }
 
