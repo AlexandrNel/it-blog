@@ -1,9 +1,10 @@
 "use client";
 
 import { Container } from "@/shared/ui/container";
-import { type ApiErrorProps, ErrorTemplate, type ErrorProps } from "@/views/error";
+import { ErrorTemplate } from "@/views/error";
+import { ErrorInfo } from "next/error";
 
-export default function ErrorView({ error }: ErrorProps | ApiErrorProps) {
+export default function ErrorPage({ error }: ErrorInfo) {
   return (
     <Container className="flex items justify-center">
       <ErrorTemplate title={error.message} text={""} />

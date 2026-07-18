@@ -42,4 +42,13 @@ export class ProfileQueries {
       staleTime: 60_000,
     });
   };
+
+  static getSettings() {
+    return queryOptions({
+      queryKey: profileFabricKeys.settings(),
+      queryFn: () => ProfileAPI.getSettings(),
+      retry: false,
+      staleTime: 60_000,
+    });
+  }
 }

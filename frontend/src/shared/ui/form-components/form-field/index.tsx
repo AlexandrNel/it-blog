@@ -12,20 +12,12 @@ export type FormFieldProps = {
   required?: boolean;
 } & BaseProps;
 
-export const FormField = ({
-  children,
-  id,
-  label,
-  error,
-  required,
-}: PropsWithChildren<FormFieldProps>) => {
+export const FormField = ({ children, id, label, error, required }: PropsWithChildren<FormFieldProps>) => {
   return (
     <Field data-invalid={!!error}>
       {label && (
         <Row align={"center"}>
-          <FieldLabel className="" htmlFor={id}>
-            {label}
-          </FieldLabel>{" "}
+          <FieldLabel htmlFor={id}>{label}</FieldLabel>
           {required && (
             <Tooltip>
               <TooltipTrigger asChild>

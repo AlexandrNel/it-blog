@@ -1,17 +1,12 @@
-import type React from "react";
 import { ErrorTemplate } from "./ErrorTemplate";
-import { type ApiErrorProps } from "@/views/error";
 import { SupportButton } from "./SupportButton";
 import { isAxiosError } from "axios";
+import { ErrorInfo } from "next/error";
 
-interface Props extends ApiErrorProps {
-  className?: string;
-}
-
-export const Error500: React.FC<Props> = ({ error }) => {
+export function Error500({ error }: ErrorInfo) {
   return (
     <ErrorTemplate
-      code={isAxiosError(error) ? error.code : undefined}
+      code={isAxiosError(error) ? error.response?.status : undefined}
       title="Сервис недоступен"
       text={[
         "Сервис временно недоступен. Мы уже в курсе и исправляем ошибку.",
@@ -20,4 +15,4 @@ export const Error500: React.FC<Props> = ({ error }) => {
       footer={<SupportButton href="https://t.me/Anonimchk">Написать в поддержку</SupportButton>}
     />
   );
-};
+}

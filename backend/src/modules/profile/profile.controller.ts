@@ -84,8 +84,7 @@ export const getProfileConnectionsPage = asyncHandler(
 export const updateProfile = asyncHandler(
   async (req: Request, res: Response) => {
     const user = getUser(req)
-    console.log(req.body);
-    
+
     const data = await updateProfileSchema.parseAsync(req.body)
     await profileService.updateProfile(user.id, data)
     res.status(204).send()

@@ -1,6 +1,8 @@
 import { type UseFormSetError, type FieldValues } from "react-hook-form";
 import { applyApiFieldErrors } from "./apply-api-field-errors";
 
+// TODO: задокументировать
+
 export function createHandleSubmit<T extends FieldValues, Response = unknown>(
   setError: UseFormSetError<T>,
   callback: (values: T) => Promise<Response>,

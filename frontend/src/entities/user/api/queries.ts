@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { UserAPI } from "./http";
 import { userFabricKeys } from "../model/consts";
 
@@ -8,16 +8,18 @@ export class UserQueries {
       queryFn: ({ signal }) => UserAPI.getMe(signal),
       queryKey: userFabricKeys.me(),
       staleTime: 60_000,
-      retry: 2,
     });
   }
 
-  static checkNickname(nickname?: string) {
+  static checkNickname(nickname: string) {
     return queryOptions({
       queryFn: () => UserAPI.checkNickname(nickname),
-      staleTime: 1000,
-      queryKey: userFabricKeys.nickname(),
+      staleTime: 300,
+      queryKey: userFabricKeys.nickname(nickname),
       retry: false,
+      meta: {
+        skipGlobalValidationToast: true,
+      },
     });
   }
 }

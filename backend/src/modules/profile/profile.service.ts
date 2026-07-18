@@ -31,7 +31,6 @@ const profileConnectionUserSelect = {
 } as const
 
 export class ProfileService {
-
   private async getUserByIdOrUsername(value: string) {
     const type = isIdOrUsername(value)
     const user = await prisma.user.findUnique({
@@ -63,14 +62,14 @@ export class ProfileService {
     await prisma.user.update({ where: { id: userId }, data: { displayName } })
     return await prisma.profile.update({
       where: { userId: userId },
-      data: profile
+      data: profile,
     })
   }
 
   async getStatisticById(value: string) {
     return prisma.$transaction(async (tx) => {
       const type = isIdOrUsername(value)
-      
+
       const profile = await tx.user
         .findUnique({
           where: type === 'id' ? { id: value } : { username: value },
@@ -110,7 +109,7 @@ export class ProfileService {
     value: string
   ): Promise<ProfileConnectionsSummaryDto> {
     const user = await this.getUserByIdOrUsername(value)
-    
+
     const [followers, following] = await prisma.$transaction([
       prisma.follow.count({ where: { followingId: user.id } }),
       prisma.follow.count({ where: { followerId: user.id } }),
@@ -176,7 +175,7 @@ export class ProfileService {
 
   async getMetaById(value: string, viewerUserId?: string) {
     const type = isIdOrUsername(value)
-      console.log("type", type, "username", value);
+    console.log('type', type, 'username', value)
 
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },

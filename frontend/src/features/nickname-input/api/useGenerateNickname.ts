@@ -6,9 +6,10 @@ export type UseGenerateNicknameOptions = Omit<
   "mutationFn"
 >;
 
-export const useGenerateNickname = (options: UseGenerateNicknameOptions) => {
+export const useGenerateNickname = (options: UseGenerateNicknameOptions = {}) => {
   return useMutation<GenerateNicknameResponse>({
-    mutationFn: () => UserAPI.generateNickname(),
+    mutationFn: UserAPI.generateNickname,
     ...options,
+    meta: { skipGlobalValidationToast: true },
   });
 };

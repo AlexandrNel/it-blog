@@ -56,3 +56,23 @@ export type FollowTypeRequest = {
   userId: string;
   action: "follow" | "unfollow";
 };
+
+export type ProfileSettings = {
+  displayName: string;
+  bio?: string;
+  location?: string;
+  contacts?: ProfileContact;
+};
+
+export type AccountSettings = {
+  username: string;
+  email: string;
+};
+
+export type ProfileSettingsResponse = {
+  profile: ProfileSettings;
+  account: AccountSettings;
+  meta: { emailVerified: boolean };
+};
+
+export type ProfileRequest = Partial<ProfileSettings>;

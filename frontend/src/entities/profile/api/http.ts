@@ -2,6 +2,8 @@ import { BaseAPI } from "@/shared/api/http";
 import {
   FollowStatusResponse,
   FollowTypeRequest,
+  ProfileRequest,
+  ProfileSettingsResponse,
   type ProfileConnectionKind,
   type ProfileConnectionsPage,
   type ProfileConnectionsSummary,
@@ -37,5 +39,11 @@ export class ProfileAPI extends BaseAPI {
   }
   static updateFollowStatus({ action, userId }: FollowTypeRequest): Promise<FollowStatusResponse> {
     return BaseAPI.post(`/follows/${action}`, { userId });
+  }
+  static updateProfile(profile: ProfileRequest): Promise<void> {
+    return BaseAPI.patch<void>("/profile", profile);
+  }
+  static getSettings(): Promise<ProfileSettingsResponse> {
+    return BaseAPI.get<ProfileSettingsResponse>("/users/settings");
   }
 }

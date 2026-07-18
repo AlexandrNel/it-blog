@@ -1,7 +1,6 @@
 import { PostAPI, type TPost } from "@/entities/post";
 import { revalidatePost } from "@/shared/actions/revalidate-post";
-import { type ApiError } from "@/shared/api";
-import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
+import { DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
 
 type CreatePostVariables = {
   postId: string;
@@ -10,12 +9,12 @@ type CreatePostVariables = {
 };
 
 export type UseCreatePostOptions = Omit<
-  UseMutationOptions<TPost.Post, ApiError, CreatePostVariables>,
+  UseMutationOptions<TPost.Post, DefaultError, CreatePostVariables>,
   "mutationFn"
 >;
 
 export const useUpdatePost = () => {
-  return useMutation<TPost.Post, ApiError, CreatePostVariables>({
+  return useMutation<TPost.Post, DefaultError, CreatePostVariables>({
     mutationFn: ({ postId, body }) => PostAPI.updatePost(postId, body),
     onSuccess: (_, vars) => {
       revalidatePost(vars.postSlug);

@@ -1,13 +1,13 @@
 import { Container } from "@/shared/ui/container";
-import { type ErrorProps } from "../types/error";
 import { Error500 } from "./Error500";
 import { UnknownError } from "./UnknownError";
 import { isAxiosError } from "axios";
+import { ErrorInfo } from "next/error";
 
-export function ErrorPage({ error, reset }: ErrorProps) {
+export function ErrorPage({ error, ...props }: ErrorInfo) {
   return (
     <Container className="flex items-center justify-center">
-      {isAxiosError(error) ? <Error500 reset={reset} error={error} /> : <UnknownError />}
+      {isAxiosError(error) ? <Error500 error={error} {...props} /> : <UnknownError />}
     </Container>
   );
 }

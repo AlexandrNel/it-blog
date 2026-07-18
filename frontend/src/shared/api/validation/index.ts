@@ -1,2 +1,2 @@
 export { ApiError, ApiParseError, isApiError } from "./api-error";
-export { getFieldErrors } from "./get-field-errors";
+export { getFieldErrors, getErrorMessage } from "./get-field-errors";

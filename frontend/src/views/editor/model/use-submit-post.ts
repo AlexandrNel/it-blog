@@ -14,10 +14,13 @@ import { uploadImage } from "@/shared/api/uploadImage";
 import { routes } from "@/shared/config";
 import { useCreatePost } from "../api/use-create-post";
 import { useUpdatePost } from "../api/use-update-post";
+import { applyApiFieldErrors } from "@/shared/lib/zod";
+import { useFormContext } from "react-hook-form";
 
 export function useSubmitPost() {
   const router = useRouter();
   const { data: tagData = [] } = useQuery(TagQueries.all());
+  const form = useFormContext();
   const update = useUpdatePost();
   const create = useCreatePost();
 
@@ -72,10 +75,8 @@ export function useSubmitPost() {
             setData({ post: data });
             window.history.replaceState(null, "", `/editor/${data.slug}`);
           },
-          onError: (err) => {
-            if (isApiError(err)) {
-              toast.error(err.message);
-            }
+          onError: (error) => {
+            applyApiFieldErrors(error, form.setError);
           },
         },
       );
@@ -85,10 +86,8 @@ export function useSubmitPost() {
           toast.success("Статья создана");
           router.push(routes.post(data.slug));
         },
-        onError: (err) => {
-          if (isApiError(err)) {
-            toast.error(err.message);
-          }
+        onError: (error) => {
+          applyApiFieldErrors(error, form.setError);
         },
       });
     }

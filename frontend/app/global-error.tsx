@@ -1,16 +1,15 @@
 "use client";
-import { isApiError } from "@/shared/api";
-import { type ErrorProps } from "@/views/error";
-import { Container } from "@/shared/ui/container";
-import { Error500, UnknownError } from "@/views/error";
-import { isAxiosError } from "axios";
+import { ErrorPage } from "@/views/error";
+import { ErrorInfo } from "next/error";
 
-export default function GlobalErrorPage({ error, reset }: ErrorProps) {
+export default function GlobalErrorPage(props: ErrorInfo) {
   return (
-    <main className="min-h-screen flex">
-      <Container className="flex items-center justify-center">
-        {isAxiosError(error) ? <Error500 reset={reset} error={error} /> : <UnknownError />}
-      </Container>
-    </main>
+    <html>
+      <body>
+        <main className="min-h-screen flex">
+          <ErrorPage {...props} />
+        </main>
+      </body>
+    </html>
   );
 }

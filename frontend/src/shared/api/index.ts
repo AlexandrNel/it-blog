@@ -1,4 +1,4 @@
-export { ApiError, ApiParseError, isApiError, getFieldErrors } from "./validation";
+export { ApiError, ApiParseError, isApiError, getFieldErrors, getErrorMessage } from "./validation";
 export { getSitemapData } from "./get-sitemap-data";
 export { BaseAPI } from "./http";
 export type { GlobalError } from "./types";

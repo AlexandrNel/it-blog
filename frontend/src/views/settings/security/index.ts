@@ -1,1 +1,1 @@
-export { default as SecuritySettingsPage } from "./ui/security-settings";
+export { SecuritySettingsPage } from "./ui/security-settings";

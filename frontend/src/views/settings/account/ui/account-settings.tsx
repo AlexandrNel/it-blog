@@ -1,7 +1,14 @@
+"use client";
 import { Card } from "@/shared/ui/card";
-import { AccountForm } from "@/widgets/settings/account-form";
+import dynamic from "next/dynamic";
+import { AccountFormSkeleton } from "./account-form-skeleton";
 
-export default function SettingsPage() {
+const AccountForm = dynamic(() => import("./account-form").then((mod) => mod.AccountForm), {
+  loading: () => <AccountFormSkeleton />,
+  ssr: false,
+});
+
+export function AccountSettingsPage() {
   return (
     <Card className="p-4 space-y-4">
       <h2 className="text-lg font-semibold">Настройки аккаунта</h2>

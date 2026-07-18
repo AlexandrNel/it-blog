@@ -1,7 +1,7 @@
 import { PageLayout } from "@/shared/layouts/page-layout/page-layout";
-import { SettingsSidebar } from "@/widgets/settings/sidebar";
 import { type PropsWithChildren } from "react";
+import { SettingsSidebar } from "./settings-sidebar";
 
-export default async function Layout({ children }: PropsWithChildren) {
+export async function SettingsLayout({ children }: PropsWithChildren) {
   return <PageLayout sidebar={<SettingsSidebar />}>{children}</PageLayout>;
 }

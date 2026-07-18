@@ -1,1 +1,1 @@
-export { default as ProfileSettingsPage } from "./ui/profile-settings";
+export { ProfileSettingsPage } from "./ui/profile-settings";

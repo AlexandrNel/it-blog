@@ -13,3 +13,12 @@ export type UserResponse = {
 
 export type GenerateNicknameResponse = { username: string };
 export type CheckNicknameResponse = { isAvailable: boolean };
+
+export type UpdatePasswordRequest = {
+  oldPassword: string;
+  newPassword: string;
+};
+
+export type UpdateUsernameRequest = {
+  username: string;
+};
