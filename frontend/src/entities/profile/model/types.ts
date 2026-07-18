@@ -17,23 +17,18 @@ export type ProfileStatistic = {
   comments: number;
 };
 
-export type ProfileMetaInfo =
-  | {
-      isOwner: true;
-      isPublic: boolean;
-      isBlocked: boolean;
-    }
-  | {
-      isOwner: false;
-      isPublic: boolean;
-      isBlocked: boolean;
-      isFollow: boolean;
-    };
+export type ProfileMetaInfo = {
+  isOwner: boolean;
+  isPublic: boolean;
+  isBlocked: boolean;
+  isFollow: boolean;
+};
 
-export type Profile = {
+export type ProfileResponse = {
   author: Author;
   contacts: ProfileContact | null;
   bio: string;
+  meta: ProfileMetaInfo;
 };
 
 export type ProfileConnectionKind = "followers" | "following";

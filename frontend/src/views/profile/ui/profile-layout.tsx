@@ -24,22 +24,23 @@ export default async function ProfilePage({
   children,
 }: PropsWithChildren<LayoutProps<"/profile/[id]">>) {
   const param = await params;
-  const [meta, profile, isMobile] = await Promise.all([
-    getProfileMetaById(param.id),
+  const [profile, isMobile] = await Promise.all([
     getProfileById(param.id),
     isMobileRequest(),
     getProfileStatisticByUserId(param.id),
   ]);
 
-  if (!meta || !profile) return notFound();
-  const isHide = meta.isBlocked || !meta.isPublic || !isMobile;
+  if (!profile) return notFound();
+  console.log(profile);
+
+  const isHide = profile.meta.isBlocked || !profile.meta.isPublic || !isMobile;
   return (
     <PageLayout
       withoutPaddingTop
       className="md:mt-2"
       sidebar={isHide ? <ProfileSidebar userId={param.id} /> : null}
     >
-      <ProfileVisibility meta={meta}>
+      <ProfileVisibility meta={profile.meta}>
         <ProfileHero userId={param.id} />
         {!isMobile && <ProfileStats userId={param.id} />}
         <Column className="max-md:gap-0 lg:mt-2">

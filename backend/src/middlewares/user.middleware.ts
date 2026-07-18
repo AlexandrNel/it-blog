@@ -9,6 +9,7 @@ export const withUserMiddleware = (
   const token: string | undefined = req.cookies.access_token
   if (token) {
     const payload = verifyToken(token)
+    console.log(payload, token);
     if (payload) {
       req.user = payload
     }

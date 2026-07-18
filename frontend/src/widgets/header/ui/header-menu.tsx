@@ -25,9 +25,12 @@ export function HeaderMenu() {
       </Button>
       {user ? (
         isEditPage ? (
-          <Button variant={"outline"} asChild>
-            <Link href={`/`}>Вернуться к ленте</Link>
-          </Button>
+          <>
+            <Button variant={"outline"} asChild>
+              <Link href={`/`}>Вернуться к ленте</Link>
+            </Button>
+            <ProfileMenu />
+          </>
         ) : (
           <>
             <Button asChild variant={"outline"}>

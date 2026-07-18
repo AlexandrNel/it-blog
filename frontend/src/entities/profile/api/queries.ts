@@ -3,20 +3,13 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { ProfileAPI } from "./http";
 import { profileFabricKeys } from "../model/consts";
-import type { Profile, ProfileConnectionKind } from "../model/types";
+import type { ProfileResponse, ProfileConnectionKind } from "../model/types";
 
 export class ProfileQueries {
-  static connections({
-    userId,
-    type,
-  }: {
-    userId: Profile["author"]["id"];
-    type: ProfileConnectionKind;
-  }) {
+  static connections({ userId, type }: { userId: ProfileResponse["author"]["id"]; type: ProfileConnectionKind }) {
     return infiniteQueryOptions({
       queryKey: profileFabricKeys.connections(userId, type),
-      queryFn: ({ pageParam }) =>
-        ProfileAPI.getConnections({ userId, type, page: Number(pageParam) }),
+      queryFn: ({ pageParam }) => ProfileAPI.getConnections({ userId, type, page: Number(pageParam) }),
       getNextPageParam: (lastPage: { nextPage: number | null }) => lastPage.nextPage ?? undefined,
       initialPageParam: 1,
       retry: false,

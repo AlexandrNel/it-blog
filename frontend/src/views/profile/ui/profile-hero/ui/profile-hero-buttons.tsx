@@ -12,13 +12,13 @@ import { useEffect, useState } from "react";
 
 export function HeroButtons({ userId, username }: { userId: string; username: string }) {
   const [mounted, setMounted] = useState(false);
-  const { data: user } = useQuery(UserQueries.getMe());
+  const { data: user, isLoading } = useQuery(UserQueries.getMe());
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted)
+  if (!mounted || isLoading)
     return (
       <Row justify={"end"}>
         <Skeleton className="h-10 w-[100px]" />

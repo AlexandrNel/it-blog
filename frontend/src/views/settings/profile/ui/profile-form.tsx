@@ -13,6 +13,7 @@ import { useProfileForm } from "../model/useProfileForm";
 export function ProfileForm() {
   const { handleSubmit, errors, form, isLoading, disabled } = useProfileForm();
   const { register } = form;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <FieldGroup className="gap-4">

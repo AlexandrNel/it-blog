@@ -1,19 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { Button } from "@/shared/ui/button";
 import { Skeleton } from "@/shared/ui/skeleton";
-
-const HeaderMenu = dynamic(() => import("./header-menu").then((mod) => mod.HeaderMenu), {
-  ssr: false,
-  loading: () => (
-    <div className="flex gap-2">
-      <Skeleton className="w-[100px] h-[40px]" />
-      <Skeleton className="w-[170px] h-[40px]" />
-    </div>
-  ),
-});
+import { Suspense } from "react";
+import { HeaderMenu } from "./header-menu";
 
 export const Header = () => {
   return (
@@ -22,7 +11,17 @@ export const Header = () => {
         <Link href={`/`}>
           <Button>IT BLOG</Button>
         </Link>
-        <HeaderMenu />
+        <Suspense
+          fallback={
+            <div className="flex gap-2">
+              <Skeleton className="w-[100px] h-[40px]" />
+              <Skeleton className="w-[170px] h-[40px]" />
+              <Skeleton className="size-9 rounded-full" />
+            </div>
+          }
+        >
+          <HeaderMenu />
+        </Suspense>
       </div>
     </header>
   );

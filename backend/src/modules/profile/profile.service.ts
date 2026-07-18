@@ -41,18 +41,27 @@ export class ProfileService {
     return user
   }
 
-  async getByUserIdOrUsername(value: string) {
+  async getByUserIdOrUsername(value: string, userId?: string) {
     const type = isIdOrUsername(value)
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
-      include: { profile: { select: profileSelect } },
+      include: { profile: { select: profileSelect }, followers: !!userId },
     })
     if (!user) throw ApiError.NotFoundError('Пользователь не найден')
+
     const result = {
       author: toAuthor(user),
       contacts: user.profile?.contacts as ProfileContactsDto,
       bio: user.profile?.bio ?? '',
       profile: user.profile!,
+      meta: {
+        isOwner: userId === user.id,
+        isFollow: userId
+          ? !!user.followers.find((f) => f.followerId === userId)
+          : false,
+        isPublic: !!user.profile?.isPublic,
+        isBlocked: user.isBlocked,
+      },
     }
     return result
   }
@@ -175,7 +184,6 @@ export class ProfileService {
 
   async getMetaById(value: string, viewerUserId?: string) {
     const type = isIdOrUsername(value)
-    console.log('type', type, 'username', value)
 
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
@@ -189,6 +197,7 @@ export class ProfileService {
       return {
         isOwner: true as const,
         isPublic,
+        isFollow: false,
         isBlocked: user.isBlocked,
       }
     }

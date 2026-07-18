@@ -36,7 +36,9 @@ function getConnectionKind(req: Request): ProfileConnectionKind {
 export const getProfileByUserId = asyncHandler(
   async (req: Request, res: Response<ProfileResponseDto>) => {
     const id = getParamId(req)
-    const profile = await profileService.getByUserIdOrUsername(id)
+    const user = req.user
+
+    const profile = await profileService.getByUserIdOrUsername(id, user?.id)
     res.status(200).json(profile)
   }
 )
