@@ -1,5 +1,5 @@
 "use client";
-import { type PostWithStatistic } from "@/entities/post";
+import type { PostWithStatistic } from "@/entities/post";
 import { BaseAPI } from "@/shared/api/http";
 
 export class SearchPosts extends BaseAPI {

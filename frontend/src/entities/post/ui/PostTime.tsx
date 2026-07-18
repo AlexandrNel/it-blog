@@ -1,5 +1,5 @@
 "use client";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { formatDate } from "@/shared/lib/utils/format-date/format-date";
 

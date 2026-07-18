@@ -39,7 +39,7 @@ import { useIsBreakpoint } from "@/shared/ui/tiptap-editor/lib/use-is-breakpoint
 import { useWindowSize } from "@/shared/ui/tiptap-editor/lib/use-window-size";
 import { useCursorVisibility } from "@/shared/ui/tiptap-editor/lib/use-cursor-visibility";
 import { useCurrentEditor } from "@tiptap/react";
-import { type ToolType } from "@/shared/ui/tiptap-editor/model/extentions";
+import type { ToolType } from "@/shared/ui/tiptap-editor/model/extentions";
 
 type ToolAvailableForExclusion = Exclude<
   ToolType,

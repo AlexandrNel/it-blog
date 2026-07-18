@@ -1,7 +1,7 @@
 import { getPostBySlug } from "@/entities/post/server";
 import { routes } from "@/shared/config/";
 import { PostPage } from "@/views/posts";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 
 export async function generateMetadata(props: PageProps<"/posts/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;

@@ -5,7 +5,7 @@ import { differenceInMilliseconds } from "date-fns";
 import { isAxiosError } from "axios";
 import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
 import { useSendView } from "../api/useSendView";
-import { TPost } from "@/entities/post";
+import type { TPost } from "@/entities/post";
 
 type View = {
   expiresAt: string;
@@ -55,6 +55,6 @@ export const useView = (id: string) => {
         },
       });
     }
-  }, [id]);
+  }, [id, mutate]);
   return null;
 };

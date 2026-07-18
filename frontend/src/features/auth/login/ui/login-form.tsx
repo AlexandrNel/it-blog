@@ -1,14 +1,14 @@
 "use client";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { FieldError, FieldGroup } from "@/shared/ui/field";
+import { FieldGroup } from "@/shared/ui/field";
 import { FormField, FormInputPassword } from "@/shared/ui/form-components";
 import { Separator } from "@/shared/ui/separator";
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
-import { type ReactNode } from "react";
+import type { BaseProps } from "@/shared/types/components";
+import type { ReactNode } from "react";
 import { Card } from "@/shared/ui/card";
-import { type UseLoginOptions } from "../api/use-login";
+import type { UseLoginOptions } from "../api/use-login";
 import { useLoginForm } from "../model/use-login-form";
 
 type LoginrFormProps = BaseProps & {
@@ -31,7 +31,11 @@ export function LoginForm({ className, footer = null, mutateOptions }: LoginrFor
             <Input id="login" placeholder="Никнейм или почта" {...register("login")} />
           </FormField>
           <FormField error={errors.password} id="password" label="Пароль">
-            <FormInputPassword id="password" placeholder="Введите пароль" {...register("password")} />
+            <FormInputPassword
+              id="password"
+              placeholder="Введите пароль"
+              {...register("password")}
+            />
           </FormField>
         </FieldGroup>
         <Button disabled={isPending} className="w-full select-none mt-6" type="submit">

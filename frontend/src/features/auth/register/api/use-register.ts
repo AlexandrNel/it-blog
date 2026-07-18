@@ -1,4 +1,4 @@
-import { type ApiError } from "@/shared/api";
+import type { ApiError } from "@/shared/api";
 import { toast } from "sonner";
 import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 import { AuthAPI, type TAuth } from "@/entities/auth";

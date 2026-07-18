@@ -5,11 +5,10 @@ import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import { toast } from "sonner";
 
-import { type Post } from "@/entities/post";
+import type { Post } from "@/entities/post";
 import { TagQueries } from "@/entities/tag";
-import { isApiError } from "@/shared/api";
 import { useEditorStore } from "./use-editor-store";
-import { type FormSchemaType } from "./schema";
+import type { FormSchemaType } from "./schema";
 import { uploadImage } from "@/shared/api/uploadImage";
 import { routes } from "@/shared/config";
 import { useCreatePost } from "../api/use-create-post";

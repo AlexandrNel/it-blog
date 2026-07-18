@@ -1,6 +1,6 @@
 import { PostAPI, type TPost } from "@/entities/post";
 import { revalidatePost } from "@/shared/actions/revalidate-post";
-import { DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
+import { type DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
 
 type CreatePostVariables = {
   postId: string;

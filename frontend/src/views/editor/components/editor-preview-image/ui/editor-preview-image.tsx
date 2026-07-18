@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { ImageEditor } from "./image-editor";
 import { UploadZone } from "./upload-zone";
 import { useRef, useState } from "react";

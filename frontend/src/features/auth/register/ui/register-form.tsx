@@ -7,10 +7,10 @@ import { FormField } from "@/shared/ui/form-components/form-field";
 import { FormInputPassword } from "@/shared/ui/form-components";
 import { Separator } from "@/shared/ui/separator";
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types";
-import { type ReactNode } from "react";
+import type { BaseProps } from "@/shared/types";
+import type { ReactNode } from "react";
 import { Card } from "@/shared/ui/card";
-import { type UseRegisterOptions } from "../api/use-register";
+import type { UseRegisterOptions } from "../api/use-register";
 import { useRegisterForm } from "../model/use-register-form";
 
 type RegisterFormProps = BaseProps & {

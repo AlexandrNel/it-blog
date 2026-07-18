@@ -1,4 +1,4 @@
-import { GlobalError } from "../types";
+import type { GlobalError } from "../types";
 import { ApiError } from "../validation";
 
 const API_URL = process.env.API_URL;
@@ -16,7 +16,11 @@ export const serverFetch = async <T>(endpoint: string, init?: RequestInit) => {
   }
 
   if (!res.ok) {
-    throw new ApiError((data as Partial<GlobalError>).message || "Неизвестная ошибка", res.status, data as GlobalError);
+    throw new ApiError(
+      (data as Partial<GlobalError>).message || "Неизвестная ошибка",
+      res.status,
+      data as GlobalError,
+    );
   }
   return {
     data,

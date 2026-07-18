@@ -1,6 +1,6 @@
 import "server-only";
 import { notFound } from "next/navigation";
-import { type Profile, type ProfileMetaInfo, type ProfileStatistic } from "../model/types";
+import type { Profile, ProfileMetaInfo, ProfileStatistic } from "../model/types";
 import { serverSafeFetch } from "@/shared/api/server";
 import { cache } from "react";
 import { cacheLife, cacheTag } from "next/cache";

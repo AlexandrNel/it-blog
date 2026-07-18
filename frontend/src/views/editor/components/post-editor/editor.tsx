@@ -24,7 +24,7 @@ import "./editor.scss";
 import { baseToolbarExtentions } from "@/shared/ui/tiptap-editor/model/extentions";
 import { CharacterCount as CharacterCountComponent } from "@/shared/ui/tiptap-editor";
 import { CharacterCount } from "@tiptap/extensions";
-import { type CSSProperties, type ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { EditorToolbar, type ToolbarOptions } from "./toolbar";
 import { INITIAL_CONTENT } from "@/shared/ui/tiptap-editor/consts";
 import { cn } from "@/shared/lib/utils";

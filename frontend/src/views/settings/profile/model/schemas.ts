@@ -8,7 +8,12 @@ export const profileSettingsSchema = z.object({
     .max(32, { message: "Максимум 32 символа" })
     .optional()
     .or(z.literal("")),
-  bio: z.string().trim().max(200, { message: "Максимум 200 символов" }).optional().or(z.literal("")),
+  bio: z
+    .string()
+    .trim()
+    .max(200, { message: "Максимум 200 символов" })
+    .optional()
+    .or(z.literal("")),
   location: z.string().trim().optional().or(z.literal("")),
   contacts: z
     .object({

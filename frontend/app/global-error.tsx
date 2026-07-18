@@ -1,10 +1,10 @@
 "use client";
 import { ErrorPage } from "@/views/error";
-import { ErrorInfo } from "next/error";
+import type { ErrorInfo } from "next/error";
 
 export default function GlobalErrorPage(props: ErrorInfo) {
   return (
-    <html>
+    <html lang="ru">
       <body>
         <main className="min-h-screen flex">
           <ErrorPage {...props} />

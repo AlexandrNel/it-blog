@@ -1,6 +1,6 @@
 import { auth } from "@/entities/auth/server";
 import { PageLayout } from "@/shared/layouts/page-layout/page-layout";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 

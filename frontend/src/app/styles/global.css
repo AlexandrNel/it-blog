@@ -127,7 +127,7 @@
     --tw-prose-body: var(--color-black);
     @apply max-w-full;
     p {
-      @apply my-1 leading-tight  text-foreground;
+      @apply my-1 leading-tight text-foreground;
     }
 
     h1,

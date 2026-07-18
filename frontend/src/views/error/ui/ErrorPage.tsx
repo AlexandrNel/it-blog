@@ -2,7 +2,7 @@ import { Container } from "@/shared/ui/container";
 import { Error500 } from "./Error500";
 import { UnknownError } from "./UnknownError";
 import { isAxiosError } from "axios";
-import { ErrorInfo } from "next/error";
+import type { ErrorInfo } from "next/error";
 
 export function ErrorPage({ error, ...props }: ErrorInfo) {
   return (

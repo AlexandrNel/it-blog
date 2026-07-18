@@ -31,7 +31,12 @@ export function SecurityForm() {
 
         <Field data-invalid={!!errors.newPassword}>
           <FieldLabel htmlFor="security-new-password">Новый пароль</FieldLabel>
-          <Input id="security-new-password" type="password" autoComplete="new-password" {...register("newPassword")} />
+          <Input
+            id="security-new-password"
+            type="password"
+            autoComplete="new-password"
+            {...register("newPassword")}
+          />
           {errors.newPassword && <FieldError errors={[errors.newPassword]} />}
         </Field>
 

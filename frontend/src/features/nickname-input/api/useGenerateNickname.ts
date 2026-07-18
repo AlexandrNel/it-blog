@@ -1,5 +1,5 @@
-import { GenerateNicknameResponse, TUser, UserAPI } from "@/entities/user";
-import { DefaultError, useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { type GenerateNicknameResponse, type TUser, UserAPI } from "@/entities/user";
+import { type DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
 
 export type UseGenerateNicknameOptions = Omit<
   UseMutationOptions<TUser.GenerateNicknameResponse, DefaultError>,

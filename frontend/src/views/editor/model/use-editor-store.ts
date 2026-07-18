@@ -1,9 +1,9 @@
 "use client";
-import { type JSONContent } from "@tiptap/core";
+import type { JSONContent } from "@tiptap/core";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { type Post } from "@/entities/post";
+import type { Post } from "@/entities/post";
 
 type EditorStoreStates = {
   file?: File | null;

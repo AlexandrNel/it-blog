@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosResponse, HttpStatusCode, isAxiosError } from "axios";
-import { GlobalError } from "./types";
+import axios, { AxiosError, type AxiosResponse, HttpStatusCode, isAxiosError } from "axios";
+import type { GlobalError } from "./types";
 
 export type ErrorMessage = {
   message: string;
@@ -12,12 +12,17 @@ const HTTP_ERROR_DESCRIPTIONS: Partial<Record<HttpStatusCode, string>> = {
   [HttpStatusCode.Forbidden]: "Доступ запрещен (403): недостаточно прав для операции.",
   [HttpStatusCode.NotFound]: "Ресурс не найден (404): проверьте адрес или параметры.",
   [HttpStatusCode.Conflict]: "Конфликт данных (409): попробуйте обновить данные и повторить.",
-  [HttpStatusCode.UnprocessableEntity]: "Ошибка валидации (422): проверьте корректность заполненных полей.",
-  [HttpStatusCode.TooManyRequests]: "Слишком много запросов (429): повторите попытку немного позже.",
-  [HttpStatusCode.InternalServerError]: "Внутренняя ошибка сервера (500): попробуйте повторить запрос позже.",
+  [HttpStatusCode.UnprocessableEntity]:
+    "Ошибка валидации (422): проверьте корректность заполненных полей.",
+  [HttpStatusCode.TooManyRequests]:
+    "Слишком много запросов (429): повторите попытку немного позже.",
+  [HttpStatusCode.InternalServerError]:
+    "Внутренняя ошибка сервера (500): попробуйте повторить запрос позже.",
   [HttpStatusCode.BadGateway]: "Ошибка шлюза (502): проблема на стороне промежуточного сервиса.",
-  [HttpStatusCode.ServiceUnavailable]: "Сервис временно недоступен (503): попробуйте повторить запрос позже.",
-  [HttpStatusCode.GatewayTimeout]: "Тайм-аут шлюза (504): сервис долго не отвечает, попробуйте позже.",
+  [HttpStatusCode.ServiceUnavailable]:
+    "Сервис временно недоступен (503): попробуйте повторить запрос позже.",
+  [HttpStatusCode.GatewayTimeout]:
+    "Тайм-аут шлюза (504): сервис долго не отвечает, попробуйте позже.",
 };
 
 const ERROR_DESCRIPTIONS: Record<string, string> = {
@@ -42,13 +47,13 @@ export class ErrorUtils {
     if (axios.isAxiosError(error)) {
       if (error.response) {
         // ответ от сервера
-        errorMessages = this._getResponseErrors(error.response, error.message, error.code);
+        errorMessages = ErrorUtils._getResponseErrors(error.response, error.message, error.code);
       } else if (error.request) {
         // запрос ушел - ответ не пришел
-        errorMessages = this._getRequestErrors(error.code);
+        errorMessages = ErrorUtils._getRequestErrors(error.code);
       } else {
         // локальный инстанс ошибки
-        const axiosValidationMessage = this._tryGetLocalErrorFromData(error);
+        const axiosValidationMessage = ErrorUtils._tryGetLocalErrorFromData(error);
 
         if (axiosValidationMessage) {
           errorMessages = axiosValidationMessage;
@@ -61,15 +66,19 @@ export class ErrorUtils {
       }
     } else {
       // ошибка не является инстансом AxiosError
-      errorMessages = this._handleNotAxiosError(error);
+      errorMessages = ErrorUtils._handleNotAxiosError(error);
     }
 
-    return this._processErrorMessages(errorMessages);
+    return ErrorUtils._processErrorMessages(errorMessages);
   }
 
-  private static _getResponseErrors(response: AxiosResponse, message: string, code?: string): ErrorMessage {
+  private static _getResponseErrors(
+    response: AxiosResponse,
+    message: string,
+    code?: string,
+  ): ErrorMessage {
     // Попытка распознать модель ошибки, которую прислал сервер
-    const errorMessageFromData = this._tryGetErrorFromData(response);
+    const errorMessageFromData = ErrorUtils._tryGetErrorFromData(response);
 
     if (errorMessageFromData?.message) {
       return errorMessageFromData;

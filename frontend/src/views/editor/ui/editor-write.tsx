@@ -5,9 +5,9 @@ import { ButtonNext } from "../components/button-next";
 import { useEditorStore } from "../model/use-editor-store";
 import dynamic from "next/dynamic";
 import { Title } from "../components/title";
-import { type Editor as EditorType, type JSONContent } from "@tiptap/core";
+import type { Editor as EditorType, JSONContent } from "@tiptap/core";
 import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 
 const Editor = dynamic(() => import("../components/post-editor/editor"), {

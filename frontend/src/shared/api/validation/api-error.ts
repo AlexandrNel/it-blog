@@ -1,4 +1,4 @@
-import { GlobalError } from "../types";
+import type { GlobalError } from "../types";
 
 export const ERROR_CODES = {
   API_ERROR: "API_ERROR",

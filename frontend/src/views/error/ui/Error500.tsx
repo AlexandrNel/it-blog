@@ -1,7 +1,7 @@
 import { ErrorTemplate } from "./ErrorTemplate";
 import { SupportButton } from "./SupportButton";
 import { isAxiosError } from "axios";
-import { ErrorInfo } from "next/error";
+import type { ErrorInfo } from "next/error";
 
 export function Error500({ error }: ErrorInfo) {
   return (

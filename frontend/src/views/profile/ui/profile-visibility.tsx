@@ -1,13 +1,15 @@
-import { type ProfileMetaInfo } from "@/entities/profile";
-import { Item } from "@/shared/ui";
+import type { ProfileMetaInfo } from "@/entities/profile";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Column } from "@/shared/ui/layout";
 import { Ban, Lock } from "lucide-react";
 import Link from "next/link";
-import { type PropsWithChildren, type ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
-export function ProfileVisibility({ meta, children }: PropsWithChildren<{ meta: ProfileMetaInfo }>) {
+export function ProfileVisibility({
+  meta,
+  children,
+}: PropsWithChildren<{ meta: ProfileMetaInfo }>) {
   if (meta.isBlocked)
     return (
       <ProfileVisibilityCard
@@ -37,7 +39,15 @@ export function ProfileVisibility({ meta, children }: PropsWithChildren<{ meta: 
   return children;
 }
 
-function ProfileVisibilityCard({ icon, title, description }: { icon: ReactNode; title: string; description: string }) {
+function ProfileVisibilityCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
     <Card>
       <CardContent>

@@ -1,5 +1,5 @@
 import { getProfileById } from "@/entities/profile/server";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { ProfileLayout } from "@/views/profile";
 
 export async function generateMetadata(props: LayoutProps<"/profile/[id]">): Promise<Metadata> {

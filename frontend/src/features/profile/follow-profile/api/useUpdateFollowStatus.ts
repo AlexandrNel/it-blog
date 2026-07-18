@@ -1,5 +1,10 @@
-import { type FollowStatusResponse, type FollowTypeRequest, ProfileAPI, profileFabricKeys } from "@/entities/profile";
-import { DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  type FollowStatusResponse,
+  type FollowTypeRequest,
+  ProfileAPI,
+  profileFabricKeys,
+} from "@/entities/profile";
+import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateFollowStatus = (username: string) => {
   const queryClient = useQueryClient();

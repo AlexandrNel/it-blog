@@ -1,4 +1,4 @@
-import { type ProfileContact, type Profile as ProfileInput } from "@/entities/profile";
+import type { ProfileContact, Profile as ProfileInput } from "@/entities/profile";
 
 const contactKeys = ["site", "email"] as const;
 type ContactType = (typeof contactKeys)[number];

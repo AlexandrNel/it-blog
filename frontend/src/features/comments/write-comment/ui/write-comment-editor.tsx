@@ -1,10 +1,10 @@
 "use client";
 import { Column } from "@/shared/ui/layout";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { useRef, type PropsWithChildren } from "react";
 import { Button } from "@/shared/ui/button";
 import { Row } from "@/shared/ui/layout";
-import { type Content, type Editor } from "@tiptap/core";
+import type { Content, Editor } from "@tiptap/core";
 import { useSendCommentAnswer, useSendPostComment } from "../api/mutations";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
@@ -12,7 +12,8 @@ import { Skeleton } from "@/shared/ui";
 import { classNames } from "@/shared/lib/utils";
 
 const CommentEditor = dynamic(
-  () => import("@/entities/comment/ui/comment-editor/comment-editor").then((mod) => mod.CommentEditor),
+  () =>
+    import("@/entities/comment/ui/comment-editor/comment-editor").then((mod) => mod.CommentEditor),
   {
     ssr: false,
     loading: () => (

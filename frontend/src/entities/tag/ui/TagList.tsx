@@ -2,9 +2,9 @@
 
 import { cn } from "@/shared/lib/utils";
 import { Tag } from "./Tag";
-import { type Tag as TypeTag } from "../model/types";
+import type { Tag as TypeTag } from "../model/types";
 import { HoverPrefetchLink } from "@/shared/ui";
-import { type Route } from "next";
+import type { Route } from "next";
 
 interface Props {
   className?: string;

@@ -27,6 +27,9 @@
       "next": "recommended"
     },
     "rules": {
+      "correctness": {
+        "noUnusedImports": "warn"
+      },
       "recommended": true,
       "complexity": {
         "noStaticOnlyClass": "off"
@@ -41,7 +44,7 @@
       "style": {
         "useImportType": {
           "level": "warn",
-          "options": { "style": "inlineType" }
+          "options": { "style": "auto" }
         }
       }
     }

@@ -1,4 +1,4 @@
-import { ERROR_CODES } from "./validation/api-error";
+import type { ERROR_CODES } from "./validation/api-error";
 
 type ApiErrorCode = keyof typeof ERROR_CODES;
 

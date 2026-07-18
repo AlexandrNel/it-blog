@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { formatUsername } from "../model/user.formatters";
 import { UserAvatar } from "./user-avatar";
-import { classNames, cn, formatDate } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types";
-import { type Author } from "@/entities/user";
-import { type Post } from "@/entities/post";
-import { type Route } from "next";
+import { classNames, formatDate } from "@/shared/lib/utils";
+import type { BaseProps } from "@/shared/types";
+import type { Author } from "@/entities/user";
+import type { Post } from "@/entities/post";
+import type { Route } from "next";
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/shared/ui";
 import { routes } from "@/shared/config";
 
@@ -35,7 +35,11 @@ export function UserCard({ className, asLink = false, data }: PropsWithChildren<
   return (
     <Item className={classNames("flex  gap-2 items-center p-0", {}, [className])}>
       <ItemMedia>
-        <UserAvatar className="md:size-11 size-10" name={fullName || username} avatarUrl={avatarUrl} />
+        <UserAvatar
+          className="md:size-11 size-10"
+          name={fullName || username}
+          avatarUrl={avatarUrl}
+        />
       </ItemMedia>
       <ItemContent className="flex flex-col justify-between">
         <ItemTitle>

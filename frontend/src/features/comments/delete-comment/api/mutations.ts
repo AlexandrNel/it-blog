@@ -1,5 +1,10 @@
 import { CommentAPI, commentFabricKeys } from "@/entities/comment";
-import { type DefaultError, type UseMutationOptions, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  type DefaultError,
+  type UseMutationOptions,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export type UseDeleteCommentOptions = Omit<
   UseMutationOptions<unknown, DefaultError, string>,

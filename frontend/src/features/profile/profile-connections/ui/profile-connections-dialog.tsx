@@ -2,12 +2,23 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/ui/dialog";
 import { Spinner } from "@/shared/ui/spinner";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { cn } from "@/shared/lib/utils";
 import { UserAvatar, formatUsername } from "@/entities/user";
-import { ProfileQueries, type ProfileConnectionKind, type ProfileConnectionUser } from "@/entities/profile";
+import {
+  ProfileQueries,
+  type ProfileConnectionKind,
+  type ProfileConnectionUser,
+} from "@/entities/profile";
 import { modalLables } from "../config/modal-labels";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -18,7 +29,12 @@ type ProfileConnectionsDialogProps = {
   className?: string;
 };
 
-export function ProfileConnectionsDialog({ userId, type, count, className }: ProfileConnectionsDialogProps) {
+export function ProfileConnectionsDialog({
+  userId,
+  type,
+  count,
+  className,
+}: ProfileConnectionsDialogProps) {
   const [open, setOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -59,7 +75,10 @@ export function ProfileConnectionsDialog({ userId, type, count, className }: Pro
       <DialogTrigger asChild>
         <button
           type="button"
-          className={cn("text-sm text-primary underline-offset-4 hover:underline cursor-pointer", className)}
+          className={cn(
+            "text-sm text-primary underline-offset-4 hover:underline cursor-pointer",
+            className,
+          )}
         >
           {labels.title}
           {typeof count === "number" ? ` ${count}` : ""}
@@ -113,7 +132,9 @@ function ConnectionItem({ user }: { user: ProfileConnectionUser }) {
       <UserAvatar className="size-10" name={title} avatarUrl={user.avatar} />
       <div className="min-w-0">
         <p className="truncate text-sm font-medium">{title}</p>
-        {hasDisplayName && <p className="truncate text-sm text-muted-foreground">{formatUsername(user.username)}</p>}
+        {hasDisplayName && (
+          <p className="truncate text-sm text-muted-foreground">{formatUsername(user.username)}</p>
+        )}
       </div>
     </Link>
   );

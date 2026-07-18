@@ -4,7 +4,7 @@ import { Button } from "@/shared/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useDeletePost, type UseDeletePostOptions } from "../api/use-delete-post";
-import { type MouseEvent, type ComponentProps } from "react";
+import type { MouseEvent, ComponentProps } from "react";
 
 type DeletePostButtonProps = {
   data: { id: string };
@@ -39,7 +39,13 @@ export function DeletePostButton({
     }
   };
   return (
-    <Button disabled={mutation.isPending} type={type} variant={variant} onClick={handleDelete} {...props}>
+    <Button
+      disabled={mutation.isPending}
+      type={type}
+      variant={variant}
+      onClick={handleDelete}
+      {...props}
+    >
       {children}
     </Button>
   );

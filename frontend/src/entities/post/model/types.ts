@@ -1,6 +1,6 @@
-import { type Author } from "@/entities/user";
-import { type Category } from "@/entities/category/@x/post";
-import { type TypeTag } from "@/entities/tag/@x/post";
+import type { Author } from "@/entities/user";
+import type { Category } from "@/entities/category/@x/post";
+import type { TypeTag } from "@/entities/tag/@x/post";
 
 export type Comment = {
   id: string;

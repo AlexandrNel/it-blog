@@ -1,5 +1,5 @@
 import { TagsPage } from "@/views/tags";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 export async function generateMetadata(props: PageProps<"/tags/[tag]">): Promise<Metadata> {

@@ -1,10 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUpdatePassword } from "../api/useUpdatePassword";
-import { SecuritySettingsFormValues, securitySettingsSchema } from "./schemas";
+import { type SecuritySettingsFormValues, securitySettingsSchema } from "./schemas";
 import { useForm } from "react-hook-form";
 import { createHandleSubmit } from "@/shared/lib/zod";
 import { toast } from "sonner";
-import { TUser } from "@/entities/user";
+import type { TUser } from "@/entities/user";
 
 export function useSecurityForm() {
   const { mutateAsync, ...updatePassword } = useUpdatePassword();

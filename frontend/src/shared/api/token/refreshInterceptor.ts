@@ -1,5 +1,5 @@
-import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { GlobalError } from "../types";
+import type { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import type { GlobalError } from "../types";
 
 declare module "axios" {
   export interface AxiosRequestConfig {
@@ -16,7 +16,11 @@ export function refreshInterceptor(instance: AxiosInstance) {
     (res) => res,
     async (error: AxiosError<GlobalError>) => {
       const originalRequest = error.config as AxiosConfigWithRetry;
-      if (error.response?.status === 401 && !originalRequest._isRetry && !error.response.config.skipAuthRefresh) {
+      if (
+        error.response?.status === 401 &&
+        !originalRequest._isRetry &&
+        !error.response.config.skipAuthRefresh
+      ) {
         originalRequest._isRetry = true;
         try {
           await instance({

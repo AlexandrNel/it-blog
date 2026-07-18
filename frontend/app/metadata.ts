@@ -1,5 +1,5 @@
 import { env } from "@/shared/config";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: env.SITE_URL,

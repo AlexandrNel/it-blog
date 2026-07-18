@@ -1,13 +1,13 @@
 import { BaseAPI } from "@/shared/api/http";
-import {
+import type {
   FollowStatusResponse,
   FollowTypeRequest,
   ProfileRequest,
   ProfileSettingsResponse,
-  type ProfileConnectionKind,
-  type ProfileConnectionsPage,
-  type ProfileConnectionsSummary,
-  type ProfileStatistic,
+  ProfileConnectionKind,
+  ProfileConnectionsPage,
+  ProfileConnectionsSummary,
+  ProfileStatistic,
 } from "../model/types";
 
 export class ProfileAPI extends BaseAPI {

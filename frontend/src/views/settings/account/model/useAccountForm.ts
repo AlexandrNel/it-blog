@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useUpdateNickname } from "../api/useUpdateNickname";
-import { AccountSettingsFormValues, accountSettingsSchema } from "./schemas";
+import { type AccountSettingsFormValues, accountSettingsSchema } from "./schemas";
 
 export function useAccountForm() {
   const query = useSuspenseQuery(ProfileQueries.getSettings());

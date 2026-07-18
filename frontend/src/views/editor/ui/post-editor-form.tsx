@@ -3,13 +3,18 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
-import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/shared/ui/input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/shared/ui/input-group";
 import { cn } from "@/shared/lib/utils";
 import { useEditorStore } from "../model/use-editor-store";
 import { useQueries } from "@tanstack/react-query";
 import { CategoryQueries } from "@/entities/category";
 import { TagQueries } from "@/entities/tag";
-import { type FormSchemaType } from "../model/schema";
+import type { FormSchemaType } from "../model/schema";
 import { ComboboxMultiple } from "@/views/editor/components/combobox-multiple";
 import { PostPreviewEditor } from "../components/post-preview-editor";
 import {
@@ -77,7 +82,9 @@ export function PostEditorForm() {
                   aria-invalid={fieldState.invalid}
                 />
                 <InputGroupAddon align="block-end">
-                  <InputGroupText className="tabular-nums">{field.value.length}/100 символов</InputGroupText>
+                  <InputGroupText className="tabular-nums">
+                    {field.value.length}/100 символов
+                  </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -148,7 +155,9 @@ export function PostEditorForm() {
           render={({ fieldState }) => {
             return (
               <div className="flex flex-col gap-3">
-                <FieldLabel className={cn({ "text-destructive": !!fieldState.error })}>Превью статьи</FieldLabel>
+                <FieldLabel className={cn({ "text-destructive": !!fieldState.error })}>
+                  Превью статьи
+                </FieldLabel>
                 <PostPreviewEditor error={fieldState.error?.message} />
                 {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
               </div>

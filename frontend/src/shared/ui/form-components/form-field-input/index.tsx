@@ -1,6 +1,6 @@
-import { type InputHTMLAttributes, type PropsWithChildren } from "react";
+import type { InputHTMLAttributes, PropsWithChildren } from "react";
 import { FieldDescription } from "../../field";
-import { type FieldError as FieldErrorType } from "react-hook-form";
+import type { FieldError as FieldErrorType } from "react-hook-form";
 import { Input } from "../../input";
 import { FormField } from "../form-field";
 

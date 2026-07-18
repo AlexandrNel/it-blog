@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import Image from "next/image";
 
 type Props = BaseProps & {};

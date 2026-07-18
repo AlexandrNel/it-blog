@@ -1,5 +1,10 @@
 import { CommentAPI, commentFabricKeys, type TComment } from "@/entities/comment";
-import { type DefaultError, type UseMutationOptions, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  type DefaultError,
+  type UseMutationOptions,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export type UseSendPostCommentOptions = Omit<
   UseMutationOptions<TComment.Comment, DefaultError, TComment.SendPostCommentRequest>,

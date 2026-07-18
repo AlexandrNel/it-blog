@@ -8,8 +8,8 @@ export function AccountFormSkeleton() {
       <ItemContent className="flex flex-col gap-4">
         <FormField label="Никнейм">
           <FieldDescription>
-            Уникальное имя, которое будет использоваться для идентификации вашего аккаунта и отображаться в вашем
-            профиле
+            Уникальное имя, которое будет использоваться для идентификации вашего аккаунта и
+            отображаться в вашем профиле
           </FieldDescription>
           <div className="flex gap-2">
             <Skeleton className="h-11 w-full" />

@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 
 export const GitHubIcon = ({ className }: BaseProps) => {
   return (

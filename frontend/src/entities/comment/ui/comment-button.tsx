@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 const variants = cva("text-sm cursor-pointer transition", {
   variants: {

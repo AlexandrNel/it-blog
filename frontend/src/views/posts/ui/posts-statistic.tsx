@@ -1,6 +1,6 @@
 "use client";
 import { Eye, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Loading } from "@/shared/ui/loading";
@@ -33,7 +33,11 @@ export const PostStatistic = ({ className, postId }: Props) => {
             strokeWidth={currentLikeStyle.strokeWidth}
           />
         </Button>
-        {loading ? <Loading size={14} length={1} /> : <span className="mx-1 text-xs">{data.score}</span>}
+        {loading ? (
+          <Loading size={14} length={1} />
+        ) : (
+          <span className="mx-1 text-xs">{data.score}</span>
+        )}
 
         <Button
           disabled={loading || isLiked || isDisliked}
@@ -43,7 +47,11 @@ export const PostStatistic = ({ className, postId }: Props) => {
           className="flex items-center gap-1 text-[#858585] text-xs"
           style={{ background: currentDislikeStyle.background }}
         >
-          <ThumbsDown size={16} color={currentDislikeStyle.color} strokeWidth={currentDislikeStyle.strokeWidth} />
+          <ThumbsDown
+            size={16}
+            color={currentDislikeStyle.color}
+            strokeWidth={currentDislikeStyle.strokeWidth}
+          />
         </Button>
       </div>
 

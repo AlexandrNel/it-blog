@@ -1,4 +1,4 @@
-import { type ProfileConnectionKind } from "@/entities/profile";
+import type { ProfileConnectionKind } from "@/entities/profile";
 
 export const modalLables: Record<
   ProfileConnectionKind,

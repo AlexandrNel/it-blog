@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
-import { type Route } from "next";
+import type { BaseProps } from "@/shared/types/components";
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

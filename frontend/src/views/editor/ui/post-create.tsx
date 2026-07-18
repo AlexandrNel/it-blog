@@ -2,7 +2,7 @@
 
 import { Activity, useEffect } from "react";
 
-import { type Post } from "@/entities/post";
+import type { Post } from "@/entities/post";
 import { useEditorStore } from "../model/use-editor-store";
 import { EditoWritePage } from "./editor-write";
 import { EditorSettingsPage } from "./editor-settings";

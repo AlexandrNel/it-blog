@@ -11,8 +11,8 @@ export function PostSectionFallback() {
         </Column>
         <p className="text-xl font-bold">В ленте пока нет статей</p>
         <p className="text text-muted-foreground md:px-10">
-          Здесь будут появляться материалы от авторов и по тегам, на которые вы подписаны. Начните читать интересные
-          публикации или поделитесь своим опытом!
+          Здесь будут появляться материалы от авторов и по тегам, на которые вы подписаны. Начните
+          читать интересные публикации или поделитесь своим опытом!
         </p>
         <Button asChild>
           <HoverPrefetchLink href={"/editor"}>Написать статью</HoverPrefetchLink>

@@ -2,7 +2,7 @@
 import { EyeClosed, Eye, InfoIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "../../input-group";
 import { TooltipContent, TooltipTrigger } from "../../tooltip";
-import { type InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes } from "react";
 import { usePasswordToggle } from "@/shared/lib/hooks/use-password-toggle";
 import { Tooltip } from "../../tooltip";
 

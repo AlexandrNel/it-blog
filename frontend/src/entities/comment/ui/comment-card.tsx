@@ -1,8 +1,8 @@
 "use client";
 import { UserCard } from "@/entities/user";
-import { type Comment } from "../model/types";
-import { type PropsWithChildren } from "react";
-import { type BaseProps } from "@/shared/types/components";
+import type { Comment } from "../model/types";
+import type { PropsWithChildren } from "react";
+import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { EditorContent } from "@/shared/ui/tiptap-editor";
 
@@ -10,7 +10,11 @@ type Props = {
   comment: Comment;
 };
 
-export function CommentCard({ comment, className, children }: PropsWithChildren<BaseProps & Props>) {
+export function CommentCard({
+  comment,
+  className,
+  children,
+}: PropsWithChildren<BaseProps & Props>) {
   return (
     <div id={comment.id} className={cn("pb-1 pt-2 flex-1", className)}>
       <UserCard

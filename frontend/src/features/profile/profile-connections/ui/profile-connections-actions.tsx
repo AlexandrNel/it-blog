@@ -4,7 +4,7 @@ import { ProfileQueries } from "@/entities/profile";
 import { Row } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { ProfileConnectionsDialog } from "./profile-connections-dialog";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 

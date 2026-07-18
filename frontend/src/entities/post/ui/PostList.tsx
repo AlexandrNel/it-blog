@@ -1,5 +1,5 @@
 import type React from "react";
-import { type PostWithStatistic } from "../model/types";
+import type { PostWithStatistic } from "../model/types";
 import { cn } from "@/shared/lib/utils";
 import { PostCard } from "./PostCard";
 

@@ -1,10 +1,10 @@
 import { BaseAPI } from "@/shared/api/http";
-import {
-  type Comment,
-  type CommentListResponse,
-  type SendPostCommentRequest,
-  type SendCommentAnswerRequest,
-  type EditCommentRequest,
+import type {
+  Comment,
+  CommentListResponse,
+  SendPostCommentRequest,
+  SendCommentAnswerRequest,
+  EditCommentRequest,
 } from "../model/types";
 
 export class CommentAPI extends BaseAPI {

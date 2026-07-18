@@ -1,16 +1,14 @@
 "use client";
 
-import { FieldContent, FieldGroup, FieldLabel, FieldSeparator } from "@/shared/ui/field";
+import { FieldGroup, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { Textarea } from "@/shared/ui/textarea";
-import { Row } from "@/shared/ui/layout";
 import { FormField, FormFieldInput } from "@/shared/ui/form-components";
 import { GitHubIcon } from "@/shared/ui/icons";
 import { Send } from "lucide-react";
 import { Spinner } from "@/shared/ui/spinner";
 import { useProfileForm } from "../model/useProfileForm";
-import { Separator } from "@/shared/ui";
 
 export function ProfileForm() {
   const { handleSubmit, errors, form, isLoading, disabled } = useProfileForm();
@@ -26,10 +24,20 @@ export function ProfileForm() {
         />
 
         <FormField id="bio" label="О себе" error={errors.bio}>
-          <Textarea id="bio" placeholder="Коротко расскажите о себе" rows={4} {...register("bio")} />
+          <Textarea
+            id="bio"
+            placeholder="Коротко расскажите о себе"
+            rows={4}
+            {...register("bio")}
+          />
         </FormField>
 
-        <FormFieldInput id="location" label="Откуда вы?" error={errors.location} {...register("location")} />
+        <FormFieldInput
+          id="location"
+          label="Откуда вы?"
+          error={errors.location}
+          {...register("location")}
+        />
         <FormFieldInput
           id="website"
           label="Веб сайт"

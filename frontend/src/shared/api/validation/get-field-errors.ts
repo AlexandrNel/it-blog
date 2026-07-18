@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import { GlobalError } from "../types";
+import type { GlobalError } from "../types";
 import { ERROR_CODES } from "./api-error";
 
 export type FieldErrors = GlobalError["errors"];

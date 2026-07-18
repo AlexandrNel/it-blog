@@ -1,5 +1,5 @@
-import { type BaseProps } from "@/shared/types/components";
-import { type CategoryListReponse } from "../model/types";
+import type { BaseProps } from "@/shared/types/components";
+import type { CategoryListReponse } from "../model/types";
 import { CategoryItem } from "./CategoryUI";
 import { cn } from "@/shared/lib/utils";
 

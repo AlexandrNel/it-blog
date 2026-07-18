@@ -5,7 +5,7 @@ import { classNames } from "@/shared/lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Column, Row } from "@/shared/ui/layout";
 import { Settings, ShieldCheck, User } from "lucide-react";
-import { type Route } from "next";
+import type { Route } from "next";
 import Link from "next/link";
 
 const LINKS = [

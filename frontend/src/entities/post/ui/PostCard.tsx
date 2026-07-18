@@ -1,4 +1,4 @@
-import { type PostWithStatistic } from "../model/types";
+import type { PostWithStatistic } from "../model/types";
 import { cn } from "@/shared/lib/utils";
 import { PostInfo } from "./PostInfo";
 import { PostPreview } from "./PostPreview";
@@ -8,8 +8,8 @@ import { PostStatistic } from "./PostStatistic";
 import { Button } from "@/shared/ui/button";
 import { Separator } from "@/shared/ui/separator";
 import { Card, CardContent, CardFooter } from "@/shared/ui/card";
-import { type PropsWithChildren } from "react";
-import { type Route } from "next";
+import type { PropsWithChildren } from "react";
+import type { Route } from "next";
 
 interface Props {
   className?: string;

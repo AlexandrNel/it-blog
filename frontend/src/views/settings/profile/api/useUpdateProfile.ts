@@ -1,6 +1,6 @@
-import { ProfileAPI, profileFabricKeys, TProfile } from "@/entities/profile";
+import { ProfileAPI, type TProfile } from "@/entities/profile";
 import { revalidateProfile } from "@/shared/actions/revalidate-profile";
-import { DefaultError, useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { type DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
 
 export type UpdateProfileVariables = TProfile.ProfileRequest & { userId: string };
 

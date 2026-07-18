@@ -2,8 +2,7 @@
 
 import { Controller } from "react-hook-form";
 
-import { FieldDescription, FieldError, FieldGroup } from "@/shared/ui/field";
-import { Input } from "@/shared/ui/input";
+import { FieldDescription, FieldGroup } from "@/shared/ui/field";
 import { Button } from "@/shared/ui/button";
 import { FormField } from "@/shared/ui/form-components";
 import { NicknameField } from "@/features/nickname-input";
@@ -17,8 +16,6 @@ export function AccountForm() {
   const {
     control,
     setValue,
-    setError,
-    clearErrors,
     formState: { errors },
   } = form;
 
@@ -31,23 +28,20 @@ export function AccountForm() {
           render={({ field }) => (
             <FormField id="username" error={errors.username} label="Никнейм">
               <FieldDescription>
-                Уникальное имя, которое будет использоваться для идентификации вашего аккаунта и отображаться в вашем
-                профиле
+                Уникальное имя, которое будет использоваться для идентификации вашего аккаунта и
+                отображаться в вашем профиле
               </FieldDescription>
               <NicknameField
                 {...field}
                 id="username"
-                onErrorCheck={(message) => {
-                  setError("username", { message });
-                }}
-                onSuccessCheck={() => {
-                  clearErrors("username");
-                }}
                 username={data.account.username}
                 value={field.value}
                 mutateOptions={{
                   onSuccess: (data) => {
-                    setValue("username", data.username, { shouldDirty: true, shouldValidate: true });
+                    setValue("username", data.username, {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    });
                   },
                 }}
               />

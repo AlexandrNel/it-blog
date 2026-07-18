@@ -2,7 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PostAPI } from "@/entities/post";
 import { toast } from "sonner";
-import { type Statistic } from "@/entities/post";
+import type { Statistic } from "@/entities/post";
 
 export const usePostStatistic = (postId: string) => {
   const queryClient = useQueryClient();

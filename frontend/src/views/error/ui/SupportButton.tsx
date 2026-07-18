@@ -3,8 +3,8 @@ import { ButtonGroup } from "@/shared/ui/button-group";
 import { MessageSquareText } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/shared/lib/utils";
-import { type BasePropsWithChildren } from "@/shared/types/components";
-import { type Route } from "next";
+import type { BasePropsWithChildren } from "@/shared/types/components";
+import type { Route } from "next";
 
 interface Props extends BasePropsWithChildren {
   href: string;

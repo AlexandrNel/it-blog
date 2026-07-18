@@ -1,10 +1,10 @@
 import "server-only";
 import { serverFetch, serverSafeFetch } from "@/shared/api/server";
-import {
-  type PostListWithStatisticResponse,
-  type PostResponse,
-  type PostWithStatisticResponse,
-  type ResponsePagination,
+import type {
+  PostListWithStatisticResponse,
+  PostResponse,
+  PostWithStatisticResponse,
+  ResponsePagination,
 } from "../model/types";
 import { cache } from "react";
 import { cacheLife, cacheTag } from "next/cache";

@@ -1,4 +1,4 @@
-import { type ReactNode, type ComponentProps } from "react";
+import type { ReactNode, ComponentProps } from "react";
 import { EditMenu } from "./EditMenu";
 import { classNames } from "@/shared/lib/utils";
 
@@ -7,7 +7,11 @@ type EditMenuWrapperProps = {
   children: ReactNode;
 } & ComponentProps<typeof EditMenu>;
 
-export function EditMenuWrapper({ children, wrap: { className, ...rest } = {}, ...props }: EditMenuWrapperProps) {
+export function EditMenuWrapper({
+  children,
+  wrap: { className, ...rest } = {},
+  ...props
+}: EditMenuWrapperProps) {
   return (
     <div className={classNames("relative", {}, [className])} {...rest}>
       {children}

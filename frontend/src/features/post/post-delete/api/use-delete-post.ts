@@ -1,8 +1,11 @@
 import { type Post, PostAPI } from "@/entities/post";
 import { revalidateSitemap } from "@/shared/actions/revalidate-sitemap";
-import { DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
+import { type DefaultError, useMutation, type UseMutationOptions } from "@tanstack/react-query";
 
-export type UseDeletePostOptions = Omit<UseMutationOptions<Post, DefaultError, string>, "mutationFn">;
+export type UseDeletePostOptions = Omit<
+  UseMutationOptions<Post, DefaultError, string>,
+  "mutationFn"
+>;
 
 export const useDeletePost = ({ onSuccess, ...options }: UseDeletePostOptions = {}) => {
   return useMutation({

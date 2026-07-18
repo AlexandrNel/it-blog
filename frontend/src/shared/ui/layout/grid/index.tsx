@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type BaseProps } from "@/shared/types/components";
-import { type PropsWithChildren } from "react";
+import type { BaseProps } from "@/shared/types/components";
+import type { PropsWithChildren } from "react";
 import { alignVariants, gapVariants, justifyVariants } from "../variants";
 
 const gridVariants = cva("grid", {

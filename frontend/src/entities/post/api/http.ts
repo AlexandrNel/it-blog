@@ -1,4 +1,4 @@
-import { type Post, type Statistic, type PostRequest, SendViewResponse } from "../model/types";
+import type { Post, Statistic, PostRequest, SendViewResponse } from "../model/types";
 import { BaseAPI } from "@/shared/api/http";
 
 export class PostAPI extends BaseAPI {

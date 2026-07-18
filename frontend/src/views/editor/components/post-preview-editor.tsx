@@ -4,7 +4,7 @@ import { useEditorStore } from "../model/use-editor-store";
 import { EditorPreviewImageWrapper } from "@/views/editor/components/editor-preview-image";
 import { cn } from "@/shared/lib/utils";
 import { safeParseJson } from "@/shared/lib/utils/safe-parse-json";
-import { type JSONContent } from "@tiptap/core";
+import type { JSONContent } from "@tiptap/core";
 
 function PostPreviewEditor({ error }: { error?: string | null }) {
   const post = useEditorStore((state) => state.post);

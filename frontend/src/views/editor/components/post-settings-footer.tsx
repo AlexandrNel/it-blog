@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 import { Button } from "@/shared/ui/button";
 import { useEditorStore } from "../model/use-editor-store";
-import { type FormSchemaType } from "../model/schema";
+import type { FormSchemaType } from "../model/schema";
 import { useSubmitPost } from "../model/use-submit-post";
 import { DeletePostButton } from "@/features/post/post-delete";
 

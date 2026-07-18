@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { type ImageType } from "./editor-preview-image";
+import type { ImageType } from "./editor-preview-image";
 import { cn } from "@/shared/lib/utils";
 import { Row } from "@/shared/ui/layout";
 import { Button } from "@/shared/ui/button";

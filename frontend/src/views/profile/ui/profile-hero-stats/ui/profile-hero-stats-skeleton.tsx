@@ -1,4 +1,4 @@
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Column, Grid } from "@/shared/ui/layout";
 import { Skeleton } from "@/shared/ui/skeleton";

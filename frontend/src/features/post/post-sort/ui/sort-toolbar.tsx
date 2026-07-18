@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { Row } from "@/shared/ui/layout";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";

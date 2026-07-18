@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { type EditorMode, useCommentStore } from "./use-comment-store";
-import { type Comment } from "@/entities/comment";
+import type { Comment } from "@/entities/comment";
 
 export const useCommentLifecycle = (comment: Comment) => {
   const commentId = useCommentStore((state) => state.commentId);

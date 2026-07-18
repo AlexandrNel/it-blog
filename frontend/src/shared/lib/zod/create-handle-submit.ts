@@ -1,4 +1,4 @@
-import { type UseFormSetError, type FieldValues } from "react-hook-form";
+import type { UseFormSetError, FieldValues } from "react-hook-form";
 import { applyApiFieldErrors } from "./apply-api-field-errors";
 
 // TODO: задокументировать

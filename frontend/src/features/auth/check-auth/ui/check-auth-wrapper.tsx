@@ -1,6 +1,6 @@
 "use client";
 
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/shared/ui/dialog";
 import { LoginForm } from "@/features/auth/login";
 import { Button } from "@/shared/ui/button";

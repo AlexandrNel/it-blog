@@ -1,10 +1,10 @@
 import { BaseAPI } from "@/shared/api/http";
-import {
+import type {
   CheckNicknameResponse,
   GenerateNicknameResponse,
   UpdatePasswordRequest,
   UpdateUsernameRequest,
-  type UserResponse,
+  UserResponse,
 } from "../model/types";
 
 export class UserAPI extends BaseAPI {

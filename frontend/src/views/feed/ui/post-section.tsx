@@ -4,7 +4,9 @@ import { EditMenuWrapper } from "@/features/post/post-menu";
 import { getAllPosts } from "@/entities/post/server";
 import { PostSectionFallback } from "./post-section-fallback";
 
-export async function PostSection({ searchParams }: Pick<PageProps<"/posts/[slug]">, "searchParams">) {
+export async function PostSection({
+  searchParams,
+}: Pick<PageProps<"/posts/[slug]">, "searchParams">) {
   const param = Number((await searchParams).page);
   const sort = (await searchParams).sort;
   const page = Number.isFinite(param) ? param : undefined;

@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useUpdateProfile } from "../api/useUpdateProfile";
 import { ProfileQueries } from "@/entities/profile";
-import { ProfileSettingsFormValues, profileSettingsSchema } from "./schemas";
+import { type ProfileSettingsFormValues, profileSettingsSchema } from "./schemas";
 import { useForm, useFormState } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createHandleSubmit } from "@/shared/lib/zod";
@@ -57,5 +57,12 @@ export function useProfileForm() {
   const isLoading = query.isLoading;
   const disabled = !isDirty || isSubmitting || query.isLoading;
 
-  return { handleSubmit: handleSubmit(onSubmit), form, errors, isLoading, disabled, data: query.data };
+  return {
+    handleSubmit: handleSubmit(onSubmit),
+    form,
+    errors,
+    isLoading,
+    disabled,
+    data: query.data,
+  };
 }

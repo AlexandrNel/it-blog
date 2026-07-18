@@ -1,8 +1,11 @@
 import { getFieldErrors } from "@/shared/api";
 import { getErrorMessage } from "@/shared/api/validation/get-field-errors";
-import { FieldValues, type FieldPath, type UseFormSetError } from "react-hook-form";
+import type { FieldValues, FieldPath, UseFormSetError } from "react-hook-form";
 
-export function applyApiFieldErrors<T extends FieldValues>(error: unknown, setError: UseFormSetError<T>) {
+export function applyApiFieldErrors<T extends FieldValues>(
+  error: unknown,
+  setError: UseFormSetError<T>,
+) {
   const fieldErrors = getFieldErrors(error);
   const message = getErrorMessage(error);
 

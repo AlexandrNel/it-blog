@@ -1,7 +1,7 @@
 import { Eye, MessageSquare, ThumbsUp } from "lucide-react";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
-import { type Statistic } from "../model/types";
+import type { Statistic } from "../model/types";
 
 interface Props extends BaseProps {
   statistic: Statistic;

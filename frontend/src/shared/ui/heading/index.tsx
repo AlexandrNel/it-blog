@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { type ComponentPropsWithoutRef, type ElementType } from "react";
+import type { ComponentPropsWithoutRef, ElementType } from "react";
 
 const headingVariants = cva("font-bold", {
   variants: {

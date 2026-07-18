@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { EllipsisVertical, Pencil } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/shared/ui/button";
@@ -42,7 +42,10 @@ export function EditMenu({ className, authorId, slug }: Props) {
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem asChild className="p-0">
-              <Link href={routes.editor.post(slug)} className=" cursor-pointer flex px-2 py-1 gap-2">
+              <Link
+                href={routes.editor.post(slug)}
+                className=" cursor-pointer flex px-2 py-1 gap-2"
+              >
                 <Pencil size={20} color="#858585" strokeWidth={2} />
                 Редактировать
               </Link>

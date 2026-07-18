@@ -1,6 +1,6 @@
 import { CACHE_TAGS } from "@/shared/config/cache-keys";
 import { env } from "@/shared/config";
-import { type MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 
 const staticRoutes = ["/"] as const;

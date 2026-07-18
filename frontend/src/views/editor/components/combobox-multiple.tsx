@@ -1,4 +1,4 @@
-import { type ComboboxRoot } from "@base-ui/react";
+import type { ComboboxRoot } from "@base-ui/react";
 import {
   Combobox,
   ComboboxChip,

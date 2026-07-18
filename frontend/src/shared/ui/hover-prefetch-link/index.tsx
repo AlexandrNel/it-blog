@@ -9,7 +9,12 @@ export function HoverPrefetchLink({ href, children, ...props }: HoverPrefetchLin
   const [active, setActive] = useState(false);
 
   return (
-    <Link href={href} prefetch={active ? null : false} onMouseEnter={() => setActive(true)} {...props}>
+    <Link
+      href={href}
+      prefetch={active ? null : false}
+      onMouseEnter={() => setActive(true)}
+      {...props}
+    >
       {children}
     </Link>
   );

@@ -1,9 +1,9 @@
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Field, FieldError, FieldLabel } from "../../field";
-import { type FieldError as FieldErrorType } from "react-hook-form";
+import type { FieldError as FieldErrorType } from "react-hook-form";
 import { Row } from "../../layout";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../tooltip";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 
 export type FormFieldProps = {
   id?: string;
@@ -12,7 +12,13 @@ export type FormFieldProps = {
   required?: boolean;
 } & BaseProps;
 
-export const FormField = ({ children, id, label, error, required }: PropsWithChildren<FormFieldProps>) => {
+export const FormField = ({
+  children,
+  id,
+  label,
+  error,
+  required,
+}: PropsWithChildren<FormFieldProps>) => {
   return (
     <Field data-invalid={!!error}>
       {label && (

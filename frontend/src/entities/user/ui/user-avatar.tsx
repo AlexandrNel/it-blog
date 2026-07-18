@@ -1,4 +1,4 @@
-import { type BaseProps } from "@/shared/types";
+import type { BaseProps } from "@/shared/types";
 import { getInitials } from "../lib/get-initials";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
-import { type BaseProps } from "@/shared/types/components";
+import type { BaseProps } from "@/shared/types/components";
 import { EditorContent } from "@/shared/ui/tiptap-editor";
-import { type Post } from "../model/types";
+import type { Post } from "../model/types";
 
 interface Props extends BaseProps {
   image?: Post["previewImage"];
