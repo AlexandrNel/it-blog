@@ -1,7 +1,7 @@
 import { withClient } from '@/shared/helpers/with-db-client.js'
 import { ApiError } from '@/shared/lib/api-error.js'
 import { prisma } from '@/shared/lib/prisma.js'
-import { ProfileService } from '@/modules/profile/profile.service.js'
+import { type ProfileService } from '@/modules/profile/profile.service.js'
 import {
   names,
   NumberDictionary,
@@ -94,7 +94,7 @@ export class UserService {
   )
 
   private async buildUsername(): Promise<string> {
-    const number = NumberDictionary.generate({ length: 4})
+    const number = NumberDictionary.generate({ length: 4 })
 
     const randomName = uniqueNamesGenerator({
       dictionaries: [names, number],

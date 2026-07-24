@@ -11,7 +11,7 @@ const router = express.Router()
 const controller = new PostController(new PostService(new PostRepository()))
 
 router.get('/search/posts', controller.search)
-router.get('/posts', paginateMiddleware, controller.getAll)
+router.get('/posts', paginateMiddleware, withUserMiddleware, controller.getAll)
 router.get('/posts/user/:userId', controller.getAllByUserId)
 router.get('/posts/id/:id', controller.getById)
 router.get('/posts/:slug', controller.getBySlug)

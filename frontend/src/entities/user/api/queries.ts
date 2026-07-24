@@ -7,7 +7,15 @@ export class UserQueries {
     return queryOptions({
       queryFn: ({ signal }) => UserAPI.getMe(signal),
       queryKey: userFabricKeys.me(),
-      staleTime: 60_000,
+      staleTime: Infinity,
+      gcTime: Infinity,
+      retry: 0,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      meta: {
+        skipGlobalErrorToast: true,
+        skipGlobalValidationToast: true,
+      },
     });
   }
 

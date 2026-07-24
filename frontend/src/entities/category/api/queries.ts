@@ -7,6 +7,7 @@ export class CategoryQueries {
     return queryOptions({
       queryKey: categoryFabricKeys.list(),
       queryFn: () => CategoryAPI.getAll(),
+      staleTime: Infinity,
     });
   }
 }

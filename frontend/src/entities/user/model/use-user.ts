@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { UserQueries } from "../api/queries";
+import { UserContext } from "./user-context";
+import { useContext } from "react";
 
-export const useUser = () => {
-  return useQuery(UserQueries.getMe());
-};
+export function useUser() {
+  const context = useContext(UserContext);
+  if (!context) throw new Error("useUser must be used within UserProvider");
+  return context;
+}

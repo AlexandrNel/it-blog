@@ -11,6 +11,7 @@ import { toFull, toPreview, toStatistic } from './lib/post.transformer.js'
 import { withUniqueSlug } from './helpers/with-unique-slug.js'
 import { PostRepository } from './post.repository.js'
 import { isIdOrUsername } from '@/shared/helpers/username-or-id.js'
+import type { PostUpdateInput } from '@/generated/prisma/models.js'
 
 // ─── Service ─────────────────────────────────────────────────────────────────
 
@@ -95,7 +96,17 @@ export class PostService {
       return prisma.$transaction(async (tx) => {
         // TODO: убрать published, когда будет модерация
         const post = await tx.post.create({
-          data: { ...rest, slug, published: true, ...(previewImage ? {previewImageUrl: previewImage.url, previewImagePosition: previewImage.position} : {}) },
+          data: {
+            ...rest,
+            slug,
+            published: true,
+            ...(previewImage
+              ? {
+                  previewImageUrl: previewImage.url,
+                  previewImagePosition: previewImage.position,
+                }
+              : {}),
+          },
         })
         await tx.postTag.createMany({
           data: data.tagIds.map((tagId) => ({
@@ -131,15 +142,29 @@ export class PostService {
       : undefined
 
     const existingTagIds = post.tags.map((t) => t.tag.id)
-    const toAdd = tagIds?.filter((id) => !existingTagIds.includes(id)) ?? []
-    const toRemove = existingTagIds.filter((id) => !tagIds?.includes(id))
-    const {previewImage, ...rest} = data
+
+    const toAdd = tagIds
+      ? tagIds.filter((id) => !existingTagIds.includes(id))
+      : []
+    const toRemove = tagIds
+      ? existingTagIds.filter((id) => !tagIds.includes(id))
+      : []
+    console.log(
+      'previewImage raw:',
+      data.previewImage,
+      typeof data.previewImage
+    )
+    const dataToUpdate: UpdatePostRequestDto & { slug?: string } = {
+      ...(data.categoryId && { category: data.categoryId }),
+      ...(data.content && { content: data.content }),
+      ...(data.desc && { desc: data.desc }),
+      ...(data.title && { title: data.title }),
+      ...(slug && { slug: slug }),
+      previewImage: data.previewImage,
+    }
+
     return this.repo.update({
-      dataToUpdate: {
-        ...rest,
-        slug,
-        previewImage: previewImage ?? null,
-      },
+      dataToUpdate,
       postId,
       tagsToAdd: toAdd,
       tagsToRemove: toRemove,

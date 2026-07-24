@@ -1,23 +1,32 @@
 import slugify from 'slugify'
 import z from 'zod'
 
-const DEFAULT_POSITION = {x: 50, y: 50}
+const DEFAULT_POSITION = { x: 50, y: 50 }
 
 export const previewImagePositionSchema = z.preprocess(
   (val) => {
     if (val === null || val === undefined) return DEFAULT_POSITION
     if (typeof val === 'string') {
-      try { return JSON.parse(val) } catch { return DEFAULT_POSITION }
+      try {
+        return JSON.parse(val)
+      } catch {
+        return DEFAULT_POSITION
+      }
     }
     return val
   },
-  z.object({
-    x: z.number(),
-    y: z.number(),
-  }).catch(DEFAULT_POSITION)
+  z
+    .object({
+      x: z.number(),
+      y: z.number(),
+    })
+    .catch(DEFAULT_POSITION)
 )
 
-export const previewImageSchema = z.object({url: z.string(), position: previewImagePositionSchema}).nullable().default(null)
+export const previewImageSchema = z
+  .object({ url: z.string(), position: previewImagePositionSchema })
+  .nullable()
+  .optional()
 
 export const createPostSchema = z.object({
   content: z.string(),
@@ -32,11 +41,11 @@ export const createPostSchema = z.object({
 })
 export const updatePostSchema = z.object({
   content: z.string().optional(),
-  previewContent: z.string(),
- previewImage: previewImageSchema,
+  previewContent: z.string().optional(),
+  previewImage: previewImageSchema,
   title: z.string().min(1, 'Заголовок обязателен').optional(),
   desc: z.string().optional(),
-  categoryId: z.string().nonempty().optional(),
+  categoryId: z.string().optional(),
   tagIds: z.array(z.string()).optional(),
 })
 export type CreatePostRequestDto = z.infer<typeof createPostSchema>
@@ -56,7 +65,7 @@ export async function validateCreatePost(
   const schema = z.object({
     content: z.string(),
     previewContent: z.string(),
-   previewImage: previewImageSchema,
+    previewImage: previewImageSchema,
     title: z.string().min(1, 'Заголовок обязателен'),
     slug: z
       .string()

@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/editor/", "/search", "/tags", "/settings/", "/login", "/register"],
       },
     ],
-    sitemap: `${env.SITE_URL}/sitemap.xml`,
-    host: env.SITE_URL,
+    sitemap: `${env.NEXT_PUBLIC_SITE_URL}/sitemap.xml`,
+    host: env.NEXT_PUBLIC_SITE_URL,
   };
 }

@@ -9,6 +9,6 @@ export class AuthAPI extends BaseAPI {
     return BaseAPI.post<TAuth.RegisterResponse>(`/auth/register`, data);
   }
   static logout() {
-    return BaseAPI.post(`/auth/logout`, {}, { skipAuthRefresh: true });
+    return BaseAPI.post<TAuth.LogoutResponse>(`/auth/logout`, undefined, { skipAuthRefresh: true });
   }
 }

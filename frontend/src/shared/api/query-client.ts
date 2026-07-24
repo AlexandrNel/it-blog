@@ -1,10 +1,4 @@
-import {
-  defaultShouldDehydrateQuery,
-  isServer,
-  MutationCache,
-  QueryCache,
-  QueryClient,
-} from "@tanstack/react-query";
+import { defaultShouldDehydrateQuery, isServer, MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { type ErrorMessage, ErrorUtils } from "./error-utils";
 import { ERROR_CODES } from "./validation/api-error";
@@ -46,8 +40,7 @@ function makeQueryClient() {
         staleTime: 60 * 1000,
       },
       dehydrate: {
-        shouldDehydrateQuery: (query) =>
-          defaultShouldDehydrateQuery(query) || query.state.status === "pending",
+        shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query) || query.state.status === "pending",
         shouldRedactErrors: () => {
           return false;
         },
@@ -77,7 +70,7 @@ function makeQueryClient() {
 
 let browserQueryClient: QueryClient | undefined;
 
-function getQueryClient() {
+export function getQueryClient() {
   if (isServer) {
     return makeQueryClient();
   } else {
@@ -85,5 +78,3 @@ function getQueryClient() {
     return browserQueryClient;
   }
 }
-
-export const queryClient = getQueryClient();

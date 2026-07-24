@@ -7,7 +7,6 @@ import {
   type LoginDataType,
   type RegisterDataType,
 } from './auth.dto.js'
-import { toUser } from '../user/index.js'
 import z from 'zod'
 import { UserService } from '../user/user.service.js'
 import {
@@ -42,7 +41,7 @@ export class AuthService {
       })
 
       const token = signToken({ id: newUser.id, role: newUser.role })
-      return { token, user: toUser(newUser) }
+      return { token }
     } catch (error) {
       if (
         isPrismaError(error) &&
@@ -61,11 +60,11 @@ export class AuthService {
       where: isEmail ? { email: result.login } : { username: result.login },
     })
     if (!user) throw ApiError.NotFoundError('Пользователь не найден')
-    const useDto = toUser(user)
     const isVerify = await bcrypt.compare(data.password, user.password)
     if (!isVerify) throw ApiError.BadRequest('Не верный логин или пароль')
-    const token = signToken({ id: user.id, role: user.role })
-    const refresh = signToken({ id: user.id, role: user.role }, 'refresh')
-    return { token, refresh, user: useDto }
+    const payload = { id: user.id, role: user.role }
+    const token = signToken(payload)
+    const refresh = signToken(payload, 'refresh')
+    return { token, refresh }
   }
 }

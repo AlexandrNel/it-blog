@@ -1,20 +1,21 @@
 import { getComments } from "@/entities/comment/server";
 import { PostWithQuery } from "./post-comments-with-query";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { ScrollToComment } from "./scroll-to-comment";
 import { Suspense } from "react";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Card, CardContent } from "@/shared/ui/card";
 import { commentFabricKeys } from "@/entities/comment";
 import { WriteCommentEditor } from "@/features/comments/write-comment";
+import { getQueryClient } from "@/shared/api";
 
 async function _PostComments({ params }: Pick<PageProps<"/posts/[slug]">, "params">) {
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   const slug = (await params).slug;
 
   await queryClient.prefetchQuery({
-    queryKey: commentFabricKeys.list(),
+    queryKey: commentFabricKeys.list(slug),
     queryFn: () => getComments(slug),
   });
 

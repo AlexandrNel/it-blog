@@ -3,12 +3,12 @@ import { getPostByUserId } from "@/entities/post/server";
 import { EditMenuWrapper } from "@/features/post/post-menu";
 import { EmptyCard } from "@/shared/ui/empty";
 
-export async function ProfilePosts({ userId }: { userId: string }) {
-  const posts = await getPostByUserId(userId);
+export async function ProfilePosts({ username }: { username: string }) {
+  const posts = await getPostByUserId(username);
   return (
     <section>
       <h2 className="sr-only">Статьи </h2>
-      {!posts?.length ? (
+      {posts.length === 0 ? (
         <EmptyCard />
       ) : (
         <ul className="flex flex-col gap-2">

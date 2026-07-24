@@ -7,3 +7,7 @@ export type GlobalError = {
   code: ApiErrorCode;
   errors?: Record<string, Array<string>>;
 };
+
+export type GlobalSuccess = {
+  message: string;
+};

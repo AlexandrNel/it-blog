@@ -1,4 +1,4 @@
-import { PostList } from "@/entities/post";
+import { PostCard, PostList } from "@/entities/post";
 import { getPostsByTag } from "@/entities/post/server";
 import { Suspense } from "react";
 
@@ -11,7 +11,7 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
         <div className="mb-2 text-center">
           <h2 className="text-2xl font-bold">Статьи по тэгу: {tagValue}</h2>
         </div>
-        <Suspense>
+        <Suspense fallback={`Ищем статьи по тегу: ${tag}`}>
           <FetchTagsPosts tag={tag} />
         </Suspense>
       </div>
@@ -21,7 +21,20 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 
 async function FetchTagsPosts({ tag }: { tag: string }) {
   const posts = await getPostsByTag(tag);
+  const midIndex = posts.length / 2;
+  const columns = [posts.slice(0, midIndex), posts.slice(midIndex)];
+
   return (
-    <PostList classNameWrapper="lg:grid lg:grid-cols-2 flex flex-col gap-1" postList={posts} />
+    <div className="grid grid-cols-2 max-lg:flex gap-2 max-lg:flex-col">
+      {columns.map((col, i) => (
+        <ul key={`column-${i}`} className="flex flex-col gap-2">
+          {col.map((post) => (
+            <li key={post.id}>
+              <PostCard className="h-auto" key={post.id} post={post} />
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
   );
 }

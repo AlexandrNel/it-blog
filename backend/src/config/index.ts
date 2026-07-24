@@ -1,3 +1,4 @@
+import type { SignOptions } from 'jsonwebtoken'
 import { env } from './env.js'
 
 export const config = {
@@ -10,11 +11,11 @@ export const config = {
   redisPort: env.REDIS_PORT,
   jwt: {
     secret: env.JWT_SECRET,
-    expiresIn: '1d',
-  },
+    expiresIn: '30s',
+  } satisfies { secret: string; expiresIn: SignOptions['expiresIn'] },
   refresh: {
     secret: env.REFRESH_SECRET,
     expiresIn: '30d',
-  },
+  } satisfies { secret: string; expiresIn: SignOptions['expiresIn'] },
 } as const
-console.log(config);
+console.log(config)

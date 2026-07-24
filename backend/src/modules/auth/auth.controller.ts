@@ -24,25 +24,29 @@ const authService = new AuthService(new UserService(new ProfileService()))
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const data = await registerSchema.parseAsync(req.body)
-  const { user, token } = await authService.register(data)
+  const { token } = await authService.register(data)
+  res.cookie('refresh_token', token, cookieOptions)
   res.cookie('access_token', token, cookieOptions)
-  res.status(201).json(user)
+  res.status(200).json({ message: 'Успешная регистрация' })
 })
+
 export const login = asyncHandler(async (req: Request, res: Response) => {
-  const { user, token, refresh } = await authService.login(req.body)
-  res.cookie('access_token', token, cookieOptions)
+  const { token, refresh } = await authService.login(req.body)
   res.cookie('refresh_token', refresh, cookieOptions)
-  res.json(user)
+  res.cookie('access_token', token, cookieOptions)
+  res.json({ message: 'Успешная авторзация', token })
 })
-export const logout = asyncHandler(async (req: Request, res: Response) => {
-  res.clearCookie('access_token', baseCookieOptions)
+
+export const logout = asyncHandler(async (_req: Request, res: Response) => {
   res.clearCookie('refresh_token', baseCookieOptions)
-  res.status(200).json()
+  res.clearCookie('access_token', baseCookieOptions)
+  res.status(200).json({ message: 'Успешный выход' })
 })
+
 export const resfreshToken = asyncHandler(
   async (req: Request, res: Response) => {
     const refresh: string | undefined = req.cookies.refresh_token
-    if (!refresh) throw ApiError.ForbiddenError()
+    if (!refresh) throw ApiError.UnauthorizedError()
     const jwt = refreshToken(refresh)
     if (!jwt) {
       res.clearCookie('refresh_token', baseCookieOptions)
@@ -50,6 +54,6 @@ export const resfreshToken = asyncHandler(
       throw ApiError.UnauthorizedError()
     }
     res.cookie('access_token', jwt, cookieOptions)
-    res.json()
+    res.status(200).json({ message: 'Получен новый токен', token: jwt })
   }
 )

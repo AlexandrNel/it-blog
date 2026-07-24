@@ -61,6 +61,8 @@ export type PostRequest = {
   categoryId: string;
 };
 
+export type PostUpdateRequest = Partial<PostRequest>;
+
 export type ResponsePagination<T> = {
   data: T[];
   pages: number;

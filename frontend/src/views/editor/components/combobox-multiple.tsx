@@ -11,23 +11,18 @@ import {
   ComboboxValue,
   useComboboxAnchor,
 } from "@/shared/ui/combobox";
-import React from "react";
+import React, { ComponentProps } from "react";
 
-export function ComboboxMultiple({
-  value,
-  items,
-  onChange,
-  id,
-  ...props
-}: {
-  value: string[];
-  items: unknown[];
-  onChange: (v: string[], eventDetails: ComboboxRoot.ChangeEventDetails) => void;
-  id: string;
-}) {
-  const isMax = value.length >= 5;
+type ComboboxMultipleProps = {
+  combobox: ComponentProps<typeof Combobox>;
+  input: ComponentProps<typeof ComboboxChipsInput>;
+};
+
+export function ComboboxMultiple({ combobox, input }: ComboboxMultipleProps) {
+  const { value, items, onValueChange, id, ...comboboxProps } = combobox;
+
   const anchor = useComboboxAnchor();
-  const [open, setOpen] = React.useState(isMax);
+  const [open, setOpen] = React.useState(false);
   const height = React.useRef<number>(undefined);
 
   React.useLayoutEffect(() => {
@@ -39,15 +34,15 @@ export function ComboboxMultiple({
 
   return (
     <Combobox
-      {...props}
       id={id}
       multiple
       value={value}
-      onValueChange={(v, event) => onChange(v, event)}
+      onValueChange={onValueChange}
       autoHighlight
       items={items}
       onOpenChange={setOpen}
-      open={open && !isMax}
+      open={open}
+      {...comboboxProps}
     >
       <ComboboxChips ref={anchor} className="w-full px-3 py-0">
         <ComboboxValue>
@@ -62,7 +57,7 @@ export function ComboboxMultiple({
         </ComboboxValue>
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
-        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxEmpty>Ничего не найдено</ComboboxEmpty>
         <ComboboxList>
           {(item) => (
             <ComboboxItem key={item} value={item}>

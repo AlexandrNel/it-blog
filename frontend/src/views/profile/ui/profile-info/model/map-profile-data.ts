@@ -1,19 +1,17 @@
-import type { ProfileContact, Profile as ProfileInput } from "@/entities/profile";
+import type { ProfileContact, ProfileResponse } from "@/entities/profile";
 
 const contactKeys = ["site", "email"] as const;
 type ContactType = (typeof contactKeys)[number];
 
 type SocialType = keyof NonNullable<ProfileContact["links"]>;
 
-export type ProfileItem =
-  | { type: ContactType; value: string }
-  | { type: SocialType; value: string };
+export type ProfileItem = { type: ContactType; value: string } | { type: SocialType; value: string };
 
 export type ProfileOutput = {
   contacts: ProfileItem[];
 };
 
-export const mapProfileData = ({ contacts }: Pick<ProfileInput, "contacts">): ProfileOutput => {
+export const mapProfileData = ({ contacts }: Pick<ProfileResponse, "contacts">): ProfileOutput => {
   const result: ProfileItem[] = [];
 
   if (!contacts) {

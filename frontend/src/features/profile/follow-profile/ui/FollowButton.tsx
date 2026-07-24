@@ -7,7 +7,7 @@ import { ProfileQueries } from "@/entities/profile";
 import { useQuery } from "@tanstack/react-query";
 
 export const FollowButton = ({ userId, username }: { userId: string; username: string }) => {
-  const { data, isLoading } = useQuery(ProfileQueries.followStatus(username));
+  const { data, isLoading } = useQuery(ProfileQueries.followStatus(userId));
   const { mutate, isPending } = useUpdateFollowStatus(username);
   const loading = isLoading || isPending;
 

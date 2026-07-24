@@ -5,7 +5,7 @@ import { type DefaultError, useMutation, type UseMutationOptions } from "@tansta
 type CreatePostVariables = {
   postId: string;
   postSlug: string;
-  body: TPost.PostRequest;
+  body: TPost.PostUpdateRequest;
 };
 
 export type UseCreatePostOptions = Omit<

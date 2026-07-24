@@ -3,11 +3,11 @@ import { getCommentsByUser } from "@/entities/comment/server";
 import { EmptyCard } from "@/shared/ui/empty";
 import Link from "next/link";
 
-export default async function CommentsPage({ params }: PageProps<"/profile/[id]">) {
-  const id = (await params).id;
-  const comments = await getCommentsByUser(id);
+export default async function CommentsPage({ params }: PageProps<"/profile/[username]">) {
+  const { username } = await params;
+  const comments = await getCommentsByUser(username);
 
-  if (!comments || comments.length === 0) return <EmptyCard />;
+  if (comments.length === 0) return <EmptyCard />;
   return comments?.map((c) => (
     <CommentCard className="card p-4" key={c.id} comment={c}>
       <CommentButton asChild>

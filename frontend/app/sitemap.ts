@@ -14,20 +14,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // const { articles, profiles } = await getSitemapData();
 
   // const articlesSitemap: MetadataRoute.Sitemap = articles.map((item) => ({
-  // 	url: `${ENV.SITE_URL}${ROUTES.article(item.slug)}`,
+  // 	url: `${env.NEXT_PUBLIC_SITE_URL}${ROUTES.article(item.slug)}`,
   // 	lastModified: item.updatedAt,
   // 	changeFrequency: "weekly",
   // 	priority: 0.7,
   // }));
 
   // const profilesSitemap: MetadataRoute.Sitemap = profiles.map((item) => ({
-  // 	url: `${ENV.SITE_URL}${ROUTES.profile.user(item.username)}`,
+  // 	url: `${env.NEXT_PUBLIC_SITE_URL}${ROUTES.profile.user(item.username)}`,
   // 	lastModified: item.updatedAt,
   // 	changeFrequency: "weekly",
   // 	priority: 0.6,
   // }));
   const staticSitemap: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
-    url: `${env.SITE_URL}${route}`,
+    url: `${env.NEXT_PUBLIC_SITE_URL}${route}`,
     lastModified: now,
     changeFrequency: route === "/" ? "daily" : "weekly",
     priority: route === "/" ? 1 : 0.7,

@@ -1,6 +1,5 @@
 import { TagsPage } from "@/views/tags";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 export async function generateMetadata(props: PageProps<"/tags/[tag]">): Promise<Metadata> {
   const { tag } = await props.params;
@@ -21,9 +20,5 @@ export async function generateMetadata(props: PageProps<"/tags/[tag]">): Promise
 }
 
 export default async function Page({ params }: PageProps<"/tags/[tag]">) {
-  return (
-    <Suspense>
-      <TagsPage params={params} />
-    </Suspense>
-  );
+  return <TagsPage params={params} />;
 }

@@ -49,6 +49,9 @@ export const CheckAutWrapper = ({ children }: Props) => {
               render: ({ goTo }) => (
                 <RegisterForm
                   className="p-2"
+                  mutateOptions={{
+                    onSuccess: onSuccessAuth,
+                  }}
                   footer={
                     <p className="text-center">
                       <span className="text-center mr-1">Нет аккаунта?</span>

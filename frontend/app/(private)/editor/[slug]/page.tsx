@@ -1,4 +1,4 @@
-import { EditorPage } from "@/views/editor";
+import { PostUpdatePage } from "@/views/editor";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,4 +6,4 @@ export const metadata: Metadata = {
   description: "Редактирование черновика или опубликованной статьи в IT Blog.",
 };
 
-export default EditorPage;
+export default PostUpdatePage;

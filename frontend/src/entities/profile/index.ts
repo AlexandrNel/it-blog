@@ -3,7 +3,7 @@ export { ProfileQueries } from "./api/queries";
 export { profileFabricKeys } from "./model/consts";
 
 export type {
-  Profile,
+  ProfileResponse,
   ProfileContact,
   ProfileStatistic,
   ProfileMetaInfo,

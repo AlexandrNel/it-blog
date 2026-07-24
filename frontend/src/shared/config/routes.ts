@@ -5,7 +5,7 @@ export const routes = {
   search: (): Route => "/search",
   profile: {
     root: (): Route => "/profile",
-    user: (username: string): Route => `/profile/${username}` as Route,
+    posts: (username: string): Route => `/profile/${username}` as Route,
     about: (username: string): Route => `/profile/${username}/about` as Route,
     comments: (username: string): Route => `/profile/${username}/comments` as Route,
   },

@@ -1,15 +1,9 @@
-export type LoginResponse = {
-  id: string;
-  email: string;
-  avatar?: string;
-  displayName: string;
-  username: string;
-  role: "USER" | "ADMIN" | "MODERATOR";
-  createdAt: Date;
-  updatedAt: Date;
-};
+import type { GlobalSuccess } from "@/shared/api";
 
-export type RegisterResponse = LoginResponse;
+export type LoginResponse = GlobalSuccess & { token: string };
+
+export type RegisterResponse = GlobalSuccess;
+export type LogoutResponse = GlobalSuccess;
 
 export type LoginRequest = {
   login: string;
@@ -20,6 +14,8 @@ export type RegisterRequest = {
   email: string;
   password: string;
 };
+
+export type RefreshReponse = LoginResponse;
 
 export type CheckAuthResponse =
   | {

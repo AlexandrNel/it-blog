@@ -1,1 +1,2 @@
-export { default as EditorPage } from "./ui/editor-page";
+export { PostCreatePage } from "./ui/post-create-page";
+export { PostUpdatePage } from "./ui/post-update-page";

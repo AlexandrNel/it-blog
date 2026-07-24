@@ -1,4 +1,4 @@
-import { EditorPage } from "@/views/editor";
+import { PostCreatePage } from "@/views/editor";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,4 +9,4 @@ export const metadata: Metadata = {
   },
 };
 
-export default EditorPage;
+export default PostCreatePage;

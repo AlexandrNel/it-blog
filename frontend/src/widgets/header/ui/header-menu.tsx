@@ -4,17 +4,15 @@ import { LogIn, Search, SquarePen } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/shared/ui/button";
 import { ProfileMenu } from "@/features/profile/profile-menu";
-import { useQuery } from "@tanstack/react-query";
-import { UserQueries } from "@/entities/user";
-import { HoverPrefetchLink } from "@/shared/ui";
+
+import { HoverPrefetchLink, Skeleton } from "@/shared/ui";
+import { Suspense } from "react";
+import { useUser } from "@/entities/user";
 
 const hiddenClassName = "md:block hidden";
 
 export function HeaderMenu() {
-  const { data: user } = useQuery(UserQueries.getMe());
-  const pathname = usePathname();
-  const [path] = pathname.split("/").filter(Boolean);
-  const isEditPage = Boolean(path === "editor");
+  const { data: user, isLoading } = useUser();
 
   return (
     <div className="flex gap-2 items-center">
@@ -23,25 +21,16 @@ export function HeaderMenu() {
           <Search /> <span className={hiddenClassName}>Найти</span>
         </Link>
       </Button>
+
       {user ? (
-        isEditPage ? (
-          <>
-            <Button variant={"outline"} asChild>
-              <Link href={`/`}>Вернуться к ленте</Link>
-            </Button>
-            <ProfileMenu />
-          </>
-        ) : (
-          <>
-            <Button asChild variant={"outline"}>
-              <HoverPrefetchLink href={"/editor"}>
-                <SquarePen strokeWidth={1} />
-                <span className={hiddenClassName}>Написать статью</span>
-              </HoverPrefetchLink>
-            </Button>
-            <ProfileMenu />
-          </>
-        )
+        <Suspense fallback={"loading"}>
+          <EditorButtons />
+        </Suspense>
+      ) : isLoading ? (
+        <>
+          <Skeleton className="w-[170px] h-[40px]" />
+          <Skeleton className="size-9 rounded-full" />
+        </>
       ) : (
         <>
           <Button asChild variant={"outline"}>
@@ -56,5 +45,30 @@ export function HeaderMenu() {
         </>
       )}
     </div>
+  );
+}
+
+function EditorButtons() {
+  const pathname = usePathname();
+  const [path] = pathname.split("/").filter(Boolean);
+  const isEditPage = Boolean(path === "editor");
+
+  return isEditPage ? (
+    <>
+      <Button variant={"outline"} asChild>
+        <Link href={`/`}>Вернуться к ленте</Link>
+      </Button>
+      <ProfileMenu />
+    </>
+  ) : (
+    <>
+      <Button asChild variant={"outline"}>
+        <HoverPrefetchLink href={"/editor"}>
+          <SquarePen strokeWidth={1} />
+          <span className={hiddenClassName}>Написать статью</span>
+        </HoverPrefetchLink>
+      </Button>
+      <ProfileMenu />
+    </>
   );
 }

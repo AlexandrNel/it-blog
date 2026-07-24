@@ -4,21 +4,17 @@ import { ApiError } from '@/shared/lib/api-error.js'
 import { PrismaClientKnownRequestError } from '@/generated/prisma/internal/prismaNamespace.js'
 // TODO: убрать отсюда импорт prismaNamespace
 export class FollowService {
-  constructor(private userService: UserService) {}
-  getFollowingStatus(authorId: string, userId: string) {
-    return prisma.$transaction(async (tx) => {
-      const author = await this.userService.getUserById(tx, { id: authorId })
-      const user = await this.userService.getUserById(tx, { id: userId })
-      const isFollower = await prisma.follow.findUnique({
-        where: {
-          followerId_followingId: {
-            followerId: user.id,
-            followingId: author.id,
-          },
+  constructor() {}
+  async getFollowingStatus(authorId: string, userId: string) {
+    const isFollower = await prisma.follow.findUnique({
+      where: {
+        followerId_followingId: {
+          followerId: userId,
+          followingId: authorId,
         },
-      })
-      return !!isFollower
+      },
     })
+    return !!isFollower
   }
   async follow(userId: string, authorId: string) {
     if (userId === authorId)

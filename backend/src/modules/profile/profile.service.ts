@@ -8,7 +8,7 @@ import {
   type ProfileStatsDto,
   type UpdateProfileRequestDto,
 } from './profile.dto.js'
-import { toAuthor } from '../user/index.js'
+import { toAuthor } from '../user/user.transformer.js'
 import type { Prisma } from '@/generated/prisma/client.js'
 import { isIdOrUsername } from '@/shared/helpers/username-or-id.js'
 
@@ -31,6 +31,8 @@ const profileConnectionUserSelect = {
 } as const
 
 export class ProfileService {
+  constructor() {}
+
   private async getUserByIdOrUsername(value: string) {
     const type = isIdOrUsername(value)
     const user = await prisma.user.findUnique({
@@ -41,11 +43,11 @@ export class ProfileService {
     return user
   }
 
-  async getByUserIdOrUsername(value: string, userId?: string) {
+  async getByUserIdOrUsername(value: string) {
     const type = isIdOrUsername(value)
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
-      include: { profile: { select: profileSelect }, followers: !!userId },
+      include: { profile: { select: profileSelect } },
     })
     if (!user) throw ApiError.NotFoundError('Пользователь не найден')
 
@@ -55,10 +57,6 @@ export class ProfileService {
       bio: user.profile?.bio ?? '',
       profile: user.profile!,
       meta: {
-        isOwner: userId === user.id,
-        isFollow: userId
-          ? !!user.followers.find((f) => f.followerId === userId)
-          : false,
         isPublic: !!user.profile?.isPublic,
         isBlocked: user.isBlocked,
       },

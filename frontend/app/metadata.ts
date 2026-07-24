@@ -2,7 +2,7 @@ import { env } from "@/shared/config";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: env.SITE_URL,
+  metadataBase: env.NEXT_PUBLIC_SITE_URL,
   title: {
     default: "IT Blog",
     template: "%s | IT Blog",

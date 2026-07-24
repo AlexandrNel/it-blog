@@ -7,7 +7,10 @@ import type {
   UpdatePostRequestDto,
 } from './lib/post.validation.js'
 import { withUniqueSlug } from './helpers/with-unique-slug.js'
-import type { PostOrderByWithRelationInput } from '@/generated/prisma/models.js'
+import type {
+  PostOrderByWithRelationInput,
+  PostUpdateInput,
+} from '@/generated/prisma/models.js'
 import { getDateFilter } from './helpers/get-date-filter.js'
 
 export class PostRepository {
@@ -127,31 +130,47 @@ export class PostRepository {
     tagsToRemove: string[]
   }) => {
     const {
-      dataToUpdate: { slug, categoryId, tagIds, previewImage, ...rest },
+      dataToUpdate: { slug, previewImage, tagIds, categoryId, ...rest },
       postId,
       tagsToAdd,
       tagsToRemove,
     } = data
 
+    const updateData: PostUpdateInput = {
+      ...rest,
+      ...(categoryId && { category: { connect: { id: categoryId } } }),
+      ...(previewImage === undefined
+        ? {}
+        : {
+            previewImageUrl: previewImage?.url ?? null,
+            previewImagePosition: previewImage?.position ?? { x: 0, y: 0 },
+          }),
+    }
     // TODO: вынести withUniqueSlug
     return prisma.$transaction(async (tx) => {
-      await withUniqueSlug(slug as any, async (newSlug) => {
+      if (slug) {
+        await withUniqueSlug(slug.toString(), async (newSlug) => {
+          await tx.post.update({
+            where: { id: data.postId },
+            data: updateData,
+          })
+        })
+      } else {
         await tx.post.update({
           where: { id: data.postId },
-          data: {
-            slug: newSlug,
-            category: { connect: { id: categoryId } },
-            ...(previewImage ? {previewImageUrl: previewImage.url, previewImagePosition: previewImage.position}:{ previewImageUrl: null, previewImagePosition: {x: 0, y: 0}}),
-            ...rest,
-          },
+          data: updateData,
         })
-      })
-      await tx.postTag.createMany({
-        data: tagsToAdd.map((tagId) => ({ postId, tagId })),
-      })
-      await tx.postTag.deleteMany({
-        where: { postId, tagId: { in: tagsToRemove } },
-      })
+      }
+      if (tagsToAdd.length > 0) {
+        await tx.postTag.createMany({
+          data: tagsToAdd.map((tagId) => ({ postId, tagId })),
+        })
+      }
+      if (tagsToRemove.length > 0) {
+        await tx.postTag.deleteMany({
+          where: { postId, tagId: { in: tagsToRemove } },
+        })
+      }
 
       return tx.post.findUnique({
         where: { id: postId },

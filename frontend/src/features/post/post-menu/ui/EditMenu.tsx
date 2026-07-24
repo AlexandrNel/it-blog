@@ -12,9 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { routes } from "@/shared/config";
-import { useQuery } from "@tanstack/react-query";
-import { UserQueries } from "@/entities/user";
 import { useLayoutEffect, useState } from "react";
+import { useUser } from "@/entities/user";
 
 interface Props extends BaseProps {
   slug: string;
@@ -23,7 +22,7 @@ interface Props extends BaseProps {
 
 export function EditMenu({ className, authorId, slug }: Props) {
   const [mounted, setMounted] = useState(false);
-  const { data: user } = useQuery(UserQueries.getMe());
+  const { data: user } = useUser();
 
   useLayoutEffect(() => {
     setMounted(true);

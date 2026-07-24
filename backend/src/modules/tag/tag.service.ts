@@ -1,5 +1,6 @@
 import { prisma } from '@/shared/lib/prisma.js'
 import type { Role } from '@/generated/prisma/enums.js'
+import type { TagFindManyArgs } from '@/generated/prisma/models.js'
 
 const tagSelect = {
   id: true,
@@ -8,14 +9,9 @@ const tagSelect = {
 }
 
 export class TagService {
-  private getRoleFilter(role?: Role) {
-    if (role === 'USER' || !role) {
-      return {
-        NOT: { availableFor: { has: 'ADMIN' as Role } },
-        category: { none: { availableFor: { has: 'ADMIN' as Role } } },
-      }
-    }
-    return {}
+  private getRoleFilter(role?: Role): TagFindManyArgs['where'] {
+    if (role === 'MODERATOR' || role === 'ADMIN') return {}
+    return { availableFor: { has: 'USER' } }
   }
   async getAll(role?: Role) {
     return prisma.tag.findMany({

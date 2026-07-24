@@ -43,7 +43,7 @@ export function UserCard({ className, asLink = false, data }: PropsWithChildren<
       </ItemMedia>
       <ItemContent className="flex flex-col justify-between">
         <ItemTitle>
-          <Title href={routes.profile.user(username)} asLink={asLink} data={formattedData} />
+          <Title href={routes.profile.posts(username)} asLink={asLink} data={formattedData} />
         </ItemTitle>
         <ItemDescription>
           <Description data={formattedData} />

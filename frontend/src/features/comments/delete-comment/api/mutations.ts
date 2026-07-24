@@ -1,15 +1,7 @@
 import { CommentAPI, commentFabricKeys } from "@/entities/comment";
-import {
-  type DefaultError,
-  type UseMutationOptions,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { type DefaultError, type UseMutationOptions, useMutation, useQueryClient } from "@tanstack/react-query";
 
-export type UseDeleteCommentOptions = Omit<
-  UseMutationOptions<unknown, DefaultError, string>,
-  "mutationFn"
->;
+export type UseDeleteCommentOptions = Omit<UseMutationOptions<unknown, DefaultError, string>, "mutationFn">;
 
 export const useDeleteComment = ({ onSuccess, ...rest }: UseDeleteCommentOptions = {}) => {
   const queryClient = useQueryClient();
@@ -20,5 +12,8 @@ export const useDeleteComment = ({ onSuccess, ...rest }: UseDeleteCommentOptions
       queryClient.invalidateQueries({ queryKey: commentFabricKeys.list() });
     },
     ...rest,
+    meta: {
+      skipGlobalErrorToast: true,
+    },
   });
 };

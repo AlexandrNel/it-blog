@@ -1,6 +1,6 @@
 "use client";
 
-import { UserAvatar, UserCard, UserQueries } from "@/entities/user";
+import { UserAvatar, UserCard, useUser } from "@/entities/user";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,12 +11,11 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { LogOut, Settings2, UserRound } from "lucide-react";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
 import { LogoutButton } from "@/features/auth/logout";
 import { useState } from "react";
 
 export function ProfileMenu() {
-  const { data: user } = useQuery(UserQueries.getMe());
+  const { data: user } = useUser();
   const [open, setOpen] = useState(false);
 
   if (!user) return null;

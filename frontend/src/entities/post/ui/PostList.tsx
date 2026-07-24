@@ -1,23 +1,22 @@
-import type React from "react";
 import type { PostWithStatistic } from "../model/types";
-import { cn } from "@/shared/lib/utils";
+import { classNames } from "@/shared/lib/utils";
 import { PostCard } from "./PostCard";
 
 interface Props {
-  classNamePost?: string | null;
+  classNamePost?: string;
   classNameWrapper?: string;
   postList?: PostWithStatistic[];
 }
 
-export const PostList: React.FC<Props> = ({ classNamePost, classNameWrapper, postList }) => {
+export const PostList = ({ classNamePost = "", classNameWrapper = "", postList }: Props) => {
   return (
     <>
       {!postList || postList.length === 0 ? (
         <div className="text-center">Ничего не найдено</div>
       ) : (
-        <ul className={cn(classNameWrapper)}>
+        <ul className={classNameWrapper}>
           {postList.map((post) => (
-            <li className={cn("mb-2", classNamePost)} key={post.id}>
+            <li className={classNames("mb-2", {}, [classNamePost])} key={post.id}>
               <PostCard post={post} />
             </li>
           ))}

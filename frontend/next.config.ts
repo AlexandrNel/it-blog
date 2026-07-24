@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   typedRoutes: true,
-  images: { remotePatterns: [{ hostname: new URL(env.API_URL).hostname }] },
+  images: { remotePatterns: [{ hostname: new URL(env.NEXT_PUBLIC_API_URL).hostname }] },
   output: "standalone",
 };
 

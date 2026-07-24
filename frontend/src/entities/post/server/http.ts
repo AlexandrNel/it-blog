@@ -11,7 +11,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import { CACHE_TAGS } from "@/shared/config/cache-keys";
 
 export const getAllPosts = cache(async (sortBy: string = "new", page = 1, limit = 10) => {
-  const res = await serverSafeFetch<ResponsePagination<PostWithStatisticResponse>>(
+  const res = await serverFetch<ResponsePagination<PostWithStatisticResponse>>(
     `/posts?sortBy=${sortBy}&limit=${limit}&page=${page}`,
   );
   return res.data;
@@ -19,10 +19,12 @@ export const getAllPosts = cache(async (sortBy: string = "new", page = 1, limit 
 
 export const getPostBySlug = cache(async (slug: string) => {
   "use cache";
-  cacheLife("max");
-  cacheTag(CACHE_TAGS.post(slug));
-
+  cacheLife("seconds");
   const res = await serverSafeFetch<PostResponse>(`/posts/${slug}`);
+  if (res.data) {
+    cacheLife("max");
+    cacheTag(CACHE_TAGS.post(slug));
+  }
   return res.data;
 });
 
@@ -36,7 +38,10 @@ export const getPostById = async (id: string) => {
   return res.data;
 };
 
+/**
+ * @param userId принимает id или username
+ */
 export const getPostByUserId = async (userId: string) => {
-  const res = await serverSafeFetch<PostListWithStatisticResponse>(`/posts/user/${userId}`);
+  const res = await serverFetch<PostListWithStatisticResponse>(`/posts/user/${userId}`);
   return res.data;
 };

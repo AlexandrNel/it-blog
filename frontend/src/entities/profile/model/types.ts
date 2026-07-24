@@ -28,7 +28,7 @@ export type ProfileResponse = {
   author: Author;
   contacts: ProfileContact | null;
   bio: string;
-  meta: ProfileMetaInfo;
+  meta: Pick<ProfileMetaInfo, "isBlocked" | "isPublic">;
 };
 
 export type ProfileConnectionKind = "followers" | "following";

@@ -7,6 +7,7 @@ export class TagQueries {
     return queryOptions({
       queryKey: tagFabricKeys.list(),
       queryFn: () => TagAPI.getAll(),
+      staleTime: Infinity,
     });
   }
 }

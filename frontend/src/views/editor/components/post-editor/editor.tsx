@@ -27,12 +27,12 @@ import { CharacterCount } from "@tiptap/extensions";
 import type { CSSProperties, ReactNode } from "react";
 import { EditorToolbar, type ToolbarOptions } from "./toolbar";
 import { INITIAL_CONTENT } from "@/shared/ui/tiptap-editor/consts";
-import { cn } from "@/shared/lib/utils";
 
 interface EditorProps {
   content?: Content;
   onChange?: (editor: Editor) => void;
   onMount?: (editor: Editor) => void;
+  onUnmount?: (editor: Editor) => void;
   options?: { toolbar?: ToolbarOptions; limit?: number; editor?: UseEditorOptions };
   classNameContentWraper?: string;
   toolbarEnable?: boolean;
@@ -53,6 +53,7 @@ export default function EditorUI({
   style,
   onChange,
   onMount,
+  onUnmount,
 }: EditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
@@ -72,6 +73,9 @@ export default function EditorUI({
     onUpdate: (e) => {
       onChange?.(e.editor);
     },
+    onUnmount: (e) => {
+      onUnmount?.(e.editor);
+    },
     content,
     ...options?.editor,
   });
@@ -80,7 +84,7 @@ export default function EditorUI({
     <div className={"editor-wrapper"}>
       <EditorContext.Provider value={{ editor }}>
         {toolbarEnable && <EditorToolbar options={options?.toolbar} />}
-        <div className={cn(classNameContentWraper)}>
+        <div className={classNameContentWraper}>
           {header}
           <EditorContent
             style={style}
@@ -91,7 +95,7 @@ export default function EditorUI({
           <CharacterCountComponent editor={editor} limit={options?.limit} />
           {children}
         </div>
-        {footer && <div className={cn("mt-2")}>{footer}</div>}
+        {footer && <div className={"mt-2"}>{footer}</div>}
       </EditorContext.Provider>
     </div>
   );

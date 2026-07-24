@@ -1,10 +1,9 @@
 "use client";
-import { UserQueries } from "@/entities/user";
-import { useQuery } from "@tanstack/react-query";
+import { useUser } from "@/entities/user";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useCheckAuth() {
-  const { data: user } = useQuery(UserQueries.getMe());
+  const { data: user } = useUser();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,10 +18,10 @@ export function useCheckAuth() {
     [user],
   );
 
-  const onSuccessAuth = () => {
+  const onSuccessAuth = useCallback(() => {
     setIsOpen(false);
     wrapperRef.current?.removeEventListener("click", handleClick);
-  };
+  }, [handleClick]);
 
   useEffect(() => {
     const el = wrapperRef.current;

@@ -4,20 +4,36 @@ import { verifyToken } from '@/shared/lib/utils/jwt.js'
 
 export const authMiddleware = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
-  const token: string | undefined = req.cookies.access_token
-  if (!token) throw ApiError.UnauthorizedError()
-  const payload = verifyToken(token)
+  const authHeader: string | undefined = req.headers.authorization
+  const cookieToken: string | undefined = req.cookies?.access_token
 
-  if (!payload) {
-    res.clearCookie('access_token')
-    throw ApiError.UnauthorizedError('Токен не действителен')
+  let accessToken: string | undefined
+
+  if (authHeader) {
+    const [scheme, token] = authHeader.split(' ')
+    if (scheme?.toLowerCase() === 'bearer' && token) {
+      accessToken = token
+    }
   }
 
-  req.user = payload
-  next()
+  if (!accessToken && cookieToken) {
+    accessToken = cookieToken
+  }
+
+  if (accessToken) {
+    const payload = verifyToken(accessToken)
+
+    if (!payload) {
+      throw ApiError.UnauthorizedError('Токен не действителен')
+    }
+    req.user = payload
+    return next()
+  } else {
+    throw ApiError.UnauthorizedError()
+  }
 }
 
 export function getUser(req: Request) {

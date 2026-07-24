@@ -14,12 +14,12 @@ import type { UseRegisterOptions } from "../api/use-register";
 import { useRegisterForm } from "../model/use-register-form";
 
 type RegisterFormProps = BaseProps & {
-  mutationOptions?: UseRegisterOptions;
+  mutateOptions?: UseRegisterOptions;
   footer?: ReactNode;
 };
 
-export function RegisterForm({ className, footer = null, mutationOptions }: RegisterFormProps) {
-  const { form, handleSubmit, error, isPending } = useRegisterForm(mutationOptions);
+export function RegisterForm({ className, footer = null, mutateOptions }: RegisterFormProps) {
+  const { form, handleSubmit, error, isPending } = useRegisterForm(mutateOptions);
   const {
     formState: { errors },
   } = form;
@@ -48,7 +48,7 @@ export function RegisterForm({ className, footer = null, mutationOptions }: Regi
               {...form.register("password")}
             />
           </FormField>
-          {error?.message && <FieldError aria-invalid>{error?.message}</FieldError>}
+          {errors.root && <FieldError aria-invalid>{errors.root.message}</FieldError>}
         </FieldGroup>
         <Button disabled={isPending} className="w-full mt-6" type="submit">
           Создать аккаунт
