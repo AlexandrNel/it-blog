@@ -1,4 +1,4 @@
-import { PostCard, PostList } from "@/entities/post";
+import { PostCard } from "@/entities/post";
 import { getPostsByTag } from "@/entities/post/server";
 import { Suspense } from "react";
 
@@ -22,7 +22,7 @@ export async function TagsPage({ params }: Pick<PageProps<"/tags/[tag]">, "param
 async function FetchTagsPosts({ tag }: { tag: string }) {
   const posts = await getPostsByTag(tag);
   const midIndex = posts.length / 2;
-  const columns = [posts.slice(0, midIndex), posts.slice(midIndex)];
+  const columns = posts.length <= 1 ? [posts] : [posts.slice(0, midIndex), posts.slice(midIndex)];
 
   return (
     <div className="grid grid-cols-2 max-lg:flex gap-2 max-lg:flex-col">
