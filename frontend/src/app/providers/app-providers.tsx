@@ -3,6 +3,7 @@ import { QueryProvider } from "./query-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { PropsWithChildren } from "react";
 import { UserProvider } from "./user-provider";
+import { CookieBanner } from "@/features/cookie-consent";
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
@@ -10,6 +11,7 @@ export function AppProviders({ children }: PropsWithChildren) {
       <NuqsAdapter>
         <UserProvider>{children}</UserProvider>
         <Toaster />
+        <CookieBanner />
       </NuqsAdapter>
     </QueryProvider>
   );
