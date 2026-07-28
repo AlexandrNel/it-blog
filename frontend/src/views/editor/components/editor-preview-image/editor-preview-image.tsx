@@ -1,17 +1,8 @@
 "use client";
 import type { BaseProps } from "@/shared/types/components";
 import { useRef, useState } from "react";
-import dynamic from "next/dynamic";
-import { Spinner } from "@/shared/ui";
-
-const ImageEditor = dynamic(() => import("./image-editor").then((mod) => mod.ImageEditor), {
-  ssr: false,
-  loading: () => <Spinner />,
-});
-const UploadZone = dynamic(() => import("./upload-zone").then((mod) => mod.UploadZone), {
-  ssr: false,
-  loading: () => <Spinner />,
-});
+import { UploadZone } from "./upload-zone";
+import { ImageEditor } from "./image-editor";
 
 export type ImageType = { url: string; position: { x: number; y: number } };
 
