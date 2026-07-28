@@ -9,6 +9,7 @@ export type UserResponse = {
   role: "USER" | "ADMIN" | "MODERATOR";
   createdAt: string;
   updatedAt: string;
+  demo?: boolean;
 };
 
 export type GenerateNicknameResponse = { username: string };
