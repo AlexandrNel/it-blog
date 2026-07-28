@@ -1,6 +1,6 @@
 import { prisma } from '@/shared/lib/prisma.js'
 import bcrypt from 'bcrypt'
-import { signToken } from '@/shared/lib/utils/jwt.js'
+import { refreshToken, signToken } from '@/shared/lib/utils/jwt.js'
 import { ApiError } from '@/shared/lib/api-error.js'
 import {
   loginSchema,
@@ -15,11 +15,11 @@ import {
 } from '@/shared/lib/utils/is-prisma-error.js'
 
 export class AuthService {
-  constructor(public userSerive: UserService) {}
+  constructor(public userService: UserService) {}
 
   async register(data: RegisterDataType) {
     const { email, password } = data
-    const username = await this.userSerive.generateUniqueUsername()
+    const username = await this.userService.generateUniqueUsername()
     const salt = await bcrypt.genSalt(10)
     const passwordHash = await bcrypt.hash(password, salt)
 
@@ -39,9 +39,10 @@ export class AuthService {
         await tx.profile.create({ data: { userId: user.id } })
         return user
       })
-
-      const token = signToken({ id: newUser.id, role: newUser.role })
-      return { token }
+      const payload = { id: newUser.id, role: newUser.role }
+      const token = signToken(payload)
+      const refresh = signToken(payload, 'refresh')
+      return { token, refresh }
     } catch (error) {
       if (
         isPrismaError(error) &&
@@ -66,5 +67,14 @@ export class AuthService {
     const token = signToken(payload)
     const refresh = signToken(payload, 'refresh')
     return { token, refresh }
+  }
+
+  async demoLogin() {
+    const user = await this.userService.createDemoUser()
+    const payload = { id: user.id, role: user.role }
+    const token = signToken(payload)
+    const refresh = signToken(payload, 'refresh')
+
+    return { user, token, refresh }
   }
 }

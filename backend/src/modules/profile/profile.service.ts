@@ -182,7 +182,6 @@ export class ProfileService {
 
   async getMetaById(value: string, viewerUserId?: string) {
     const type = isIdOrUsername(value)
-
     const user = await prisma.user.findUnique({
       where: type === 'username' ? { username: value } : { id: value },
       include: { profile: true, followers: true },

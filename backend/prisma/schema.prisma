@@ -26,6 +26,7 @@ model User {
   posts           Post[]
   profile         Profile?
 
+  demo                  Demo?          @relation("DemoToUser")
   followers             Follow[]       @relation("UserFollowers")
   following             Follow[]       @relation("UserFollowing")
   receivedNotifications Notification[] @relation("NotificationRecipient")
@@ -181,6 +182,17 @@ model Notification {
   @@index([recipientId, isRead])
   @@index([recipientId, createdAt])
   @@map("notifications")
+}
+
+model Demo {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation("DemoToUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("demo")
 }
 
 enum EntityType {

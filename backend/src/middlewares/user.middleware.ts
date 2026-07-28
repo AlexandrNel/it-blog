@@ -9,13 +9,18 @@ export const withUserMiddleware = (
   const token: string | undefined = req.cookies.access_token
   if (token) {
     const payload = verifyToken(token)
-    console.log(payload, token);
     if (payload) {
       req.user = payload
     }
   }
   next()
 }
+
+export const demoUserMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {}
 
 export function getUserSafe(req: Request) {
   return req.user

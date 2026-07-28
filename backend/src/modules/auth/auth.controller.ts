@@ -7,6 +7,7 @@ import { asyncHandler } from '@/shared/helpers/asyncHandler.js'
 import { UserService } from '../user/user.service.js'
 import { ProfileService } from '../profile/profile.service.js'
 import { config } from '@/config/index.js'
+import { getUserSafe } from '@/middlewares/user.middleware.js'
 
 const baseCookieOptions: CookieOptions = {
   httpOnly: config.isProduction,
@@ -24,8 +25,8 @@ const authService = new AuthService(new UserService(new ProfileService()))
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const data = await registerSchema.parseAsync(req.body)
-  const { token } = await authService.register(data)
-  res.cookie('refresh_token', token, cookieOptions)
+  const { token, refresh } = await authService.register(data)
+  res.cookie('refresh_token', refresh, cookieOptions)
   res.cookie('access_token', token, cookieOptions)
   res.status(200).json({ message: 'Успешная регистрация' })
 })
@@ -57,3 +58,16 @@ export const resfreshToken = asyncHandler(
     res.status(200).json({ message: 'Получен новый токен', token: jwt })
   }
 )
+
+export const demoLogin = asyncHandler(async (req, res) => {
+  const payload = getUserSafe(req)
+  if (payload) {
+    throw new ApiError('Сначала выйдите, чтобы создать демо аккаунт', 409)
+  }
+  const { user, token, refresh } = await authService.demoLogin()
+  res.cookie('refresh_token', refresh, cookieOptions)
+  res.cookie('access_token', token, cookieOptions)
+  res
+    .status(200)
+    .json({ message: 'Вы успешно вошли в демо аккаунт', user: user })
+})
