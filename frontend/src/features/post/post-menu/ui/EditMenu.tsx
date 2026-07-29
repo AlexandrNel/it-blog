@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { routes } from "@/shared/config";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/entities/user";
 
 interface Props extends BaseProps {
@@ -24,9 +24,11 @@ export function EditMenu({ className, authorId, slug }: Props) {
   const [mounted, setMounted] = useState(false);
   const { data: user } = useUser();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
+  console.log(user?.id);
+  console.log(authorId);
   if (!mounted) return null;
   if (user?.id !== authorId) return null;
 

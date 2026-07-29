@@ -12,7 +12,6 @@ const editorSteps = [EditoWritePage, EditorSettingsPage];
 export function PostEditor({ post }: { post?: Post }) {
   const page = useEditorStore((state) => state.page);
   const form = usePostEditForm(post);
-
   const Component = editorSteps[page];
 
   return (

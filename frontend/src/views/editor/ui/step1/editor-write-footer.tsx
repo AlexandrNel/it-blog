@@ -18,13 +18,8 @@ export const EditorWriteFooter = ({ className }: BaseProps) => {
   };
 
   return (
-    <div className={className}>
-      <ol className="list-disc pl-5  text-sm text-destructive  mb-2">
-        {errors.contentSize && <li>{errors.contentSize.message}</li>}
-      </ol>
-      <Button disabled={disabled} onClick={handleNext}>
-        Далее
-      </Button>
-    </div>
+    <Button className={className} disabled={disabled} onClick={handleNext}>
+      Далее
+    </Button>
   );
 };

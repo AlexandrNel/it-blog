@@ -14,7 +14,7 @@ export async function ProfilePosts({ username }: { username: string }) {
         <ul className="flex flex-col gap-2">
           {posts?.map((p) => (
             <li key={p.id}>
-              <EditMenuWrapper authorId={p.id} slug={p.slug}>
+              <EditMenuWrapper authorId={p.author.id} slug={p.slug}>
                 <PostCard post={p} />
               </EditMenuWrapper>
             </li>

@@ -10,10 +10,10 @@ import type { CreatePostValues, EditPostValues } from "./schema";
 import { uploadImage } from "@/shared/api/uploadImage";
 import { routes } from "@/shared/config";
 import { useCreatePost } from "../api/use-create-post";
-import { useUpdatePost } from "../api/use-update-post";
 import { applyApiFieldErrors } from "@/shared/lib/zod";
 import { useFormContext, useFormState } from "react-hook-form";
 import type { PostUpdateRequest } from "@/entities/post/model/types";
+import { useUpdatePost } from "../api/use-update-post";
 
 export function useSubmitPost() {
   const router = useRouter();
@@ -30,12 +30,10 @@ export function useSubmitPost() {
 
   const formState = useFormState({ control });
 
-  const { dirtyFields, isDirty, errors } = formState;
+  const { dirtyFields, isDirty } = formState;
 
   const submit = async () => {
     const isFormValid = await trigger();
-    console.log("submit");
-    console.log(isFormValid, isDirty, errors);
 
     if (!isFormValid || !isDirty) return;
     const data = getValues();

@@ -8,6 +8,25 @@ import { useEffect } from "react";
 import { useEditorStore } from "./use-editor-store";
 import { CreatePostSchema, type CreatePostValues } from "./schema";
 
+function getDefaultValues(post?: Post) {
+  return {
+    previewContentSize: 0,
+    contentSize: 0,
+    category: post?.category ?? {
+      id: "",
+      key: "",
+      value: "",
+    },
+    content: post?.content ? JSON.parse(post.content) : INITIAL_CONTENT,
+    description: post?.desc ?? "",
+    previewContent: post?.previewContent ? JSON.parse(post.previewContent) : INITIAL_CONTENT,
+    tags: post?.tags ?? [],
+    title: post?.title ?? "",
+    previewImage: post?.previewImage ?? null,
+    file: null,
+  };
+}
+
 const INITIAL_CONTENT: JSONContent = {
   type: "doc",
   content: [
@@ -28,37 +47,17 @@ export function usePostEditForm(post?: Post) {
     resolver: zodResolver(CreatePostSchema),
     shouldUnregister: false,
     mode: "onChange",
-    defaultValues: {
-      previewContentSize: 0,
-      contentSize: 0,
-      category: post?.category ?? {
-        id: "",
-        key: "",
-        value: "",
-      },
-      content: post?.content ? JSON.parse(post.content) : INITIAL_CONTENT,
-      description: post?.desc ?? "",
-      previewContent: post?.previewContent ? JSON.parse(post.previewContent) : INITIAL_CONTENT,
-      tags: post?.tags ?? [],
-      title: post?.title ?? "",
-      previewImage: post?.previewImage ?? null,
-      file: null,
-    },
+    defaultValues: getDefaultValues(post),
   });
 
   useEffect(() => {
     if (post) {
-      setPost({
-        postId: post.id,
-        postSlug: post.slug,
-      });
+      setPost({ postId: post.id, postSlug: post.slug });
     }
     return () => {
       reset();
-      form.reset();
-      form.unregister();
     };
-  }, [reset, post, setPost, form.reset, form.unregister]);
+  }, [reset, setPost, post]);
 
   return form;
 }

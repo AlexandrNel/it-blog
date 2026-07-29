@@ -9,6 +9,7 @@ import type {
 import { withUniqueSlug } from './helpers/with-unique-slug.js'
 import type {
   PostOrderByWithRelationInput,
+  PostUpdateArgs,
   PostUpdateInput,
 } from '@/generated/prisma/models.js'
 import { getDateFilter } from './helpers/get-date-filter.js'
@@ -136,7 +137,7 @@ export class PostRepository {
       tagsToRemove,
     } = data
 
-    const updateData: PostUpdateInput = {
+    const updateData: PostUpdateArgs['data'] = {
       ...rest,
       ...(categoryId && { category: { connect: { id: categoryId } } }),
       ...(previewImage === undefined
@@ -152,7 +153,10 @@ export class PostRepository {
         await withUniqueSlug(slug.toString(), async (newSlug) => {
           await tx.post.update({
             where: { id: data.postId },
-            data: updateData,
+            data: {
+              ...updateData,
+              slug: newSlug,
+            },
           })
         })
       } else {

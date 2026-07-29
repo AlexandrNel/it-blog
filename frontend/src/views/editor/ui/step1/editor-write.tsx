@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import type { Editor as EditorType } from "@tiptap/core";
 import type { BaseProps } from "@/shared/types/components";
 import { Field, FieldError, Skeleton } from "@/shared/ui";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useFormState } from "react-hook-form";
 import type { EditPostValues } from "../../model/schema";
 import { useParams } from "next/navigation";
 import { useCallback } from "react";
@@ -25,6 +25,7 @@ export function EditoWritePage({ className }: BaseProps) {
   const params = useParams<{ slug: string }>();
 
   const { control, setValue, getValues } = useFormContext<EditPostValues>();
+  const { errors } = useFormState<EditPostValues>({ name: "contentSize" });
 
   const updateStore = useCallback(
     (editor: EditorType) => {
@@ -37,13 +38,6 @@ export function EditoWritePage({ className }: BaseProps) {
   const handleMount = useCallback(
     (editor: EditorType) => {
       setValue("contentSize", editor.storage.characterCount.characters());
-    },
-    [setValue],
-  );
-
-  const handleUnmount = useCallback(
-    (editor: EditorType) => {
-      setValue("content", editor.getJSON());
     },
     [setValue],
   );
@@ -76,9 +70,11 @@ export function EditoWritePage({ className }: BaseProps) {
           }
           onMount={handleMount}
           onChange={updateStore}
-          onUnmount={handleUnmount}
         ></Editor>
-        <EditorWriteFooter className="mx-6 pb-4 mt-2" />
+        <div className="mx-6 pb-4 mt-2">
+          <FieldError className="mb-2" errors={[errors.contentSize]} />
+          <EditorWriteFooter />
+        </div>
       </div>
     </Container>
   );

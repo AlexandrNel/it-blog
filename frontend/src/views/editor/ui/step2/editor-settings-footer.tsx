@@ -7,7 +7,6 @@ import { DeletePostButton } from "@/features/post/post-delete";
 
 export function PostSettingsFooter() {
   const prevPage = useEditorStore((s) => s.prevPage);
-
   const { submit, id, disabled } = useSubmitPost();
 
   return (

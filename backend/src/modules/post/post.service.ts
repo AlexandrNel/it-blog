@@ -11,7 +11,6 @@ import { toFull, toPreview, toStatistic } from './lib/post.transformer.js'
 import { withUniqueSlug } from './helpers/with-unique-slug.js'
 import { PostRepository } from './post.repository.js'
 import { isIdOrUsername } from '@/shared/helpers/username-or-id.js'
-import type { PostUpdateInput } from '@/generated/prisma/models.js'
 
 // ─── Service ─────────────────────────────────────────────────────────────────
 
@@ -155,7 +154,7 @@ export class PostService {
       typeof data.previewImage
     )
     const dataToUpdate: UpdatePostRequestDto & { slug?: string } = {
-      ...(data.categoryId && { category: data.categoryId }),
+      ...(data.categoryId && { categoryId: data.categoryId }),
       ...(data.content && { content: data.content }),
       ...(data.desc && { desc: data.desc }),
       ...(data.title && { title: data.title }),
