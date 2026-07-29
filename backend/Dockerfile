@@ -21,7 +21,6 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 COPY . .
 
-
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/dummy"
 RUN pnpm prisma generate
 RUN pnpm build
@@ -33,8 +32,10 @@ FROM node:24-alpine AS runner
 
 WORKDIR /app
 
+ARG PORT
+
 ENV NODE_ENV=production
-ENV PORT=${PORT:-1010}
+ENV PORT=${PORT:-3005}
 
 RUN addgroup -S nodejs && adduser -S backend -G nodejs
 RUN mkdir -p uploads && chown backend:nodejs uploads
