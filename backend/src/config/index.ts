@@ -18,4 +18,3 @@ export const config = {
     expiresIn: '30d',
   } satisfies { secret: string; expiresIn: SignOptions['expiresIn'] },
 } as const
-console.log(config)
