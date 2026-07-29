@@ -5,7 +5,7 @@ export const config = {
   isProduction: env.NODE_ENV === 'production',
   port: env.PORT,
   publicUrl: env.PUBLIC_URL,
-  corsOrigin: env.CORS_ORIGIN ?? env.PUBLIC_URL,
+  corsOrigin: env.CORS_ORIGIN,
   databaseUrl: env.DATABASE_URL,
   redisHost: env.REDIS_HOST,
   redisPort: env.REDIS_PORT,
@@ -18,3 +18,5 @@ export const config = {
     expiresIn: '30d',
   } satisfies { secret: string; expiresIn: SignOptions['expiresIn'] },
 } as const
+
+console.log(config)
