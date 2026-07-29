@@ -21,18 +21,22 @@ const app = express()
 app.set('trust proxy', true)
 
 app.use(
-  express.json(),
-  cookieParser(),
   cors({
     origin: config.corsOrigin,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'Cookie',
+    ],
     credentials: true,
-  })
+  }),
+  express.json(),
+  cookieParser()
 )
 
 app.use(
-  '/api',
   authRouter,
   postRouter,
   commentsRouter,

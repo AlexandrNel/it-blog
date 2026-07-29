@@ -5,6 +5,5 @@
     reverse_proxy frontend:3000
 }
 api.{$DOMAIN} {
-
-    reverse_proxy /api/* backend:3005
+    reverse_proxy backend:3005
 }
