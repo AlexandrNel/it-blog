@@ -142,6 +142,9 @@
     h6 {
       @apply text-base font-bold leading-tight;
     }
+    *:not(pre) > code {
+      @apply bg-[#0f16240d] text-[#23252ade] font-normal px-1 py-px rounded-sm border  after:content-[""] before:content-[""];
+    }
   }
 }
 

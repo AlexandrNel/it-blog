@@ -8,6 +8,8 @@ const tagService = new TagService()
 
 export const getAll = asyncHandler(async (req: Request, res: Response) => {
   const user = getUserSafe(req)
+  console.log(user)
+
   const tags = await tagService.getAll(user?.role)
   res.json(tags)
 })

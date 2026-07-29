@@ -49,8 +49,7 @@ services:
       - NET_ADMIN
     environment:
       DOMAIN: ${DOMAIN}
-      API_DOMAIN: ${API_DOMAIN}
-      EMAIL: ${EMAIL}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
     ports:
       - "80:80"
       - "443:443"

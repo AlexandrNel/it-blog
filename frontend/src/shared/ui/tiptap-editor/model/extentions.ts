@@ -16,6 +16,7 @@ export const baseToolbarExtentions = [
     codeBlock: {
       enableTabIndentation: true,
     },
+    code: { HTMLAttributes: { class: "code" } },
     link: {
       openOnClick: false,
       enableClickSelection: true,

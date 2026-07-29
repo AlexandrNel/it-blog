@@ -46,7 +46,7 @@ export default function EditorUI({
   content = INITIAL_CONTENT,
   options,
   children,
-  classNameContentWraper,
+  classNameContentWraper = "",
   toolbarEnable = true,
   footer,
   header,

@@ -18,9 +18,16 @@ export const mutationLimiter = rateLimit({
   standardHeaders: 'draft-7',
   legacyHeaders: false,
 })
+export const loginLimiter = rateLimit({
+  windowMs: 30000, // 30 секунд
+  limit: 6,
+  message: { message: 'Слишком много запросов. Пожалуйста, попробуйте позже' },
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+})
 
 router.post('/auth/register', register)
-router.post('/auth/login', login)
+router.post('/auth/login', loginLimiter, login)
 router.post('/auth/logout', logout)
 router.post('/auth/refresh', resfreshToken)
 router.post('/auth/demo', mutationLimiter, withUserMiddleware, demoLogin)

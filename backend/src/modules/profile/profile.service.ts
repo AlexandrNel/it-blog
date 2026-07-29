@@ -11,6 +11,7 @@ import {
 import { toAuthor } from '../user/user.transformer.js'
 import type { Prisma } from '@/generated/prisma/client.js'
 import { isIdOrUsername } from '@/shared/helpers/username-or-id.js'
+import type { ProfileUpdateArgs } from '@/generated/prisma/models.js'
 
 const profileSelect: Pick<
   Prisma.ProfileSelect,
@@ -65,11 +66,20 @@ export class ProfileService {
   }
 
   async updateProfile(userId: string, data: UpdateProfileRequestDto) {
-    const { displayName, ...profile } = data
-    await prisma.user.update({ where: { id: userId }, data: { displayName } })
+    const dataToUpdate: ProfileUpdateArgs['data'] = {
+      ...(data.bio !== undefined && { bio: data.bio }),
+      ...(data.contacts !== undefined && { contacts: data.contacts }),
+      ...(data.location !== undefined && { location: data.location }),
+    }
+    if (data.displayName) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { displayName: data.displayName },
+      })
+    }
     return await prisma.profile.update({
       where: { userId: userId },
-      data: profile,
+      data: dataToUpdate,
     })
   }
 

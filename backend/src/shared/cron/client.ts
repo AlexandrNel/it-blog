@@ -1,7 +1,7 @@
 import cron from 'node-cron'
 import { checkDemoUsers } from './tasks/checkDemoUsers.js'
 
-export const initCron = () => {
+export const initCron = async () => {
   const task = cron.schedule('0 0 * * *', checkDemoUsers, {
     timezone: 'Etc/GMT+3',
     name: 'Delete-demo-users',

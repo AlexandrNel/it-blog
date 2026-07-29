@@ -27,12 +27,16 @@ const renderMap = {
 } satisfies Record<ProfileItem["type"], (value: string) => JSX.Element>;
 
 export async function ProfileInfo({ userId }: { userId: string }) {
-  const { contacts } = await getProfileById(userId);
+  const { contacts, ...other } = await getProfileById(userId);
+  console.log(contacts, other);
+
   const data = mapProfileData({ contacts });
   return <ProfileInfoView data={data.contacts} />;
 }
 
 function ProfileInfoView({ data }: { data: ProfileItem[] }) {
+  console.log(data);
+
   return (
     <Card>
       <CardContent>

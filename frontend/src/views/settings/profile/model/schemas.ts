@@ -8,36 +8,29 @@ export const profileSettingsSchema = z.object({
     .max(32, { message: "Максимум 32 символа" })
     .optional()
     .or(z.literal("")),
-  bio: z
-    .string()
-    .trim()
-    .max(200, { message: "Максимум 200 символов" })
-    .optional()
-    .or(z.literal("")),
+  bio: z.string().trim().max(200, { message: "Максимум 200 символов" }).optional().or(z.literal("")),
   location: z.string().trim().optional().or(z.literal("")),
   contacts: z
     .object({
       email: z.email().trim().optional().or(z.literal("")),
       site: z.url().trim().optional().or(z.literal("")),
-      links: z
-        .object({
-          github: z
-            .string()
-            .trim()
-            .url({ hostname: /github/ })
-            .optional()
-            .or(z.literal("")),
-          telegram: z
-            .string()
-            .optional()
-            .refine((val) => {
-              if (val) {
-                return /^https?:\/\/(t\.me|telegram\.me)\/[a-zA-Z0-9_]{5,32}$/.test(val);
-              }
-            })
-            .or(z.literal("")),
-        })
-        .optional(),
+      links: z.object({
+        github: z
+          .string()
+          .trim()
+          .url({ hostname: /github/ })
+          .optional()
+          .or(z.literal("")),
+        telegram: z
+          .string()
+          .optional()
+          .refine((val) => {
+            if (val) {
+              return /^https?:\/\/(t\.me|telegram\.me)\/[a-zA-Z0-9_]{5,32}$/.test(val);
+            }
+          }, "Неверно указана ссылка. Пример: https://t.me/anonim")
+          .or(z.literal("")),
+      }),
     })
     .optional(),
 });

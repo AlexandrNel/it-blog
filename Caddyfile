@@ -1,9 +1,9 @@
 {
-    email {$EMAIL}
+    email {$ADMIN_EMAIL}
 }
 {$DOMAIN} {
     reverse_proxy frontend:3000
 }
-{$API_DOMAIN} {
+api.{$DOMAIN} {
     reverse_proxy backend:3005
 }

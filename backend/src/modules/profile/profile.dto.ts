@@ -7,49 +7,44 @@ const optionalUrl = (pattern?: RegExp) =>
     pattern ? z.url({ hostname: pattern }).optional() : z.url().optional()
   )
 
-export const updateProfileSchema = z.object({
-  displayName: z
-    .string()
-    .min(1, 'Минимум 1 символ')
-    .max(32, { message: 'Максимум 32 символа' })
-    .nullable()
-    .optional()
-    .or(z.literal('')),
-  bio: z
-    .string()
-    .max(200, { message: 'Максимум 200 символов' })
-    .optional()
-    .or(z.literal('')),
-  location: z.string().optional(),
-  contacts: z
-    .object({
-      email: z
-        .email({ error: 'Должно быть email' })
-        .optional()
-        .or(z.literal('', { error: 'поля' })),
-      site: z.url().optional().or(z.literal('')),
-      links: z
-        .object({
-          github: z
-            .url({ hostname: /github/ })
-            .optional()
-            .or(z.literal('')),
-          telegram: z
-            .string()
-            .optional()
-            .or(z.literal(''))
-            .refine((val) => {
-              if (val) {
-                return /^https?:\/\/(t\.me|telegram\.me)\/[a-zA-Z0-9_]{5,32}$/.test(
-                  val
-                )
-              }
-            }),
-        })
-        .optional(),
-    })
-    .optional(),
-})
+export const updateProfileSchema = z
+  .object({
+    displayName: z
+      .string()
+      .min(1, 'Минимум 1 символ')
+      .max(32, { message: 'Максимум 32 символа' })
+      .optional(),
+    bio: z.string().max(200, { message: 'Максимум 200 символов' }).optional(),
+    location: z.string().optional(),
+    contacts: z
+      .object({
+        email: z.email({ error: 'Должно быть email' }).or(z.literal('')),
+        site: z.url().optional().or(z.literal('')),
+        links: z
+          .object({
+            github: z
+              .url({ hostname: /github/ })
+              .optional()
+              .or(z.literal('')),
+            telegram: z
+              .string()
+              .optional()
+              .refine((val) => {
+                if (val) {
+                  return /^https?:\/\/(t\.me|telegram\.me)\/[a-zA-Z0-9_]{5,32}$/.test(
+                    val
+                  )
+                }
+              })
+              .or(z.literal('')),
+          })
+          .optional(),
+      })
+      .optional(),
+  })
+  .refine((data) => Object.keys(data).length > 0, {
+    error: 'Необходимо передать хотя бы одно поле',
+  })
 
 export type UpdateProfileRequestDto = z.infer<typeof updateProfileSchema>
 

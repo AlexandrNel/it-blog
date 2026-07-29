@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useUpdateProfile } from "../api/useUpdateProfile";
-import { ProfileQueries } from "@/entities/profile";
+import { ProfileQueries, TProfile } from "@/entities/profile";
 import { type ProfileSettingsFormValues, profileSettingsSchema } from "./schemas";
 import { useForm, useFormState } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,10 +41,15 @@ export function useProfileForm() {
   const { dirtyFields, isDirty } = useFormState({ control });
 
   const onSubmit = createHandleSubmit<ProfileSettingsFormValues>(setError, async (values) => {
-    const dirtyValues = getDirtyValues(values, dirtyFields);
+    const body: TProfile.ProfileRequest = {
+      ...(dirtyFields.bio && { bio: values.bio }),
+      ...(dirtyFields.displayName && { displayName: values.displayName }),
+      ...(dirtyFields.location && { location: values.location }),
+      ...(dirtyFields.contacts && { contacts: values.contacts }),
+    };
 
     await mutateAsync(
-      { userId: account.username, ...dirtyValues },
+      { userId: account.username, ...body },
       {
         onSuccess() {
           toast.success("Данные профиля обновлены");
