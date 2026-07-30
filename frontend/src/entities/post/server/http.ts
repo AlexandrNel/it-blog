@@ -1,0 +1,47 @@
+import "server-only";
+import { serverFetch, serverSafeFetch } from "@/shared/api/server";
+import type {
+  PostListWithStatisticResponse,
+  PostResponse,
+  PostWithStatisticResponse,
+  ResponsePagination,
+} from "../model/types";
+import { cache } from "react";
+import { cacheLife, cacheTag } from "next/cache";
+import { CACHE_TAGS } from "@/shared/config/cache-keys";
+
+export const getAllPosts = cache(async (sortBy: string = "new", page = 1, limit = 10) => {
+  const res = await serverFetch<ResponsePagination<PostWithStatisticResponse>>(
+    `/posts?sortBy=${sortBy}&limit=${limit}&page=${page}`,
+  );
+  return res.data;
+});
+
+export const getPostBySlug = cache(async (slug: string) => {
+  "use cache";
+  cacheLife("seconds");
+  const res = await serverSafeFetch<PostResponse>(`/posts/${slug}`);
+  if (res.data) {
+    cacheLife("max");
+    cacheTag(CACHE_TAGS.post(slug));
+  }
+  return res.data;
+});
+
+export const getPostsByTag = async (tag: string) => {
+  const res = await serverFetch<PostListWithStatisticResponse>(`/posts/tag/${tag}`);
+  return res.data;
+};
+
+export const getPostById = async (id: string) => {
+  const res = await serverSafeFetch<PostResponse>(`/posts/id/${id}`);
+  return res.data;
+};
+
+/**
+ * @param userId принимает id или username
+ */
+export const getPostByUserId = async (userId: string) => {
+  const res = await serverFetch<PostListWithStatisticResponse>(`/posts/user/${userId}`);
+  return res.data;
+};

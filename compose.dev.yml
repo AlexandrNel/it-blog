@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      dockerfile: dev.Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: 3005
+    command: sh -c "pnpm db:deploy && pnpm dev"
+    ports:
+      - "3005:3005"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      dockerfile: dev.Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    command: pnpm dev -p 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next

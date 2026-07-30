@@ -7,6 +7,15 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev up -d --build",
+    "dev:down": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev down -v --remove-orphans",
+    "dev:logs": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev logs -f",
+    "dev:seed": "docker compose --env-file .env.dev -f compose.yml -f compose.dev.yml --profile dev exec backend pnpm db:init",
+    "prod": "docker compose --env-file .env.prod -f compose.yml --profile prod up -d --build",
+    "prod:down": "docker compose --env-file .env.prod -f compose.yml --profile prod down -v --remove-orphans",
+    "prod:logs": "docker compose --env-file .env.prod -f compose.yml --profile prod logs -f"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
   }
 }

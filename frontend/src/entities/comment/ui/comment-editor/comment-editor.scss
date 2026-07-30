@@ -1,0 +1,24 @@
+.comment_input {
+  display: block;
+  border: none;
+  outline: none;
+  padding: 6px;
+  &:empty::before {
+    color: rgb(122, 122, 122);
+    content: attr(data-placeholder);
+  }
+}
+.tiptap.ProseMirror {
+  border: none;
+  outline: none;
+}
+.tiptap.ProseMirror .comment-paragraph:not(:first-child):not(td p):not(th p) {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.tiptap.ProseMirror ul.comment-list,
+tiptap.ProseMirror ol.comment-list {
+  margin: 10px 0;
+}

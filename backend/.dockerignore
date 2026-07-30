@@ -1,0 +1,9 @@
+node_modules
+generated
+dist
+coverage
+.git
+*.log
+.DS_Store
+.vscode
+.idea
