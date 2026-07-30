@@ -21,6 +21,8 @@ const app = express()
 app.set('trust proxy', true)
 
 app.use(
+  express.json(),
+  cookieParser(),
   cors({
     origin: config.corsOrigin,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -31,9 +33,7 @@ app.use(
       'Cookie',
     ],
     credentials: true,
-  }),
-  express.json(),
-  cookieParser()
+  })
 )
 
 app.use(
