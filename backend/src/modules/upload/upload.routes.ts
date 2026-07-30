@@ -21,7 +21,6 @@ const ensureUploadsDir = async () => {
   await fs.promises.mkdir(uploadsDir, { recursive: true })
 }
 
-
 const storage = multer.diskStorage({
   destination: async (_, __, cb) => {
     await ensureUploadsDir()
@@ -61,7 +60,7 @@ router.post(
     }
 
     try {
-      const imagePath = `/api/uploads/${file.filename}`
+      const imagePath = `/uploads/${file.filename}`
 
       res.json({
         path: imagePath,

@@ -43,7 +43,7 @@ export const PostCard = ({ className, post }: Props) => {
 
 const PostCardHeading = ({ children, href }: PropsWithChildren<{ href: Route }>) => {
   return (
-    <h2 className="font-bold md:text-xl text-lg transition-all hover:underline w-max my-2">
+    <h2 className="font-bold md:text-xl text-lg transition-all leading-tight hover:underline  my-2">
       <Link
         className={cn(
           "max-md:before:absolute max-md:before:content-[''] max-md:before:inset-0 max-md:before:z-1 max-md:before:block max-md:before:w-full max-md:before:h-full",

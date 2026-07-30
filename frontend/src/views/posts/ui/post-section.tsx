@@ -24,7 +24,7 @@ async function _PostSection({ params }: Pick<PageProps<"/posts/[slug]">, "params
           <CardContent>
             <PostInfo author={data.author} createdAt={data.createdAt} />
             <h1 className="font-bold md:text-[20px] text-lg my-2 ">{data.title}</h1>
-            <PostPreview previewContent={data.previewContent} image={data.previewImage} />
+            <PostPreview isFullPage previewContent={data.previewContent} image={data.previewImage} />
 
             <div className={`mb-5 text-[16px] `}>
               <EditorContent content={data.content} />

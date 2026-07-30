@@ -27,22 +27,24 @@ export function CookieBanner() {
   if (isAccepted) return null;
 
   return (
-    <Card
-      className={classNames(
-        "fixed max-w-lg bottom-4 z-20 left-[50%] border border-border -translate-x-[50%] bg-card/80 opacity-0 invisible transition-all duration-300 ease-out translate-y-full",
-        { "translate-y-0 opacity-100 backdrop-blur-xl visible": isOpen },
-      )}
-    >
-      <CardContent className="flex gap-2 items-center">
-        <p className="text-sm">
-          Продолжая использовать сервис, вы соглашаетесь на использование файлов cookie
-        </p>
-        <CardAction>
-          <Button onClick={handleAccept} size={"sm"}>
-            Понятно
-          </Button>
-        </CardAction>
-      </CardContent>
-    </Card>
+    <div className="fixed bottom-0 left-0 p-2 z-20 w-full pointer-events-none">
+      <Card
+        className={classNames(
+          "pointer-events-auto max-w-lg w-full mx-auto border border-border bg-card/80 opacity-0 invisible transition-all duration-300 ease-out translate-y-full",
+          { "translate-y-0 opacity-100 backdrop-blur-xl visible": isOpen },
+        )}
+      >
+        <CardContent className="flex  gap-2 items-center">
+          <p className="text-sm">
+            Продолжая использовать сервис, вы соглашаетесь на использование файлов cookie
+          </p>
+          <CardAction>
+            <Button onClick={handleAccept} size={"sm"}>
+              Понятно
+            </Button>
+          </CardAction>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { cn } from "@/shared/lib/utils";
+import { classNames, cn } from "@/shared/lib/utils";
 import type { BaseProps } from "@/shared/types/components";
 import { EditorContent } from "@/shared/ui/tiptap-editor";
 import type { Post } from "../model/types";
@@ -7,9 +7,11 @@ import type { Post } from "../model/types";
 interface Props extends BaseProps {
   image?: Post["previewImage"];
   previewContent: string;
+  isFullPage?: boolean
+
 }
 
-export const PostPreview = ({ className, image, previewContent }: Props) => {
+export const PostPreview = ({ className, image, previewContent, isFullPage = false }: Props) => {
   return (
     <>
       {image?.url && (
@@ -32,7 +34,7 @@ export const PostPreview = ({ className, image, previewContent }: Props) => {
           />
         </div>
       )}
-      <div className={cn("max-h-[200px] overflow-hidden text-ellipsis line-clamp-6  ")}>
+      <div className={classNames("", {"overflow-hidden text-ellipsis line-clamp-8": !isFullPage})}>
         <EditorContent content={previewContent} />
       </div>
     </>
